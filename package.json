@@ -1,0 +1,76 @@
+{
+  "name": "frontend-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint -c .eslintrc.js src/**/*.ts src/**/*.tsx",
+    "lint:fix": "eslint -c .eslintrc.js src/**/*.ts src/**/*.tsx --fix"
+  },
+  "lint-staged": {
+    "**/*.+(js|jsx|css|less|scss|ts|tsx|md)": [
+      "./node_modules/.bin/eslint -c .eslintrc.js src/**/*.ts src/**/*.tsx --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@material-ui/core": "^4.9.0",
+    "@material-ui/icons": "^4.5.1",
+    "axios": "^0.19.1",
+    "express": "^4.17.1",
+    "formik": "^2.1.3",
+    "isomorphic-fetch": "^2.2.1",
+    "js-cookie": "^2.2.1",
+    "next": "^9.1.7",
+    "next-redux-saga": "^4.1.2",
+    "next-redux-wrapper": "^4.0.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-redux": "^7.1.3",
+    "react-scripts": "3.3.0",
+    "redux": "^4.0.5",
+    "redux-saga": "^1.1.3",
+    "typesafe-actions": "^5.1.0",
+    "typescript": "~3.7.2",
+    "yup": "^0.28.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/next": "^9.0.0",
+    "@types/node": "^13.1.6",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.0",
+    "@types/react-redux": "^7.1.5",
+    "@types/redux-saga": "^0.10.5",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "babel-plugin-styled-components": "^1.10.6",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.4",
+    "nodemon": "^2.0.1",
+    "prettier": "^1.19.1"
+  }
+}
