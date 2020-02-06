@@ -18,10 +18,14 @@ export function* sendRegister(value) {
     if (result.token) {
       Cookies.set('token', result.token);
     }
-    yield all([
-      put(ActionsList.registerSuccess(result)),
-      put(LoginActionList.loginSuccess(result)),
-    ]);
+    if (result.message) {
+      yield put(ActionsList.registerFailure());
+    } else {
+      yield all([
+        put(ActionsList.registerSuccess(result)),
+        put(LoginActionList.loginSuccess(result)),
+      ]);
+    }
   } catch (err) {
     yield put(ActionsList.registerFailure());
   }

@@ -87,8 +87,8 @@ const HeaderComponent: React.FC = () => {
                 <ColorButton
                   variant="contained"
                   onClick={() => {
-                    dispatch(ActionsList.logoutRequest());
                     Cookies.remove('token');
+                    dispatch(ActionsList.logoutRequest());
                   }}
                 >
                   Sair

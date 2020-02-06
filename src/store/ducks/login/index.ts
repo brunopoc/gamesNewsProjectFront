@@ -35,7 +35,7 @@ export const ActionsList = {
     return { type: actionLoginTypes.LOGIN_FAILURE };
   },
   logoutRequest: () => {
-    return { type: actionLoginTypes.LOGIN_REQUEST };
+    return { type: actionLoginTypes.LOGOUT_REQUEST };
   },
 };
 
@@ -67,7 +67,7 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
     case actionLoginTypes.LOGIN_REQUEST:
       return { ...state, loading: true };
     case actionLoginTypes.LOGOUT_REQUEST:
-      return { ...state, logged: false };
+      return { ...state, data: {}, logged: false };
     default:
       return state;
   }
