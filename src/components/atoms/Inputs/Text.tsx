@@ -13,17 +13,16 @@ interface OwnProps {
 const Text: React.FC<OwnProps> = props => {
   const { label, placeholder, onChange, value, name, onBlur } = props;
   return (
-    <div>
-      <TextField
-        label={label}
-        onChange={onChange}
-        onBlur={onBlur}
-        value={value}
-        name={name}
-        type="text"
-        placeholder={placeholder}
-      />
-    </div>
+    <TextField
+      label={label}
+      style={{ width: '100%' }}
+      onChange={onChange}
+      onBlur={onBlur}
+      value={value}
+      name={name}
+      type="text"
+      placeholder={placeholder}
+    />
   );
 };
 

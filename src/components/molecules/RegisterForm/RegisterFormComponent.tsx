@@ -19,7 +19,9 @@ const FooterForm = styled(Box)({
 const FieldContainer = styled(Box)({
   height: '80px',
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
   flexDirection: 'column',
 });
 
@@ -28,6 +30,12 @@ const FormContainer = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   flexDirection: 'column',
+  width: '100%',
+});
+
+const ErrorSection = styled(Box)({
+  height: '20px',
+  textAlign: 'right',
   width: '100%',
 });
 
@@ -54,8 +62,8 @@ const RegisterFormComponent = () => {
     >
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
         <form onSubmit={handleSubmit}>
-          <Grid container spacing={5}>
-            <Grid container item md={6}>
+          <Grid container spacing={1}>
+            <Grid container item sm={12}>
               <FormContainer>
                 <FieldContainer>
                   <Email
@@ -66,11 +74,11 @@ const RegisterFormComponent = () => {
                     label="Digite seu email :"
                     placeholder="Digite seu email ..."
                   />
-                  {errors.email && touched.email && errors.email}
+                  <ErrorSection>{errors.email && touched.email && errors.email}</ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>
-            <Grid container item md={6}>
+            <Grid container item sm={12}>
               <FormContainer>
                 <FieldContainer>
                   <Text
@@ -81,11 +89,11 @@ const RegisterFormComponent = () => {
                     label="Digite seu Nome :"
                     placeholder="Digite seu Nome ..."
                   />
-                  {errors.name && touched.name && errors.name}
+                  <ErrorSection>{errors.name && touched.name && errors.name}</ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>
-            <Grid container item md={6}>
+            <Grid container item sm={12}>
               <FormContainer>
                 <FieldContainer>
                   <Password
@@ -96,7 +104,9 @@ const RegisterFormComponent = () => {
                     label="Digite sua senha :"
                     placeholder="Digite sua senha ..."
                   />
-                  {errors.password && touched.password && errors.password}
+                  <ErrorSection>
+                    {errors.password && touched.password && errors.password}
+                  </ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>

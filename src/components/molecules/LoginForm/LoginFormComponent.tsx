@@ -32,6 +32,12 @@ const FormContainer = styled(Box)({
   width: '100%',
 });
 
+const ErrorSection = styled(Box)({
+  height: '20px',
+  textAlign: 'right',
+  width: '100%',
+});
+
 const LoginFormComponent = () => {
   onlyNotAuth();
   const dispatch = useDispatch();
@@ -66,7 +72,7 @@ const LoginFormComponent = () => {
                     label="Digite seu email :"
                     placeholder="Digite seu email ..."
                   />
-                  {errors.email && touched.email && errors.email}
+                  <ErrorSection>{errors.email && touched.email && errors.email}</ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>
@@ -81,7 +87,9 @@ const LoginFormComponent = () => {
                     label="Digite sua senha :"
                     placeholder="Digite sua senha ..."
                   />
-                  {errors.password && touched.password && errors.password}
+                  <ErrorSection>
+                    {errors.password && touched.password && errors.password}
+                  </ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>

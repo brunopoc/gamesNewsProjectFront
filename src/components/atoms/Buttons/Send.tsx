@@ -3,9 +3,9 @@ import { Button, styled } from '@material-ui/core';
 
 const ColorButton = styled(Button)({
   color: '#fff',
-  backgroundColor: '#000000',
+  backgroundColor: '#111111',
   '&:hover': {
-    backgroundColor: '#1C1C1C',
+    backgroundColor: '#1B1B1B',
   },
 });
 
