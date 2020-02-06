@@ -17,7 +17,11 @@ export function* sendLogin(value) {
     if (result.token) {
       Cookies.set('token', result.token);
     }
-    yield put(ActionsList.loginSuccess(result));
+    if (result.message) {
+      yield put(ActionsList.loginFailure());
+    } else {
+      yield put(ActionsList.loginSuccess(result));
+    }
   } catch (err) {
     yield put(ActionsList.loginFailure());
   }
