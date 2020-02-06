@@ -1,8 +1,20 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Box, Button, Grid } from '@material-ui/core';
+import {
+  Container,
+  Box,
+  Button,
+  Grid,
+  Avatar,
+  Popper,
+  Grow,
+  Paper,
+  MenuList,
+  MenuItem,
+  ClickAwayListener,
+} from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import { ActionsList } from '../../../store/ducks/login';
 import { ApplicationState } from '../../../store';
@@ -15,7 +27,7 @@ const Header = styled(Box)({
   alignItems: 'flex-end',
 });
 
-const Menu = styled(Box)({
+const MenuContainer = styled(Box)({
   width: '100%',
   backgroundColor: '#C13535',
   boxShadow: '0 5px 15px rgba(0, 0, 0, 0.4)',
@@ -24,14 +36,14 @@ const Menu = styled(Box)({
   padding: '5px',
 });
 
-const MenuList = styled(Box)({
+const MenuListStyled = styled(Box)({
   listStyleType: 'none',
   margin: 0,
   padding: 0,
   overflow: 'hidden',
 });
 
-const MenuItem = styled(Box)({
+const MenuItemStyled = styled(Box)({
   float: 'left',
   padding: '14px 16px',
   color: '#fff',
@@ -52,52 +64,116 @@ const ColorButton = styled(Button)({
   },
 });
 
-const HeaderComponent: React.FC = () => {
+const HeaderComponent = () => {
   const dispatch = useDispatch();
   const logged = useSelector((state: ApplicationState) => state.login.logged);
   const token = Cookies.get('token');
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
+  const prevOpenRef = useRef(open);
   if (token) {
     dispatch(ActionsList.loginSuccess({ token }));
   }
+
+  const handleToggle = () => {
+    setOpen(prevOpen => !prevOpen);
+  };
+
+  const handleClose = event => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  function handleListKeyDown(event) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    if (prevOpenRef.current === true && open === false) {
+      anchorRef.current.focus();
+    }
+
+    prevOpenRef.current = open;
+  }, [open]);
+
   return (
     <Header>
-      <Menu>
+      <MenuContainer>
         <Container>
           <Grid container spacing={2}>
-            <Grid container item md={8}>
-              <MenuList component="ul">
+            <Grid container item md={10}>
+              <MenuListStyled component="ul">
                 <Link href="/">
-                  <MenuItem component="li">Home</MenuItem>
+                  <MenuItemStyled component="li">Home</MenuItemStyled>
                 </Link>
-                <MenuItem component="li">PC</MenuItem>
-                <MenuItem component="li">Xbox One</MenuItem>
-                <MenuItem component="li">PS4</MenuItem>
-                <MenuItem component="li">Nintendo Switch</MenuItem>
-                <MenuItem component="li">Arcade</MenuItem>
-                <MenuItem component="li">Animes</MenuItem>
-                <MenuItem component="li">Outros</MenuItem>
-              </MenuList>
+                <MenuItemStyled component="li">PC</MenuItemStyled>
+                <MenuItemStyled component="li">Xbox One</MenuItemStyled>
+                <MenuItemStyled component="li">PS4</MenuItemStyled>
+                <MenuItemStyled component="li">Nintendo Switch</MenuItemStyled>
+                <MenuItemStyled component="li">Arcade</MenuItemStyled>
+                <MenuItemStyled component="li">Animes</MenuItemStyled>
+                <MenuItemStyled component="li">Outros</MenuItemStyled>
+              </MenuListStyled>
             </Grid>
-            <Grid container item justify="flex-end" alignItems="center" md={4}>
+            <Grid container item justify="flex-end" alignItems="center" md={2}>
               {!logged ? (
                 <Link href="/login">
                   <ColorButton variant="contained">Faça seu login</ColorButton>
                 </Link>
               ) : (
-                <ColorButton
-                  variant="contained"
-                  onClick={() => {
-                    Cookies.remove('token');
-                    dispatch(ActionsList.logoutRequest());
-                  }}
-                >
-                  Sair
-                </ColorButton>
+                <div style={{ float: 'unset' }}>
+                  <Avatar ref={anchorRef} onClick={handleToggle} />
+                  <div>
+                    <Popper
+                      open={open}
+                      anchorEl={anchorRef.current}
+                      role={undefined}
+                      transition
+                      disablePortal
+                    >
+                      {({ TransitionProps, placement }) => (
+                        <Grow
+                          {...TransitionProps}
+                          style={{
+                            transformOrigin:
+                              placement === 'bottom' ? 'center top' : 'center bottom',
+                          }}
+                        >
+                          <Paper>
+                            <ClickAwayListener onClickAway={handleClose}>
+                              <MenuList
+                                autoFocusItem={open}
+                                id="menu-list-grow"
+                                onKeyDown={handleListKeyDown}
+                              >
+                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem
+                                  onClick={() => {
+                                    Cookies.remove('token');
+                                    dispatch(ActionsList.logoutRequest());
+                                  }}
+                                >
+                                  Sair
+                                </MenuItem>
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </div>
+                </div>
               )}
             </Grid>
           </Grid>
         </Container>
-      </Menu>
+      </MenuContainer>
     </Header>
   );
 };
