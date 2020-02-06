@@ -13,17 +13,16 @@ interface OwnProps {
 const Password: React.FC<OwnProps> = props => {
   const { label, placeholder, onChange, value, onBlur, name } = props;
   return (
-    <div>
-      <TextField
-        label={label}
-        onChange={onChange}
-        value={value}
-        onBlur={onBlur}
-        name={name}
-        type="password"
-        placeholder={placeholder}
-      />
-    </div>
+    <TextField
+      style={{ width: '100%' }}
+      label={label}
+      onChange={onChange}
+      value={value}
+      onBlur={onBlur}
+      name={name}
+      type="password"
+      placeholder={placeholder}
+    />
   );
 };
 

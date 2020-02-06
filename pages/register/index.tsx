@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { LoginCardComponent } from '../../src/components/organisms';
+import { RegisterCardComponent } from '../../src/components/organisms';
 
 const BoxStyled = styled(Box)({
   display: 'flex',
@@ -9,12 +9,12 @@ const BoxStyled = styled(Box)({
   paddingTop: '40px',
 });
 
-const Login: React.FC = () => (
+const Register: React.FC = () => (
   <Container fixed>
     <BoxStyled component="div">
-      <LoginCardComponent />
+      <RegisterCardComponent />
     </BoxStyled>
   </Container>
 );
 
-export default Login;
+export default Register;

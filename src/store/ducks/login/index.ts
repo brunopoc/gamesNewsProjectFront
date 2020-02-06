@@ -1,10 +1,10 @@
 import { Reducer } from 'redux';
 
-export enum actionTypes {
-  LOGIN_REQUEST = '@repositories/LOGIN_REQUEST',
-  LOGIN_SUCCESS = '@repositories/LOGIN_SUCCESS',
-  LOGIN_FAILURE = '@repositories/LOGIN_FAILURE',
-  LOGOUT_REQUEST = '@repositories/LOGOUT_REQUEST',
+export enum actionLoginTypes {
+  LOGIN_REQUEST = '@login/LOGIN_REQUEST',
+  LOGIN_SUCCESS = '@login/LOGIN_SUCCESS',
+  LOGIN_FAILURE = '@login/LOGIN_FAILURE',
+  LOGOUT_REQUEST = '@login/LOGOUT_REQUEST',
 }
 
 type data = {
@@ -26,16 +26,16 @@ export interface UserState {
 
 export const ActionsList = {
   loginRequest: (data: User) => {
-    return { type: actionTypes.LOGIN_REQUEST, payload: { data } };
+    return { type: actionLoginTypes.LOGIN_REQUEST, payload: { data } };
   },
   loginSuccess: (data: User) => {
-    return { type: actionTypes.LOGIN_SUCCESS, payload: { data } };
+    return { type: actionLoginTypes.LOGIN_SUCCESS, payload: { data } };
   },
   loginFailure: () => {
-    return { type: actionTypes.LOGIN_FAILURE };
+    return { type: actionLoginTypes.LOGIN_FAILURE };
   },
   logoutRequest: () => {
-    return { type: actionTypes.LOGIN_REQUEST };
+    return { type: actionLoginTypes.LOGIN_REQUEST };
   },
 };
 
@@ -48,7 +48,7 @@ const INITIAL_STATE: UserState = {
 
 const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
   switch (reduceAction.type) {
-    case actionTypes.LOGIN_SUCCESS:
+    case actionLoginTypes.LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -56,7 +56,7 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         logged: true,
         data: reduceAction.payload.data,
       };
-    case actionTypes.LOGIN_FAILURE:
+    case actionLoginTypes.LOGIN_FAILURE:
       return {
         ...state,
         error: true,
@@ -64,9 +64,9 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         logged: false,
         data: {},
       };
-    case actionTypes.LOGIN_REQUEST:
+    case actionLoginTypes.LOGIN_REQUEST:
       return { ...state, loading: true };
-    case actionTypes.LOGOUT_REQUEST:
+    case actionLoginTypes.LOGOUT_REQUEST:
       return { ...state, logged: false };
     default:
       return state;

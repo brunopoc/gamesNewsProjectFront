@@ -1,11 +1,13 @@
 import { createStore, applyMiddleware, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { UserState } from './ducks/login';
+import { RegisterState } from './ducks/register';
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 
 export interface ApplicationState {
   login: UserState;
+  register: RegisterState;
 }
 
 const bindMiddleware = (middleware: any) => applyMiddleware(...middleware);
