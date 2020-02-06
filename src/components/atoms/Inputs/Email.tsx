@@ -13,17 +13,16 @@ interface OwnProps {
 const Email: React.FC<OwnProps> = props => {
   const { label, placeholder, onChange, value, name, onBlur } = props;
   return (
-    <div>
-      <TextField
-        label={label}
-        onChange={onChange}
-        onBlur={onBlur}
-        value={value}
-        name={name}
-        type="email"
-        placeholder={placeholder}
-      />
-    </div>
+    <TextField
+      style={{ width: '100%' }}
+      label={label}
+      onChange={onChange}
+      onBlur={onBlur}
+      value={value}
+      name={name}
+      type="email"
+      placeholder={placeholder}
+    />
   );
 };
 

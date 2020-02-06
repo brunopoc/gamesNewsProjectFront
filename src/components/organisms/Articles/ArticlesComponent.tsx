@@ -1,6 +1,6 @@
 import React from 'react';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { Grid, Card, Box, CardMedia, CardHeader, CardContent, Typography } from '@material-ui/core';
+import { Grid, Card, Box, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 
 const Content = styled(Box)({
@@ -18,6 +18,8 @@ const Like = styled(Box)({
 const Date = styled(Typography)({
   fontStyle: 'italic',
   color: '#b2b2b2',
+  textAlign: 'right',
+  marginTop: '5px',
 });
 
 const Comments = styled(Typography)({
@@ -28,7 +30,23 @@ const Comments = styled(Typography)({
 const Author = styled(Typography)({
   fontStyle: 'italic',
   color: '#b2b2b2',
-  cursor: 'pointer',
+  textAlign: 'right',
+  fontSize: '12px',
+});
+
+const FooterCard = styled(Box)({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+});
+
+const ImageCard = styled(CardMedia)({
+  height: '200px',
+  borderRadius: '5px',
+});
+
+const DescriptionArea = styled(CardMedia)({
+  padding: '0px 10px 10px 10px',
 });
 
 interface Author {
@@ -51,29 +69,30 @@ type OwnProps = {
   articles: Article[];
 };
 
-const Articles: React.FC<OwnProps> = props => {
+const ArticlesComponent = (props: OwnProps) => {
   const { articles } = props;
   return (
     <Grid container spacing={3}>
       {articles.map(article => (
-        <Grid item xs={4} key={article.id}>
+        <Grid item lg={6} key={article.id}>
           <Card>
-            <div>
-              <CardMedia image={article.image} />
-            </div>
             <Content component="div">
-              <CardHeader>
-                <h3>{article.title}</h3>
-                <Date>{article.createdAt}</Date>
-              </CardHeader>
-              <CardContent>{article.resume}</CardContent>
               <CardContent>
-                <Like component="div">
-                  <FavoriteBorderIcon />
-                  {article.likes}
-                </Like>
-                <Comments>{`${article.commentsCount} Comentários`}</Comments>
+                <div>
+                  <h3>{article.title}</h3>
+                  <ImageCard image={article.image} />
+                  <Date>{article.createdAt}</Date>
+                </div>
+                <DescriptionArea>{article.resume}</DescriptionArea>
                 <Author>{`Autor: ${article.author.name}`}</Author>
+                <FooterCard component="div">
+                  <Like component="div">
+                    <FavoriteBorderIcon />
+                    {article.likes}
+                  </Like>
+                  <Comments>{`${article.commentsCount} Comentários`}</Comments>
+                  <div>Compartilhar</div>
+                </FooterCard>
               </CardContent>
             </Content>
           </Card>
@@ -83,4 +102,4 @@ const Articles: React.FC<OwnProps> = props => {
   );
 };
 
-export default Articles;
+export default ArticlesComponent;

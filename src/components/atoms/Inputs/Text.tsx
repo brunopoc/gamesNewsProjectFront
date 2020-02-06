@@ -1,19 +1,28 @@
 import React from 'react';
-import { TextInput, LabelText } from '../../../styles/components/atoms/Inputs/text';
+import { TextField } from '@material-ui/core';
 
 interface OwnProps {
   label?: string;
+  name?: string;
   placeholder?: string;
   onChange?: (...args: any[]) => void;
+  onBlur?: (...args: any[]) => void;
   value?: string;
 }
 
 const Text: React.FC<OwnProps> = props => {
-  const { label, placeholder, onChange, value } = props;
+  const { label, placeholder, onChange, value, name, onBlur } = props;
   return (
     <div>
-      {label && <LabelText>{label}</LabelText>}
-      <TextInput onChange={onChange} value={value} type="text" placeholder={placeholder} />
+      <TextField
+        label={label}
+        onChange={onChange}
+        onBlur={onBlur}
+        value={value}
+        name={name}
+        type="text"
+        placeholder={placeholder}
+      />
     </div>
   );
 };

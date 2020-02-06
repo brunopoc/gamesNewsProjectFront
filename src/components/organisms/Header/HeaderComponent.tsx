@@ -17,11 +17,11 @@ const Header = styled(Box)({
 
 const Menu = styled(Box)({
   width: '100%',
-  height: '50px',
   backgroundColor: '#C13535',
   boxShadow: '0 5px 15px rgba(0, 0, 0, 0.4)',
   display: 'flex',
   justifyContent: 'space-between',
+  padding: '5px',
 });
 
 const MenuList = styled(Box)({
@@ -44,7 +44,15 @@ const MenuItem = styled(Box)({
   },
 });
 
-const Articles: React.FC = () => {
+const ColorButton = styled(Button)({
+  color: '#fff',
+  backgroundColor: '#000000',
+  '&:hover': {
+    backgroundColor: '#1C1C1C',
+  },
+});
+
+const HeaderComponent: React.FC = () => {
   const dispatch = useDispatch();
   const logged = useSelector((state: ApplicationState) => state.login.logged);
   const token = Cookies.get('token');
@@ -56,7 +64,7 @@ const Articles: React.FC = () => {
       <Menu>
         <Container>
           <Grid container spacing={2}>
-            <Grid container item xs={8}>
+            <Grid container item md={8}>
               <MenuList component="ul">
                 <Link href="/">
                   <MenuItem component="li">Home</MenuItem>
@@ -70,24 +78,21 @@ const Articles: React.FC = () => {
                 <MenuItem component="li">Outros</MenuItem>
               </MenuList>
             </Grid>
-            <Grid container item justify="flex-end" alignItems="center" xs={4}>
+            <Grid container item justify="flex-end" alignItems="center" md={4}>
               {!logged ? (
                 <Link href="/login">
-                  <Button variant="contained" color="primary">
-                    Faça seu login
-                  </Button>
+                  <ColorButton variant="contained">Faça seu login</ColorButton>
                 </Link>
               ) : (
-                <Button
+                <ColorButton
                   variant="contained"
-                  color="primary"
                   onClick={() => {
                     dispatch(ActionsList.logoutRequest());
                     Cookies.remove('token');
                   }}
                 >
                   Sair
-                </Button>
+                </ColorButton>
               )}
             </Grid>
           </Grid>
@@ -97,4 +102,4 @@ const Articles: React.FC = () => {
   );
 };
 
-export default Articles;
+export default HeaderComponent;

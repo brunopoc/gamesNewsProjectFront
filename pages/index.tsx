@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box, Grid, Card } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import Articles from '../src/components/organisms/Articles';
+import ArticlesComponent from '../src/components/organisms/Articles/ArticlesComponent';
 
 interface Author {
   name: string;
@@ -161,10 +161,10 @@ const Index: React.FC = () => {
     <Container fixed>
       <Main>
         <Grid container spacing={2}>
-          <Grid container item xs={8}>
-            <Articles articles={articles} />
+          <Grid container item md={8}>
+            <ArticlesComponent articles={articles} />
           </Grid>
-          <Grid container item xs={4}>
+          <Grid container item md={4}>
             <CardStyled> - Assuntos em Alta - </CardStyled>
           </Grid>
         </Grid>
