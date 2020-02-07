@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Box, Grid, Card } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import ArticlesComponent from '../src/components/organisms/Articles/ArticlesComponent';
+import Header from '../src/components/organisms/Header/HeaderComponent';
 
 interface Author {
   name: string;
@@ -158,18 +159,21 @@ const Index: React.FC = () => {
   ];
 
   return (
-    <Container fixed>
-      <Main>
-        <Grid container spacing={2}>
-          <Grid container item md={8}>
-            <ArticlesComponent articles={articles} />
+    <div>
+      <Header />
+      <Container fixed>
+        <Main>
+          <Grid container spacing={2}>
+            <Grid container item md={8}>
+              <ArticlesComponent articles={articles} />
+            </Grid>
+            <Grid container item md={4}>
+              <CardStyled> - Assuntos em Alta - </CardStyled>
+            </Grid>
           </Grid>
-          <Grid container item md={4}>
-            <CardStyled> - Assuntos em Alta - </CardStyled>
-          </Grid>
-        </Grid>
-      </Main>
-    </Container>
+        </Main>
+      </Container>
+    </div>
   );
 };
 

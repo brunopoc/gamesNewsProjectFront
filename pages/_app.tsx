@@ -5,7 +5,6 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import createStore from '../src/store';
-import Header from '../src/components/organisms/Header/HeaderComponent';
 
 interface OwnProps {
   Component: React.Component;
@@ -29,7 +28,6 @@ class MyApp extends App<OwnProps> {
       <Provider store={store}>
         <div className="layout">
           <CssBaseline />
-          <Header />
           <Component {...pageProps} />
         </div>
       </Provider>
