@@ -6,7 +6,7 @@ import { Grid, styled, Box } from '@material-ui/core';
 import Password from '../../atoms/Inputs/Password';
 import Email from '../../atoms/Inputs/Email';
 import Send from '../../atoms/Buttons/Send';
-import { ActionsList } from '../../../store/ducks/login';
+import { ActionsList } from '../../../store/ducks/user';
 import { onlyNotAuth } from '../../../utils/auth';
 
 const FooterForm = styled(Box)({

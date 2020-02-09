@@ -26,7 +26,7 @@ const BoxFooterStyled = styled(Box)({
 });
 
 const LoginCardComponent: React.FC = () => {
-  const error = useSelector((state: ApplicationState) => state.login.error);
+  const error = useSelector((state: ApplicationState) => state.user.error);
   return (
     <Card>
       <BoxHeaderStyled component="div">Faça seu login</BoxHeaderStyled>
