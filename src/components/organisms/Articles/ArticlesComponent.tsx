@@ -2,6 +2,7 @@ import React from 'react';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { Grid, Card, Box, CardMedia, CardContent, Typography } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
+import { Article } from '../../../store/ducks/articles';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -49,22 +50,6 @@ const DescriptionArea = styled(CardMedia)({
   padding: '0px 10px 10px 10px',
 });
 
-interface Author {
-  name: string;
-  id: number;
-}
-
-interface Article {
-  id: number;
-  createdAt: string;
-  title: string;
-  author: Author;
-  resume: string;
-  likes: number;
-  commentsCount: number;
-  image: string;
-}
-
 type OwnProps = {
   articles: Article[];
 };
@@ -74,23 +59,23 @@ const ArticlesComponent = (props: OwnProps) => {
   return (
     <Grid container spacing={3}>
       {articles.map(article => (
-        <Grid item lg={6} key={article.id}>
+        <Grid item lg={6} key={article._id}>
           <Card>
             <Content component="div">
               <CardContent>
                 <div>
                   <h3>{article.title}</h3>
-                  <ImageCard image={article.image} />
+                  <ImageCard image={article?.image} />
                   <Date>{article.createdAt}</Date>
                 </div>
-                <DescriptionArea>{article.resume}</DescriptionArea>
-                <Author>{`Autor: ${article.author.name}`}</Author>
+                <DescriptionArea>{article?.resume}</DescriptionArea>
+                <Author>{`Autor: ${article?.author?.name}`}</Author>
                 <FooterCard component="div">
                   <Like component="div">
                     <FavoriteBorderIcon />
-                    {article.likes}
+                    {article?.likes}
                   </Like>
-                  <Comments>{`${article.commentsCount} Comentários`}</Comments>
+                  <Comments>{`${article?.commentsCount} Comentários`}</Comments>
                   <div>Compartilhar</div>
                 </FooterCard>
               </CardContent>

@@ -5,7 +5,7 @@ import { actionRegisterTypes } from './register';
 import { actionArticleTypes } from './articles';
 import { sendLogin, retrieveToken } from './user/sagas';
 import { sendRegister } from './register/sagas';
-import { sendArticle } from './articles/sagas';
+import { sendArticle, loadArticle } from './articles/sagas';
 
 export default function* rootSaga() {
   return yield all([
@@ -13,5 +13,6 @@ export default function* rootSaga() {
     takeLatest(actionRegisterTypes.REGISTER_REQUEST, sendRegister),
     takeLatest(actionLoginTypes.TOKEN_RETRIEVE_REQUEST, retrieveToken),
     takeLatest(actionArticleTypes.ARTICLE_REQUEST, sendArticle),
+    takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST, loadArticle),
   ]);
 }

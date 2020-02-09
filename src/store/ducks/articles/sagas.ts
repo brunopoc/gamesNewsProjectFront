@@ -19,11 +19,27 @@ export function* sendArticle(value) {
     });
     const result = yield resp.json();
 
-    if (result.message) {
+    if (result.status === 'Error') {
       yield put(ActionsList.articleFailure());
     } else {
-      yield put(ActionsList.articleSuccess(result));
+      yield put(ActionsList.articleSuccess());
     }
+  } catch (err) {
+    yield put(ActionsList.articleFailure());
+  }
+}
+
+export function* loadArticle(value) {
+  try {
+    const resp = yield fetch(`http://localhost:4000/api/v1/posts/list/${value.payload.page}`, {
+      method: 'get',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+
+    yield put(ActionsList.articleListSuccess(result));
   } catch (err) {
     yield put(ActionsList.articleFailure());
   }
