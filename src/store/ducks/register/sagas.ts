@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import fetch from 'isomorphic-fetch';
 
 import { ActionsList } from '.';
-import { ActionsList as LoginActionList } from '../login';
+import { ActionsList as LoginActionList } from '../user';
 
 export function* sendRegister(value) {
   try {

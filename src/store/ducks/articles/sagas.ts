@@ -4,7 +4,7 @@ import { ApplicationState } from '../../index';
 
 import { ActionsList } from '.';
 
-export const getToken = (state: ApplicationState) => state.login.data.token;
+export const getToken = (state: ApplicationState) => state.user.data.token;
 
 export function* sendArticle(value) {
   try {

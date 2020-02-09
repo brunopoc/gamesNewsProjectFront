@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Cookies from 'js-cookie';
 import Link from 'next/link';
 import {
   Avatar,
@@ -13,7 +12,7 @@ import {
   styled,
   Button,
 } from '@material-ui/core';
-import { ActionsList } from '../../../store/ducks/login';
+import { ActionsList } from '../../../store/ducks/user';
 import { ApplicationState } from '../../../store';
 
 const ColorButton = styled(Button)({
@@ -25,16 +24,11 @@ const ColorButton = styled(Button)({
 });
 
 const UserMenuComponent = () => {
-  const logged = useSelector((state: ApplicationState) => state.login.logged);
+  const logged = useSelector((state: ApplicationState) => state.user.logged);
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const prevOpenRef = useRef(open);
   const dispatch = useDispatch();
-  const token = Cookies.get('token');
-
-  if (token) {
-    dispatch(ActionsList.loginSuccess({ token }));
-  }
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
@@ -104,7 +98,6 @@ const UserMenuComponent = () => {
                       </div>
                       <MenuItem
                         onClick={() => {
-                          Cookies.remove('token');
                           dispatch(ActionsList.logoutRequest());
                         }}
                       >

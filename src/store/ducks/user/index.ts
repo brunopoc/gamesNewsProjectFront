@@ -1,15 +1,19 @@
 import { Reducer } from 'redux';
+import Cookies from 'js-cookie';
 
 export enum actionLoginTypes {
   LOGIN_REQUEST = '@login/LOGIN_REQUEST',
   LOGIN_SUCCESS = '@login/LOGIN_SUCCESS',
   LOGIN_FAILURE = '@login/LOGIN_FAILURE',
   LOGOUT_REQUEST = '@login/LOGOUT_REQUEST',
+  TOKEN_RETRIEVE_REQUEST = '@login/TOKEN_RETRIEVE_REQUEST',
+  TOKEN_RETRIEVE_SUCCESS = '@login/TOKEN_RETRIEVE_SUCCESS',
 }
 
 type data = {
   name: string;
   email: string;
+  type?: string;
 };
 
 export interface User {
@@ -36,6 +40,12 @@ export const ActionsList = {
   },
   logoutRequest: () => {
     return { type: actionLoginTypes.LOGOUT_REQUEST };
+  },
+  tokenRetrieveRequest: (data: User) => {
+    return { type: actionLoginTypes.TOKEN_RETRIEVE_REQUEST, payload: { data } };
+  },
+  tokenRetrieveSuccess: (data: User) => {
+    return { type: actionLoginTypes.TOKEN_RETRIEVE_SUCCESS, payload: { data } };
   },
 };
 
@@ -66,7 +76,16 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
       };
     case actionLoginTypes.LOGIN_REQUEST:
       return { ...state, loading: true };
+    case actionLoginTypes.TOKEN_RETRIEVE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        logged: true,
+        data: reduceAction.payload.data,
+      };
     case actionLoginTypes.LOGOUT_REQUEST:
+      Cookies.remove('token');
       return { ...state, data: {}, logged: false };
     default:
       return state;

@@ -29,7 +29,7 @@ const RichTextComponent = (props: OwnProps) => {
       }}
       config={{
         ckfinder: {
-          uploadUrl: `/pdf/uploadImage`,
+          uploadUrl: `http://localhost:4000/api/v1/posts/uploadImage/`,
         },
       }}
     />
