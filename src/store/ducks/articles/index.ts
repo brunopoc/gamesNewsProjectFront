@@ -4,60 +4,66 @@ export enum actionArticleTypes {
   ARTICLE_REQUEST = '@ARTICLE_/ARTICLE_REQUEST',
   ARTICLE_SUCCESS = '@ARTICLE_/ARTICLE_SUCCESS',
   ARTICLE_FAILURE = '@ARTICLE_/ARTICLE_FAILURE',
+  ARTICLE_LIST_REQUEST = '@ARTICLE_/ARTICLE_LIST_REQUEST',
+  ARTICLE_LIST_SUCCESS = '@ARTICLE_/ARTICLE_LIST_SUCCESS',
 }
 
-type data = {
+type Author = {
   name: string;
-  email: string;
 };
 
-export interface User {
-  token?: string;
-  data?: data;
+type Comments = {
+  text: string;
+  commentedAt: Date;
+  author: string;
+};
+
+export interface Article {
+  title: string;
+  content: string;
+  _id: number;
+  image?: string;
+  createdAt: Date;
+  resume?: string;
+  author?: Author;
+  likes?: number;
+  comments?: Comments[];
 }
 
 export interface ArticleState {
-  readonly data: User;
-  readonly loading: boolean;
-  readonly error: boolean;
+  readonly list: Article[];
+  readonly totalOfPages: number;
+  readonly currentPage: number;
 }
 
 export const ActionsList = {
-  articleRequest: (data: User) => {
+  articleRequest: (data: Article) => {
     return { type: actionArticleTypes.ARTICLE_REQUEST, payload: { data } };
   },
-  articleSuccess: (data: User) => {
-    return { type: actionArticleTypes.ARTICLE_SUCCESS, payload: { data } };
+  articleSuccess: () => {
+    return { type: actionArticleTypes.ARTICLE_SUCCESS };
   },
   articleFailure: () => {
     return { type: actionArticleTypes.ARTICLE_FAILURE };
   },
+  articleListRequest: (page: number) => {
+    return { type: actionArticleTypes.ARTICLE_LIST_REQUEST, payload: { page } };
+  },
+  articleListSuccess: (data: ArticleState) => {
+    return { type: actionArticleTypes.ARTICLE_LIST_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
-  data: {},
-  error: false,
-  loading: false,
+  list: [],
+  totalOfPages: 1,
+  currentPage: 1,
 };
 
 const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => {
   switch (reduceAction.type) {
-    case actionArticleTypes.ARTICLE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        error: false,
-        data: reduceAction.payload.data,
-      };
-    case actionArticleTypes.ARTICLE_FAILURE:
-      return {
-        ...state,
-        error: true,
-        loading: false,
-        data: {},
-      };
-    case actionArticleTypes.ARTICLE_REQUEST:
-      return { ...state, loading: true };
+    case actionArticleTypes.ARTICLE_LIST_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
     default:
       return state;
   }

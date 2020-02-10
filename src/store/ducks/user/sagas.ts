@@ -1,6 +1,6 @@
 import { put } from 'redux-saga/effects';
-import Cookies from 'js-cookie';
 import fetch from 'isomorphic-fetch';
+import Cookies from 'js-cookie';
 
 import { ActionsList } from '.';
 
@@ -14,11 +14,8 @@ export function* sendLogin(value) {
       }),
     });
     const result = yield resp.json();
-    const expireToken = new Date(new Date().getTime() + 60 * 120);
     if (result.token) {
-      Cookies.set('token', result.token, {
-        expires: expireToken,
-      });
+      Cookies.set('token', result.token);
     }
     if (result.message) {
       yield put(ActionsList.loginFailure());
@@ -40,11 +37,8 @@ export function* retrieveToken(value) {
       }),
     });
     const result = yield resp.json();
-    const expireToken = new Date(new Date().getTime() + 60 * 120);
     if (result.token) {
-      Cookies.set('token', result.token, {
-        expires: expireToken,
-      });
+      Cookies.set('token', result.token);
     }
     if (result.message) {
       yield put(ActionsList.logoutRequest());
