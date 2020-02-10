@@ -19,12 +19,20 @@ const CKEditor = dynamic(
 );
 
 const FieldContainer = styled(Box)({
-  height: '80px',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   width: '100%',
   flexDirection: 'column',
+});
+
+const FieldLineContainer = styled(Box)({
+  height: '80px',
+  width: '100%',
+});
+
+const RichTextContainer = styled(Box)({
+  width: '100%',
 });
 
 const FormContainer = styled(Box)({
@@ -55,7 +63,9 @@ const FooterForm = styled(Box)({
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Por favor, coloque um titulo'),
-  content: Yup.string().required('Por favor, escreva sua postagem'),
+  content: Yup.string()
+    .required('Por favor, escreva sua postagem')
+    .min(250, 'O Seu artigo é muito pequeno'),
   upload: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
 });
 
@@ -93,27 +103,33 @@ const Write = () => {
                   <Grid container item sm={12}>
                     <FormContainer>
                       <FieldContainer>
-                        <Text
-                          value={values.title}
-                          name="title"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          label="Digite um titulo :"
-                          placeholder="Digite um titulo ..."
-                        />
-                        <ErrorSection>{errors.title && touched.title && errors.title}</ErrorSection>
+                        <FieldLineContainer>
+                          <Text
+                            value={values.title}
+                            name="title"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            label="Digite um titulo :"
+                            placeholder="Digite um titulo ..."
+                          />
+                          <ErrorSection>
+                            {errors.title && touched.title && errors.title}
+                          </ErrorSection>
+                        </FieldLineContainer>
                       </FieldContainer>
                     </FormContainer>
                   </Grid>
                   <Grid container item md={12}>
                     <FormContainer>
                       <FieldContainer>
-                        <CKEditor
-                          name="content"
-                          value={values.content}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                        />
+                        <RichTextContainer>
+                          <CKEditor
+                            name="content"
+                            value={values.content}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+                        </RichTextContainer>
                         <ErrorSection>
                           {errors.content && touched.content && errors.content}
                         </ErrorSection>
@@ -146,6 +162,17 @@ const Write = () => {
           </Formik>
         </BoxStyled>
       </Container>
+      <style jsx global>
+        {`
+          .ck-editor__editable {
+            height: 300px !important;
+            width: 100%;
+          }
+          form {
+            width: 100%;
+          }
+        `}
+      </style>
     </AppBarComponent>
   );
 };
