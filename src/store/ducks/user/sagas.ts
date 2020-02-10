@@ -40,7 +40,7 @@ export function* retrieveToken(value) {
       }),
     });
     const result = yield resp.json();
-    const expireToken = new Date(new Date().getTime() + 60 * 120);
+    const expireToken = new Date(new Date().getTime() + 60000);
     if (result.token) {
       Cookies.set('token', result.token, {
         expires: expireToken,

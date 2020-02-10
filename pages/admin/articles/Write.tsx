@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Container, Box, Grid, styled } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
@@ -9,6 +9,7 @@ import { AppBarComponent } from '../../../src/components/organisms';
 import Text from '../../../src/components/atoms/Inputs/Text';
 import Send from '../../../src/components/atoms/Buttons/Send';
 import { ActionsList } from '../../../src/store/ducks/articles';
+import { ApplicationState } from '../../../src/store';
 
 const CKEditor = dynamic(
   () => import('../../../src/components/molecules/RichText/RichTextComponent'),
@@ -55,12 +56,15 @@ const FooterForm = styled(Box)({
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Por favor, coloque um titulo'),
   content: Yup.string().required('Por favor, escreva sua postagem'),
+  upload: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
 });
 
 const Write = () => {
   const dispatch = useDispatch();
+  const author = useSelector((state: ApplicationState) => state.user.data.data.name) || '';
   function handleFormikSubmit(values) {
-    dispatch(ActionsList.articleRequest(values));
+    const data = { ...values, author };
+    dispatch(ActionsList.articleRequest(data));
   }
 
   return (
@@ -71,11 +75,19 @@ const Write = () => {
         </Typography>
         <BoxStyled component="div">
           <Formik
-            initialValues={{ title: '', content: '' }}
+            initialValues={{ title: '', content: '', upload: null }}
             validationSchema={validationSchema}
             onSubmit={handleFormikSubmit}
           >
-            {({ values, errors, touched, handleChange, handleBlur, handleSubmit }) => (
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              setFieldValue,
+            }) => (
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={1}>
                   <Grid container item sm={12}>
@@ -95,15 +107,34 @@ const Write = () => {
                   </Grid>
                   <Grid container item md={12}>
                     <FormContainer>
-                      <CKEditor
-                        name="content"
-                        value={values.content}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      <ErrorSection>
-                        {errors.content && touched.content && errors.content}
-                      </ErrorSection>
+                      <FieldContainer>
+                        <CKEditor
+                          name="content"
+                          value={values.content}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                        />
+                        <ErrorSection>
+                          {errors.content && touched.content && errors.content}
+                        </ErrorSection>
+                      </FieldContainer>
+                    </FormContainer>
+                  </Grid>
+                  <Grid container item sm={12}>
+                    <FormContainer>
+                      <FieldContainer>
+                        <input
+                          id="upload"
+                          type="file"
+                          name="upload"
+                          onChange={e => {
+                            setFieldValue('upload', e.currentTarget.files[0]);
+                          }}
+                        />
+                        <ErrorSection>
+                          {errors.upload && touched.upload && errors.upload}
+                        </ErrorSection>
+                      </FieldContainer>
                     </FormContainer>
                   </Grid>
                 </Grid>

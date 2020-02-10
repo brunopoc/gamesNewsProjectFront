@@ -11,6 +11,7 @@ export enum actionLoginTypes {
 }
 
 type data = {
+  _id: number;
   name: string;
   email: string;
   type?: string;
@@ -50,7 +51,7 @@ export const ActionsList = {
 };
 
 const INITIAL_STATE: UserState = {
-  data: {},
+  data: { data: { name: '', email: '', _id: 0 } },
   logged: false,
   error: false,
   loading: false,

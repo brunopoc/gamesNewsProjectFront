@@ -12,6 +12,12 @@ type Author = {
   name: string;
 };
 
+type Comments = {
+  text: string;
+  commentedAt: Date;
+  author: string;
+};
+
 export interface Article {
   title: string;
   content: string;
@@ -21,7 +27,7 @@ export interface Article {
   resume?: string;
   author?: Author;
   likes?: number;
-  commentsCount?: number;
+  comments?: Comments[];
 }
 
 export interface ArticleState {
@@ -67,7 +73,6 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
     case actionArticleTypes.ARTICLE_REQUEST:
       return { ...state };
     case actionArticleTypes.ARTICLE_LIST_SUCCESS:
-      console.log(reduceAction);
       const { data } = reduceAction.payload;
       return { ...state, ...data };
     default:
