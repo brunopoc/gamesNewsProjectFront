@@ -33,7 +33,7 @@ const DrawerComponent = () => {
             <ListItemText primary="Voltar" />
           </ListItem>
         </Link>
-        <Link href="/">
+        <Link href="/admin/profile">
           <ListItem button key="Meu Perfil">
             <ListItemIcon>
               <AccountBoxIcon />
@@ -52,11 +52,11 @@ const DrawerComponent = () => {
       </List>
       <Divider />
       <List>
-        <ListItem button key="Sair">
+        <ListItem button key="Teste">
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary="Sair" />
+          <ListItemText primary="Teste" />
         </ListItem>
       </List>
     </div>

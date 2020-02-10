@@ -4,3 +4,4 @@ export { default as HeaderComponent } from './Header/HeaderComponent';
 export { default as ArticlesComponent } from './Articles/ArticlesComponent';
 export { default as AppBarComponent } from './AppBar/AppBarComponent';
 export { default as MainComponent } from './Main/MainComponent';
+export { default as WriteCardComponent } from './WriteCard/WriteCardComponent';

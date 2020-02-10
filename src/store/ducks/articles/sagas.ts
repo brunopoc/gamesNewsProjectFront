@@ -1,12 +1,13 @@
 import { put, select } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
 import { ApplicationState } from '../../index';
-
 import { ActionsList } from '.';
+import { ActionsList as MessageActionList } from '../message';
 
 export const getToken = (state: ApplicationState) => state.user.data.token;
 
 export function* sendArticle(value) {
+  yield put(MessageActionList.loadRequest());
   try {
     const token = yield select(getToken);
     const formdata = value.payload.data;
@@ -29,18 +30,22 @@ export function* sendArticle(value) {
       }),
     });
     const result = yield resp.json();
-
     if (result.status === 'Error') {
       yield put(ActionsList.articleFailure());
+      yield put(MessageActionList.loadReady());
     } else {
       yield put(ActionsList.articleSuccess());
+      yield put(MessageActionList.loadReady());
+      yield put(MessageActionList.successShow());
     }
   } catch (err) {
     yield put(ActionsList.articleFailure());
+    yield put(MessageActionList.loadReady());
   }
 }
 
 export function* loadArticle(value) {
+  yield put(MessageActionList.loadRequest());
   try {
     const resp = yield fetch(`http://localhost:4000/api/v1/posts/list/${value.payload.page}`, {
       method: 'get',
@@ -51,7 +56,9 @@ export function* loadArticle(value) {
     const result = yield resp.json();
 
     yield put(ActionsList.articleListSuccess(result));
+    yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(ActionsList.articleFailure());
+    yield put(MessageActionList.loadReady());
   }
 }

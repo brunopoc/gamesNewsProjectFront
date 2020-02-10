@@ -62,19 +62,8 @@ const INITIAL_STATE: ArticleState = {
 
 const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => {
   switch (reduceAction.type) {
-    case actionArticleTypes.ARTICLE_SUCCESS:
-      return {
-        ...state,
-      };
-    case actionArticleTypes.ARTICLE_FAILURE:
-      return {
-        ...state,
-      };
-    case actionArticleTypes.ARTICLE_REQUEST:
-      return { ...state };
     case actionArticleTypes.ARTICLE_LIST_SUCCESS:
-      const { data } = reduceAction.payload;
-      return { ...state, ...data };
+      return { ...state, ...reduceAction.payload.data };
     default:
       return state;
   }

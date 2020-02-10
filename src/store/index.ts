@@ -3,6 +3,8 @@ import createSagaMiddleware from 'redux-saga';
 import { UserState } from './ducks/user';
 import { RegisterState } from './ducks/register';
 import { ArticleState } from './ducks/articles';
+import { CategoriesState } from './ducks/categories';
+import { MessageState } from './ducks/Message';
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 
@@ -10,6 +12,8 @@ export interface ApplicationState {
   user: UserState;
   register: RegisterState;
   articles: ArticleState;
+  categories: CategoriesState;
+  message: MessageState;
 }
 
 const bindMiddleware = (middleware: any) => applyMiddleware(...middleware);
