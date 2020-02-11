@@ -6,6 +6,8 @@ export enum actionArticleTypes {
   ARTICLE_FAILURE = '@ARTICLE_/ARTICLE_FAILURE',
   ARTICLE_LIST_REQUEST = '@ARTICLE_/ARTICLE_LIST_REQUEST',
   ARTICLE_LIST_SUCCESS = '@ARTICLE_/ARTICLE_LIST_SUCCESS',
+  LOAD_ARTICLE_REQUEST = '@ARTICLE_/LOAD_ARTICLE_REQUEST',
+  LOAD_ARTICLE_SUCCESS = '@ARTICLE_/LOAD_ARTICLE_SUCCESS',
 }
 
 type Author = {
@@ -28,12 +30,14 @@ export interface Article {
   author?: Author;
   likes?: number;
   comments?: Comments[];
+  refer: string;
 }
 
 export interface ArticleState {
   readonly list: Article[];
   readonly totalOfPages: number;
   readonly currentPage: number;
+  readonly currentArticle?: Article;
 }
 
 export const ActionsList = {
@@ -52,6 +56,12 @@ export const ActionsList = {
   articleListSuccess: (data: ArticleState) => {
     return { type: actionArticleTypes.ARTICLE_LIST_SUCCESS, payload: { data } };
   },
+  loadArticleRequest: (refer: string) => {
+    return { type: actionArticleTypes.LOAD_ARTICLE_REQUEST, payload: { refer } };
+  },
+  loadArticleSuccess: (data: Article) => {
+    return { type: actionArticleTypes.LOAD_ARTICLE_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
@@ -64,6 +74,8 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
   switch (reduceAction.type) {
     case actionArticleTypes.ARTICLE_LIST_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.LOAD_ARTICLE_SUCCESS:
+      return { ...state, currentArticle: reduceAction.payload.data };
     default:
       return state;
   }

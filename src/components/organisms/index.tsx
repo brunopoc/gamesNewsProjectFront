@@ -2,6 +2,8 @@ export { default as RegisterCardComponent } from './RegisterCard/RegisterCardCom
 export { default as LoginCardComponent } from './LoginCard/LoginCardComponent';
 export { default as HeaderComponent } from './Header/HeaderComponent';
 export { default as ArticlesComponent } from './Articles/ArticlesComponent';
+export { default as ArticleComponent } from './Article/ArticleComponent';
 export { default as AppBarComponent } from './AppBar/AppBarComponent';
 export { default as MainComponent } from './Main/MainComponent';
 export { default as WriteCardComponent } from './WriteCard/WriteCardComponent';
+export { default as CommonComponent } from './Common/CommonComponent';
