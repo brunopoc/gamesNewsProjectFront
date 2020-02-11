@@ -44,7 +44,7 @@ export function* sendArticle(value) {
   }
 }
 
-export function* loadArticle(value) {
+export function* loadArticleList(value) {
   yield put(MessageActionList.loadRequest());
   try {
     const resp = yield fetch(`http://localhost:4000/api/v1/posts/list/${value.payload.page}`, {
@@ -56,6 +56,25 @@ export function* loadArticle(value) {
     const result = yield resp.json();
 
     yield put(ActionsList.articleListSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(ActionsList.articleFailure());
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadArticle(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const resp = yield fetch(`http://localhost:4000/api/v1/posts/article/${value.payload.refer}`, {
+      method: 'get',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+
+    yield put(ActionsList.loadArticleSuccess(result));
     yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(ActionsList.articleFailure());
