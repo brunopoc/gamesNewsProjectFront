@@ -9,7 +9,6 @@ const Refer = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { currentArticle } = useSelector((state: ApplicationState) => state.articles);
-
   useEffect(() => {
     dispatch(ActionsList.loadArticleRequest(router.query.refer));
   }, []);

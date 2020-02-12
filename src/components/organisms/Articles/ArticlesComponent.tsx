@@ -13,6 +13,7 @@ import { styled } from '@material-ui/core/styles';
 import moment from 'moment';
 import Link from 'next/link';
 import { Article } from '../../../store/ducks/articles';
+import Like from '../../atoms/Buttons/Like';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -20,12 +21,6 @@ const Content = styled(Box)({
   flexDirection: 'column',
   minHeight: '480px',
   width: '100%',
-});
-
-const Like = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  cursor: 'pointer',
 });
 
 const Date = styled(Typography)({
@@ -95,10 +90,7 @@ const ArticlesComponent = (props: OwnProps) => {
                   </Link>
                 </CardActionArea>
                 <FooterCard component="div">
-                  <Like component="div">
-                    <FavoriteBorderIcon />
-                    {article?.likes}
-                  </Like>
+                  <Like articleId={article._id} articleLikes={article.likes} />
                   <Comments>{`${article?.comments.length} Comentários`}</Comments>
                   <div>Compartilhar</div>
                 </FooterCard>

@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch';
 import { ApplicationState } from '../../index';
 import { ActionsList } from '.';
 import { ActionsList as MessageActionList } from '../message';
+import { ActionsList as UserActionList } from '../user';
 
 export const getToken = (state: ApplicationState) => state.user.data.token;
 
@@ -79,5 +80,60 @@ export function* loadArticle(value) {
   } catch (err) {
     yield put(ActionsList.articleFailure());
     yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* likeArticle(value) {
+  const token = yield select(getToken);
+  const data = { action: value.payload.data.action };
+  const userData = { id: value.payload.data.userId, likedPosts: value.payload.data.likedPosts };
+
+  const resp = yield fetch(`http://localhost:4000/api/v1/posts/like/${value.payload.data.id}`, {
+    method: 'post',
+    body: JSON.stringify(data, null, 2),
+    headers: new Headers({
+      'content-type': 'application/json',
+      'x-access-token': token,
+    }),
+  });
+  const result = yield resp.json();
+
+  const respUser = yield fetch(`http://localhost:4000/api/v1/users/update/likes`, {
+    method: 'post',
+    body: JSON.stringify(userData, null, 2),
+    headers: new Headers({
+      'content-type': 'application/json',
+      'x-access-token': token,
+    }),
+  });
+  const resultUser = yield respUser.json();
+
+  if (!resultUser.message) {
+    yield put(UserActionList.userLikeRetrieveSuccess(resultUser));
+  }
+
+  if (!result.message) {
+    yield put(ActionsList.loadArticleSuccess(result));
+  }
+}
+
+export function* articleComment(value) {
+  const token = yield select(getToken);
+  const { comments, articleID } = value.payload.data;
+
+  const resp = yield fetch(`http://localhost:4000/api/v1/posts/comment/${articleID}`, {
+    method: 'post',
+    body: JSON.stringify(comments, null, 2),
+    headers: new Headers({
+      'content-type': 'application/json',
+      'x-access-token': token,
+    }),
+  });
+
+  const result = yield resp.json();
+
+  if (!result.message) {
+    yield put(MessageActionList.successShow());
+    yield put(ActionsList.loadArticleSuccess(result));
   }
 }
