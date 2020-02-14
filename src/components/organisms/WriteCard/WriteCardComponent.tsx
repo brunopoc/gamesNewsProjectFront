@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import { Container, Box, styled } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppBarComponent } from '..';
+import { AppBarAdminComponent } from '..';
 import { ActionsList as CategorieActionList } from '../../../store/ducks/categories';
 import { WriteFormComponent } from '../../molecules';
 import { withAuthSync } from '../../../utils/auth';
@@ -23,7 +23,7 @@ const WriteCardComponent = () => {
   }, []);
 
   return (
-    <AppBarComponent>
+    <AppBarAdminComponent>
       <Container fixed>
         <Typography paragraph>
           Aqui voce pode escrever artigos, e apos uma analise, nos publicamos o seu artigo no site!
@@ -32,7 +32,7 @@ const WriteCardComponent = () => {
           <WriteFormComponent />
         </BoxStyled>
       </Container>
-    </AppBarComponent>
+    </AppBarAdminComponent>
   );
 };
 
