@@ -3,4 +3,5 @@ export { default as RegisterFormComponent } from './RegisterForm/RegisterFormCom
 export { default as UserMenuComponent } from './UserMenu/UserMenuComponent';
 export { default as DrawerComponent } from './Drawer/DrawerComponent';
 export { default as WriteFormComponent } from './WriteForm/WriteFormComponent';
-export { default as CommentsComponent } from './Comments/CommentsComponent';
+export { default as CommentFieldComponent } from './CommentField/CommentFieldComponent';
+export { default as AnswareFieldComponent } from './AnswareField/AnswareFieldComponent';

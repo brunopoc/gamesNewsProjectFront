@@ -35,7 +35,7 @@ const Like = (props: OwnProps) => {
   const likedLength =
     likedPosts &&
     likedPosts.filter(like => {
-      return like.id === articleId;
+      return like === articleId;
     })?.length;
   const liked = likedLength > 0;
 
@@ -52,12 +52,12 @@ const Like = (props: OwnProps) => {
     if (logged) {
       if (liked) {
         for (let i = likedPosts.length - 1; i >= 0; i--) {
-          if (likedPosts[i].id === articleId) {
+          if (likedPosts[i] === articleId) {
             likedPosts.splice(i, 1);
           }
         }
       } else {
-        likedPosts.push({ id: articleId });
+        likedPosts.push(articleId);
       }
 
       const data = {

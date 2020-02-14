@@ -21,7 +21,7 @@ type CommentAuthor = {
   id: string;
 };
 
-type Answare = {
+export type Answare = {
   _id?: string;
   text: string;
   commentedAt: Date;
@@ -99,7 +99,7 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
     case actionArticleTypes.LOAD_ARTICLE_SUCCESS:
       const listArticles = state.list.map(article => {
         if (article._id == reduceAction.payload.data._id) {
-          return { ...article, likes: reduceAction.payload.data.likes };
+          return { ...article, ...reduceAction.payload.data };
         }
         return article;
       });

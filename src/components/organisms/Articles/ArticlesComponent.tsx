@@ -1,5 +1,4 @@
 import React from 'react';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import {
   Grid,
   Card,
@@ -10,8 +9,8 @@ import {
   CardActionArea,
 } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import moment from 'moment';
 import Link from 'next/link';
+import { FromNow } from '../../../utils/moment';
 import { Article } from '../../../store/ducks/articles';
 import Like from '../../atoms/Buttons/Like';
 
@@ -21,13 +20,6 @@ const Content = styled(Box)({
   flexDirection: 'column',
   minHeight: '480px',
   width: '100%',
-});
-
-const Date = styled(Typography)({
-  fontStyle: 'italic',
-  color: '#b2b2b2',
-  textAlign: 'right',
-  marginTop: '5px',
 });
 
 const Comments = styled(Typography)({
@@ -55,7 +47,7 @@ const ImageCard = styled(CardMedia)({
 });
 
 const DescriptionArea = styled(Box)({
-  padding: '0px 10px 10px 10px',
+  padding: '10px',
 });
 
 type OwnProps = {
@@ -67,7 +59,7 @@ const ArticlesComponent = (props: OwnProps) => {
   return (
     <Grid container spacing={3}>
       {articles.map(article => {
-        const articleCreatedAt = moment(article.createdAt).format('DD/MM/YYYY');
+        const articleCreatedAt = FromNow(article.createdAt);
         const authorName = article.author?.name || 'Anônimo';
         const imageURL =
           article?.image ||
@@ -82,16 +74,17 @@ const ArticlesComponent = (props: OwnProps) => {
                       <div>
                         <h3>{article.title}</h3>
                         <ImageCard image={imageURL} />
-                        <Date>{articleCreatedAt}</Date>
                       </div>
                       <DescriptionArea>{article?.resume}</DescriptionArea>
-                      <Author>{`Autor: ${authorName}`}</Author>
+                      <Author>{`Autor: ${authorName} - ${articleCreatedAt}`}</Author>
                     </CardContent>
                   </Link>
                 </CardActionArea>
                 <FooterCard component="div">
                   <Like articleId={article._id} articleLikes={article.likes} />
-                  <Comments>{`${article?.comments.length} Comentários`}</Comments>
+                  <Link href="/post/[refer]" as={`/post/${article.refer}#comments`}>
+                    <Comments>{`${article?.comments.length} Comentários`}</Comments>
+                  </Link>
                   <div>Compartilhar</div>
                 </FooterCard>
               </Content>

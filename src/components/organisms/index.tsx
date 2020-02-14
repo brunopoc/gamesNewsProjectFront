@@ -7,3 +7,6 @@ export { default as AppBarComponent } from './AppBar/AppBarComponent';
 export { default as MainComponent } from './Main/MainComponent';
 export { default as WriteCardComponent } from './WriteCard/WriteCardComponent';
 export { default as CommonComponent } from './Common/CommonComponent';
+export { default as HeadComponent } from './Head/HeadComponent';
+export { default as CommentsComponent } from './Comments/CommentsComponent';
+export { default as AnswaresComponent } from './Answares/AnswaresComponent';

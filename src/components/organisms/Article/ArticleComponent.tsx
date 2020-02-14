@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card, Box, CardMedia, CardContent, Typography, styled } from '@material-ui/core';
-import moment from 'moment';
+import { FromNow } from '../../../utils/moment';
 import { Article } from '../../../store/ducks/articles';
 import Like from '../../atoms/Buttons/Like';
-import { CommentsComponent } from '../../molecules';
+import { CommentsComponent } from '..';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -17,6 +17,7 @@ const Date = styled(Typography)({
   color: '#b2b2b2',
   textAlign: 'right',
   marginTop: '5px',
+  fontSize: '14px',
 });
 
 const Author = styled(Typography)({
@@ -39,7 +40,7 @@ const ImageCard = styled(CardMedia)({
 });
 
 const DescriptionArea = styled(Box)({
-  padding: '0px 10px 10px 10px',
+  padding: '10px',
 });
 
 type OwnProps = {
@@ -48,7 +49,7 @@ type OwnProps = {
 
 const ArticleComponent = (props: OwnProps) => {
   const { article } = props;
-  const articleCreatedAt = moment(article.createdAt).format('DD/MM/YYYY');
+  const articleCreatedAt = FromNow(article.createdAt);
   const authorName = article.author?.name || 'Anônimo';
   const imageURL =
     article?.image ||
@@ -62,10 +63,10 @@ const ArticleComponent = (props: OwnProps) => {
             <div>
               <h3>{article.title}</h3>
               <ImageCard image={imageURL} />
-              <Date>{articleCreatedAt}</Date>
             </div>
             <DescriptionArea dangerouslySetInnerHTML={{ __html: article?.content }} />
             <Author>{`Autor: ${authorName}`}</Author>
+            <Date>{articleCreatedAt}</Date>
           </CardContent>
           <FooterCard component="div">
             <Like articleId={article._id} articleLikes={article.likes} />

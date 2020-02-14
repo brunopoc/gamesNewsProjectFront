@@ -12,16 +12,12 @@ export enum actionLoginTypes {
   USER_LIKE_RETRIEVE_SUCCESS = '@login/USER_LIKE_RETRIEVE_SUCCESS',
 }
 
-type likedPosts = {
-  id: string;
-};
-
 type data = {
   id: string;
   name: string;
   email: string;
   type?: string;
-  likedPosts?: likedPosts[];
+  likedPosts?: string[];
 };
 
 export interface User {

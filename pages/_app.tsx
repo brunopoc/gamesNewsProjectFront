@@ -5,7 +5,7 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import createStore from '../src/store';
-import { MainComponent } from '../src/components/organisms';
+import { MainComponent, HeadComponent } from '../src/components/organisms';
 
 interface OwnProps {
   Component: React.Component;
@@ -23,11 +23,19 @@ class MyApp extends App<OwnProps> {
     return { pageProps };
   }
 
+  componentDidMount() {
+    const jssStyles = document.querySelector('#jss-server-side');
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles);
+    }
+  }
+
   render() {
     const { Component, pageProps, store } = this.props;
     return (
       <Provider store={store}>
         <MainComponent>
+          <HeadComponent title="Sou Gamer Com Orgulho" />
           <CssBaseline />
           <Component {...pageProps} />
         </MainComponent>
