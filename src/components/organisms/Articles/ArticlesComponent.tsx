@@ -65,7 +65,7 @@ const ArticlesComponent = (props: OwnProps) => {
           article?.image ||
           'https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/18j48tw3csif0jpg.jpg';
         return (
-          <Grid item lg={6} key={article._id} style={{ width: '100%' }}>
+          <Grid item lg={6} key={article.id} style={{ width: '100%' }}>
             <Card>
               <Content component="div">
                 <CardActionArea>
@@ -81,7 +81,7 @@ const ArticlesComponent = (props: OwnProps) => {
                   </Link>
                 </CardActionArea>
                 <FooterCard component="div">
-                  <Like articleId={article._id} articleLikes={article.likes} />
+                  <Like articleId={article.id} articleLikes={article.likes} />
                   <Link href="/post/[refer]" as={`/post/${article.refer}#comments`}>
                     <Comments>{`${article?.comments.length} Comentários`}</Comments>
                   </Link>

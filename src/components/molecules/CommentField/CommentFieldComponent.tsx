@@ -17,13 +17,13 @@ const AvatarStyled = styled(Avatar)({
 });
 
 const CommentAuthorContainer = styled(Box)({
-  fontWeight: '600',
+  fontWeight: 600,
   textTransform: 'uppercase',
   fontSize: '12px',
 });
 
 const PostedAt = styled(Box)({
-  fontWeight: '600',
+  fontWeight: 600,
   fontSize: '10px',
   color: '#b2b2b2',
   textAlign: 'right',
@@ -56,7 +56,7 @@ const CommentFieldComponent = ({ text, commentedAt, author, handleAnsware }: own
     </Grid>
     <Grid container item xs={9} sm={11}>
       <CommentContent>
-        <CommentAuthorContainer>{author}</CommentAuthorContainer>
+        <CommentAuthorContainer>{author.name}</CommentAuthorContainer>
         <PostedAt>{commentedAt}</PostedAt>
         <div>
           <p>{text}</p>

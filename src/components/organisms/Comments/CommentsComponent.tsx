@@ -58,7 +58,7 @@ const ButtonContainer = styled(Box)({
 
 type OwnProps = {
   comments: Comment[];
-  articleID: number;
+  articleID: string;
 };
 
 const CommentsComponent = (props: OwnProps) => {
@@ -112,7 +112,7 @@ const CommentsComponent = (props: OwnProps) => {
 
   function handleAnswareFormikSubmit(values, idComment) {
     comments.map(comment => {
-      if (comment._id == idComment) {
+      if (comment.id === idComment) {
         const temp = comment.answares || [];
         setNewComment({ text: values.answare, author: { id, name }, id: idComment });
         temp.push({ text: values.answare, author: { id, name } });
@@ -164,18 +164,18 @@ const CommentsComponent = (props: OwnProps) => {
               <CommentSection>
                 {comments &&
                   comments.map(comment => (
-                    <div key={comment._id}>
+                    <div key={comment.id}>
                       <Divider />
                       <CommentContainer>
                         <CommentFieldComponent
                           text={comment.text}
-                          author={comment.author.name}
+                          author={{ name: comment.author.name }}
                           commentedAt={FromNow(comment.commentedAt)}
-                          handleAnsware={() => handleAnsware(comment._id)}
+                          handleAnsware={() => handleAnsware(comment.id)}
                         />
                         <AnswaresComponent
                           answares={comment.answares}
-                          commentID={comment._id}
+                          commentID={comment.id}
                           newComment={newComment}
                           userID={id}
                           limit={limit}

@@ -19,7 +19,7 @@ const TooltipContainer = styled(Box)({
   border: '1px solid',
   borderRadius: '5px',
   backgroundColor: '#fff',
-  fontWeight: '600',
+  fontWeight: 600,
 });
 
 type OwnProps = {
@@ -51,7 +51,7 @@ const Like = (props: OwnProps) => {
   const handleLike = () => {
     if (logged) {
       if (liked) {
-        for (let i = likedPosts.length - 1; i >= 0; i--) {
+        for (let i = likedPosts.length - 1; i >= 0; i - 1) {
           if (likedPosts[i] === articleId) {
             likedPosts.splice(i, 1);
           }

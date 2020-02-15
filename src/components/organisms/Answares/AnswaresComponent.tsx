@@ -61,20 +61,20 @@ const AvatarStyled = styled(Avatar)({
 
 const LoadMoreStyled = styled(Box)({
   color: '#b2b2b2',
-  fontWeight: '600',
+  fontWeight: 600,
   width: '100%',
   textAlign: 'center',
   cursor: 'pointer',
 });
 
 const CommentAuthorContainer = styled(Box)({
-  fontWeight: '600',
+  fontWeight: 600,
   textTransform: 'uppercase',
   fontSize: '12px',
 });
 
 const PostedAtAnsware = styled(Box)({
-  fontWeight: '600',
+  fontWeight: 600,
   fontSize: '10px',
   color: '#b2b2b2',
   textAlign: 'left',
@@ -122,7 +122,7 @@ const AnswaresComponent = ({
             />
           );
         }
-        if (limit == index) {
+        if (limit === index) {
           return (
             <div key="temp">
               {newComment.id === commentID && (
@@ -153,6 +153,7 @@ const AnswaresComponent = ({
             </div>
           );
         }
+        return <></>;
       })}
     {answareForm.indexOf(commentID) > -1 && (
       <Formik

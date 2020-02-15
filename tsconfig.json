@@ -19,7 +19,7 @@
       "es2016"
     ],
     "strict": false,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": false,
     "noEmit": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,

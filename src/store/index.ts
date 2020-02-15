@@ -4,7 +4,7 @@ import { UserState } from './ducks/user';
 import { RegisterState } from './ducks/register';
 import { ArticleState } from './ducks/articles';
 import { CategoriesState } from './ducks/categories';
-import { MessageState } from './ducks/Message';
+import { MessageState } from './ducks/message';
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 

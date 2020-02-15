@@ -33,9 +33,10 @@ const reducer: Reducer<CategoriesState> = (state = INITIAL_STATE, reduceAction) 
       return {
         ...state,
       };
-    case actionCategoriesTypes.LIST_CATEGORIES_SUCCESS:
+    case actionCategoriesTypes.LIST_CATEGORIES_SUCCESS: {
       const data = reduceAction.payload;
       return { ...state, list: data };
+    }
     default:
       return state;
   }

@@ -25,8 +25,15 @@ const MainComponent: React.FC = ({ children }) => {
   const success = useSelector((state: ApplicationState) => state.message.success) || false;
   RetrieveData(logged);
 
-  Router.onRouteChangeStart = () => dispatch(ActionsList.loadRequest());
-  Router.onRouteChangeComplete = () => dispatch(ActionsList.loadReady());
+  if (typeof window !== 'undefined') {
+    Router.events.on('routeChangeStart', () => {
+      dispatch(ActionsList.loadRequest());
+    });
+
+    Router.events.on('routeChangeComplete', () => {
+      dispatch(ActionsList.loadReady());
+    });
+  }
 
   return (
     <>
