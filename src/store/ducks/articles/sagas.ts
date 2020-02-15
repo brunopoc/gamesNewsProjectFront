@@ -1,11 +1,10 @@
 import { put, select } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
-import { ApplicationState } from '../../index';
 import { ActionsList } from '.';
 import { ActionsList as MessageActionList } from '../message';
 import { ActionsList as UserActionList } from '../user';
 
-export const getToken = (state: ApplicationState) => state.user.data.token;
+export const getToken = state => state.user.data.token;
 
 export function* sendArticle(value) {
   yield put(MessageActionList.loadRequest());

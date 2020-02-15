@@ -22,14 +22,14 @@ type CommentAuthor = {
 };
 
 export type Answare = {
-  _id?: string;
+  id?: string;
   text: string;
-  commentedAt: Date;
+  commentedAt?: Date;
   author: CommentAuthor;
 };
 
 export type Comment = {
-  _id?: string;
+  id?: string;
   text: string;
   commentedAt?: Date;
   author: CommentAuthor;
@@ -39,7 +39,7 @@ export type Comment = {
 export interface Article {
   title: string;
   content: string;
-  _id: string;
+  id: string;
   image?: string;
   createdAt: Date;
   resume?: string;
@@ -72,7 +72,7 @@ export const ActionsList = {
   articleListSuccess: (data: ArticleState) => {
     return { type: actionArticleTypes.ARTICLE_LIST_SUCCESS, payload: { data } };
   },
-  loadArticleRequest: (refer: string) => {
+  loadArticleRequest: (refer: string | string[]) => {
     return { type: actionArticleTypes.LOAD_ARTICLE_REQUEST, payload: { refer } };
   },
   loadArticleSuccess: (data: Article) => {
@@ -96,9 +96,9 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
   switch (reduceAction.type) {
     case actionArticleTypes.ARTICLE_LIST_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
-    case actionArticleTypes.LOAD_ARTICLE_SUCCESS:
+    case actionArticleTypes.LOAD_ARTICLE_SUCCESS: {
       const listArticles = state.list.map(article => {
-        if (article._id == reduceAction.payload.data._id) {
+        if (article.id === reduceAction.payload.data.id) {
           return { ...article, ...reduceAction.payload.data };
         }
         return article;
@@ -111,6 +111,7 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
           ...reduceAction.payload.data,
         },
       };
+    }
     default:
       return state;
   }

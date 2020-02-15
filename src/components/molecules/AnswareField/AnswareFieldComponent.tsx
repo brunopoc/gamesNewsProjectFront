@@ -17,7 +17,7 @@ const AvatarStyled = styled(Avatar)({
 });
 
 const CommentAuthorContainer = styled(Box)({
-  fontWeight: '600',
+  fontWeight: 600,
   textTransform: 'uppercase',
   fontSize: '12px',
 });
@@ -32,7 +32,7 @@ const CommentContainer = styled(Box)({
 });
 
 const PostedAtAnsware = styled(Box)({
-  fontWeight: '600',
+  fontWeight: 600,
   fontSize: '10px',
   color: '#b2b2b2',
   textAlign: 'left',

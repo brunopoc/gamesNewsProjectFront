@@ -69,13 +69,13 @@ const ArticleComponent = (props: OwnProps) => {
             <Date>{articleCreatedAt}</Date>
           </CardContent>
           <FooterCard component="div">
-            <Like articleId={article._id} articleLikes={article.likes} />
+            <Like articleId={article.id} articleLikes={article.likes} />
 
             <div>Compartilhar</div>
           </FooterCard>
         </Content>
       </Card>
-      <CommentsComponent comments={article.comments} articleID={article._id} />
+      <CommentsComponent comments={article.comments} articleID={article.id} />
     </Content>
   );
 };

@@ -43,7 +43,7 @@ const LoginCardComponent: React.FC = () => {
           Ainda não possui uma conta?
           <br />
           <Link href="/register">
-            <a>Clique aqui e cria uma!</a>
+            <div>Clique aqui e cria uma!</div>
           </Link>
         </BoxFooterStyled>
       </BoxStyled>

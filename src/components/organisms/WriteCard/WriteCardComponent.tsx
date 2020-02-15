@@ -15,7 +15,7 @@ const BoxStyled = styled(Box)({
 
 const WriteCardComponent = () => {
   const dispatch = useDispatch();
-  const redirect = useSelector((state: ApplicationState) => state.user.redirect);
+  const redirect = useSelector((state: any) => state.user.redirect);
 
   useEffect(() => {
     dispatch(CategorieActionList.listCategoriesRequest());
