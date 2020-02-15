@@ -19,7 +19,7 @@ const Index = () => {
     const selected = data.selected + 1;
     dispatch(ActionsList.articleListRequest(selected));
   };
-  const initPage = parseInt(currentPage, 10) - 1;
+  const initPage = currentPage - 1;
   return (
     <div>
       <CommonComponent>

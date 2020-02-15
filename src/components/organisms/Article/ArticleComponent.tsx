@@ -1,9 +1,9 @@
 import React from 'react';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { Card, Box, CardMedia, CardContent, Typography } from '@material-ui/core';
-import { styled } from '@material-ui/core/styles';
-import moment from 'moment';
+import { Card, Box, CardMedia, CardContent, Typography, styled } from '@material-ui/core';
+import { FromNow } from '../../../utils/moment';
 import { Article } from '../../../store/ducks/articles';
+import Like from '../../atoms/Buttons/Like';
+import { CommentsComponent } from '..';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -12,22 +12,12 @@ const Content = styled(Box)({
   width: '100%',
 });
 
-const Like = styled(Box)({
-  display: 'flex',
-  alignItems: 'center',
-  cursor: 'pointer',
-});
-
 const Date = styled(Typography)({
   fontStyle: 'italic',
   color: '#b2b2b2',
   textAlign: 'right',
   marginTop: '5px',
-});
-
-const Comments = styled(Typography)({
-  color: '#b2b2b2',
-  cursor: 'pointer',
+  fontSize: '14px',
 });
 
 const Author = styled(Typography)({
@@ -50,7 +40,7 @@ const ImageCard = styled(CardMedia)({
 });
 
 const DescriptionArea = styled(Box)({
-  padding: '0px 10px 10px 10px',
+  padding: '10px',
 });
 
 type OwnProps = {
@@ -59,11 +49,12 @@ type OwnProps = {
 
 const ArticleComponent = (props: OwnProps) => {
   const { article } = props;
-  const articleCreatedAt = moment(article.createdAt).format('DD/MM/YYYY');
+  const articleCreatedAt = FromNow(article.createdAt);
   const authorName = article.author?.name || 'Anônimo';
   const imageURL =
     article?.image ||
     'https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/18j48tw3csif0jpg.jpg';
+
   return (
     <Content component="div">
       <Card>
@@ -72,21 +63,19 @@ const ArticleComponent = (props: OwnProps) => {
             <div>
               <h3>{article.title}</h3>
               <ImageCard image={imageURL} />
-              <Date>{articleCreatedAt}</Date>
             </div>
             <DescriptionArea dangerouslySetInnerHTML={{ __html: article?.content }} />
             <Author>{`Autor: ${authorName}`}</Author>
+            <Date>{articleCreatedAt}</Date>
           </CardContent>
           <FooterCard component="div">
-            <Like component="div">
-              <FavoriteBorderIcon />
-              {article?.likes}
-            </Like>
-            <Comments>{`${article?.comments.length} Comentários`}</Comments>
+            <Like articleId={article._id} articleLikes={article.likes} />
+
             <div>Compartilhar</div>
           </FooterCard>
         </Content>
       </Card>
+      <CommentsComponent comments={article.comments} articleID={article._id} />
     </Content>
   );
 };

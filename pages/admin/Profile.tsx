@@ -1,9 +1,9 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { AppBarComponent } from '../../src/components/organisms';
+import { AppBarAdminComponent } from '../../src/components/organisms';
 
 const Profile = () => (
-  <AppBarComponent>
+  <AppBarAdminComponent>
     <Typography paragraph>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
       labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo
@@ -26,7 +26,7 @@ const Profile = () => (
       Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus
       vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
     </Typography>
-  </AppBarComponent>
+  </AppBarAdminComponent>
 );
 
 export default Profile;

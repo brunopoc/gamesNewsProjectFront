@@ -9,13 +9,15 @@ export enum actionLoginTypes {
   REDIRECT_REQUEST = '@login/REDIRECT_REQUEST',
   TOKEN_RETRIEVE_REQUEST = '@login/TOKEN_RETRIEVE_REQUEST',
   TOKEN_RETRIEVE_SUCCESS = '@login/TOKEN_RETRIEVE_SUCCESS',
+  USER_LIKE_RETRIEVE_SUCCESS = '@login/USER_LIKE_RETRIEVE_SUCCESS',
 }
 
 type data = {
-  _id: number;
+  id: string;
   name: string;
   email: string;
   type?: string;
+  likedPosts?: string[];
 };
 
 export interface User {
@@ -53,10 +55,13 @@ export const ActionsList = {
   tokenRetrieveSuccess: (data: User) => {
     return { type: actionLoginTypes.TOKEN_RETRIEVE_SUCCESS, payload: { data } };
   },
+  userLikeRetrieveSuccess: (data: User) => {
+    return { type: actionLoginTypes.USER_LIKE_RETRIEVE_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: UserState = {
-  data: { data: { name: '', email: '', _id: 0 } },
+  data: { data: { name: '', email: '', id: '0', likedPosts: [] } },
   logged: false,
   error: false,
   loading: false,
@@ -94,11 +99,27 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         error: false,
         logged: true,
         redirect: false,
-        data: reduceAction.payload.data,
+        data: {
+          token: reduceAction.payload.data.token,
+          data: { ...state.data.data, ...reduceAction.payload.data.data },
+        },
+      };
+    case actionLoginTypes.USER_LIKE_RETRIEVE_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          data: { ...state.data.data, ...reduceAction.payload.data.data },
+        },
       };
     case actionLoginTypes.LOGOUT_REQUEST:
       Cookies.remove('token');
-      return { ...state, data: {}, logged: false, redirect: true };
+      return {
+        ...state,
+        data: { data: { name: '', email: '', id: '0', likedPosts: [] } },
+        logged: false,
+        redirect: true,
+      };
     default:
       return state;
   }

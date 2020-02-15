@@ -7,7 +7,13 @@ import { actionCategoriesTypes } from './categories';
 import { actionMessageTypes } from './message';
 import { sendLogin, retrieveToken } from './user/sagas';
 import { sendRegister } from './register/sagas';
-import { sendArticle, loadArticleList, loadArticle } from './articles/sagas';
+import {
+  sendArticle,
+  loadArticleList,
+  loadArticle,
+  likeArticle,
+  articleComment,
+} from './articles/sagas';
 import { loadCategories } from './categories/sagas';
 import { showMessage } from './message/sagas';
 
@@ -19,6 +25,8 @@ export default function* rootSaga() {
     takeLatest(actionArticleTypes.ARTICLE_REQUEST, sendArticle),
     takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST, loadArticleList),
     takeLatest(actionArticleTypes.LOAD_ARTICLE_REQUEST, loadArticle),
+    takeLatest(actionArticleTypes.ARTICLE_UPDATE_LIKE_REQUEST, likeArticle),
+    takeLatest(actionArticleTypes.ARTICLE_COMMENT_REQUEST, articleComment),
     takeLatest(actionCategoriesTypes.LIST_CATEGORIES_REQUEST, loadCategories),
     takeLatest(actionMessageTypes.SUCCESS_SHOW, showMessage),
   ]);

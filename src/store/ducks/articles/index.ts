@@ -8,28 +8,44 @@ export enum actionArticleTypes {
   ARTICLE_LIST_SUCCESS = '@ARTICLE_/ARTICLE_LIST_SUCCESS',
   LOAD_ARTICLE_REQUEST = '@ARTICLE_/LOAD_ARTICLE_REQUEST',
   LOAD_ARTICLE_SUCCESS = '@ARTICLE_/LOAD_ARTICLE_SUCCESS',
+  ARTICLE_UPDATE_LIKE_REQUEST = '@ARTICLE_/ARTICLE_UPDATE_LIKE_REQUEST',
+  ARTICLE_COMMENT_REQUEST = '@ARTICLE_/ARTICLE_UPDATE_COMMENT_REQUEST',
 }
 
 type Author = {
   name: string;
 };
 
-type Comments = {
+type CommentAuthor = {
+  name: string;
+  id: string;
+};
+
+export type Answare = {
+  _id?: string;
   text: string;
   commentedAt: Date;
-  author: string;
+  author: CommentAuthor;
+};
+
+export type Comment = {
+  _id?: string;
+  text: string;
+  commentedAt?: Date;
+  author: CommentAuthor;
+  answares?: Answare[];
 };
 
 export interface Article {
   title: string;
   content: string;
-  _id: number;
+  _id: string;
   image?: string;
   createdAt: Date;
   resume?: string;
   author?: Author;
   likes?: number;
-  comments?: Comments[];
+  comments?: Comment[];
   refer: string;
 }
 
@@ -62,6 +78,12 @@ export const ActionsList = {
   loadArticleSuccess: (data: Article) => {
     return { type: actionArticleTypes.LOAD_ARTICLE_SUCCESS, payload: { data } };
   },
+  updateLikeRequest: data => {
+    return { type: actionArticleTypes.ARTICLE_UPDATE_LIKE_REQUEST, payload: { data } };
+  },
+  articleCommentRequest: data => {
+    return { type: actionArticleTypes.ARTICLE_COMMENT_REQUEST, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
@@ -75,7 +97,20 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
     case actionArticleTypes.ARTICLE_LIST_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
     case actionArticleTypes.LOAD_ARTICLE_SUCCESS:
-      return { ...state, currentArticle: reduceAction.payload.data };
+      const listArticles = state.list.map(article => {
+        if (article._id == reduceAction.payload.data._id) {
+          return { ...article, ...reduceAction.payload.data };
+        }
+        return article;
+      });
+      return {
+        ...state,
+        list: listArticles,
+        currentArticle: {
+          ...state.currentArticle,
+          ...reduceAction.payload.data,
+        },
+      };
     default:
       return state;
   }
