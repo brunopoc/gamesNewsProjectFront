@@ -1,6 +1,7 @@
 import React from 'react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CKEditor from '@ckeditor/ckeditor5-react';
+import api from '../../../utils/api';
 
 type OwnProps = {
   onBlur?: (...args: any[]) => void;
@@ -27,7 +28,7 @@ const RichTextComponent = (props: OwnProps) => {
       }}
       config={{
         ckfinder: {
-          uploadUrl: `http://localhost:4000/api/v1/posts/uploadImage/`,
+          uploadUrl: `${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`,
         },
       }}
     />

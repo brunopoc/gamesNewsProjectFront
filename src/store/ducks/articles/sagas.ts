@@ -3,6 +3,7 @@ import fetch from 'isomorphic-fetch';
 import { ActionsList } from '.';
 import { ActionsList as MessageActionList } from '../message';
 import { ActionsList as UserActionList } from '../user';
+import api from '../../../utils/api';
 
 export const getToken = state => state.user.data.token;
 
@@ -13,7 +14,7 @@ export function* sendArticle(value) {
     const formdata = value.payload.data;
     const imgFormData = new FormData();
     imgFormData.append('upload', formdata.upload, formdata.upload.name);
-    const imgUpload = yield fetch(`http://localhost:4000/api/v1/posts/uploadImage/`, {
+    const imgUpload = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`, {
       method: 'post',
       body: imgFormData,
     });
@@ -21,7 +22,7 @@ export function* sendArticle(value) {
 
     const data = { ...formdata, image: imgResult.url };
 
-    const resp = yield fetch(`http://localhost:4000/api/v1/posts/`, {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/`, {
       method: 'post',
       body: JSON.stringify(data, null, 2),
       headers: new Headers({
@@ -47,12 +48,15 @@ export function* sendArticle(value) {
 export function* loadArticleList(value) {
   yield put(MessageActionList.loadRequest());
   try {
-    const resp = yield fetch(`http://localhost:4000/api/v1/posts/list/${value.payload.page}`, {
-      method: 'get',
-      headers: new Headers({
-        'content-type': 'application/json',
-      }),
-    });
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/list/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      },
+    );
     const result = yield resp.json();
 
     yield put(ActionsList.articleListSuccess(result));
@@ -66,12 +70,15 @@ export function* loadArticleList(value) {
 export function* loadArticle(value) {
   yield put(MessageActionList.loadRequest());
   try {
-    const resp = yield fetch(`http://localhost:4000/api/v1/posts/article/${value.payload.refer}`, {
-      method: 'get',
-      headers: new Headers({
-        'content-type': 'application/json',
-      }),
-    });
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/article/${value.payload.refer}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      },
+    );
     const result = yield resp.json();
 
     yield put(ActionsList.loadArticleSuccess(result));
@@ -87,17 +94,20 @@ export function* likeArticle(value) {
   const data = { action: value.payload.data.action };
   const userData = { id: value.payload.data.userId, likedPosts: value.payload.data.likedPosts };
 
-  const resp = yield fetch(`http://localhost:4000/api/v1/posts/like/${value.payload.data.id}`, {
-    method: 'post',
-    body: JSON.stringify(data, null, 2),
-    headers: new Headers({
-      'content-type': 'application/json',
-      'x-access-token': token,
-    }),
-  });
+  const resp = yield fetch(
+    `${api.publicRuntimeConfig.API_ENDPOINT}/posts/like/${value.payload.data.id}`,
+    {
+      method: 'post',
+      body: JSON.stringify(data, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+        'x-access-token': token,
+      }),
+    },
+  );
   const result = yield resp.json();
 
-  const respUser = yield fetch(`http://localhost:4000/api/v1/users/update/likes`, {
+  const respUser = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/update/likes`, {
     method: 'post',
     body: JSON.stringify(userData, null, 2),
     headers: new Headers({
@@ -120,7 +130,7 @@ export function* articleComment(value) {
   const token = yield select(getToken);
   const { comments, articleID } = value.payload.data;
 
-  const resp = yield fetch(`http://localhost:4000/api/v1/posts/comment/${articleID}`, {
+  const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/comment/${articleID}`, {
     method: 'post',
     body: JSON.stringify(comments, null, 2),
     headers: new Headers({

@@ -1,13 +1,14 @@
 import { put, all } from 'redux-saga/effects';
 import Cookies from 'js-cookie';
 import fetch from 'isomorphic-fetch';
+import api from '../../../utils/api';
 
 import { ActionsList } from '.';
 import { ActionsList as LoginActionList } from '../user';
 
 export function* sendRegister(value) {
   try {
-    const resp = yield fetch(`http://localhost:4000/api/v1/users/singup`, {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/singup`, {
       method: 'post',
       body: JSON.stringify(value.payload.data, null, 2),
       headers: new Headers({

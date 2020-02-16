@@ -2,7 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { AppBarAdminComponent } from '../../src/components/organisms';
 
-const Profile = () => (
+const profile = () => (
   <AppBarAdminComponent>
     <Typography paragraph>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
@@ -29,4 +29,4 @@ const Profile = () => (
   </AppBarAdminComponent>
 );
 
-export default Profile;
+export default profile;

@@ -1,12 +1,13 @@
 import { put } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
+import api from '../../../utils/api';
 
 import { ActionsList } from '.';
 
 export function* sendLogin(value) {
   try {
-    const resp = yield fetch(`http://localhost:4000/api/v1/users/singin`, {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/singin`, {
       method: 'post',
       body: JSON.stringify(value.payload.data, null, 2),
       headers: new Headers({
@@ -29,7 +30,7 @@ export function* sendLogin(value) {
 
 export function* retrieveToken(value) {
   try {
-    const resp = yield fetch(`http://localhost:4000/api/v1/users/myuser`, {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/myuser`, {
       method: 'get',
       headers: new Headers({
         'content-type': 'application/json',
