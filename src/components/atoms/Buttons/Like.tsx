@@ -51,7 +51,8 @@ const Like = (props: OwnProps) => {
   const handleLike = () => {
     if (logged) {
       if (liked) {
-        for (let i = likedPosts.length - 1; i >= 0; i - 1) {
+        // eslint-disable-next-line no-plusplus
+        for (let i = likedPosts.length - 1; i >= 0; i--) {
           if (likedPosts[i] === articleId) {
             likedPosts.splice(i, 1);
           }
