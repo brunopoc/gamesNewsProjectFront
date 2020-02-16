@@ -1,5 +1,6 @@
 import { put, select, delay } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
+import api from '../../../utils/api';
 
 import { ActionsList } from '.';
 
@@ -10,7 +11,7 @@ export function* loadCategories() {
   try {
     const token = yield select(getToken);
 
-    const resp = yield fetch(`http://localhost:4000/api/v1/posts/listcategories`, {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/listcategories`, {
       method: 'get',
       headers: new Headers({
         'content-type': 'application/json',
