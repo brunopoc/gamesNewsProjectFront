@@ -1,8 +1,8 @@
 import React from 'react';
 import { WriteCardComponent } from '../../../src/components/organisms';
 
-const write = () => {
+const Write = () => {
   return <WriteCardComponent />;
 };
 
-export default write;
+export default Write;
