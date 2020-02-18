@@ -5,7 +5,7 @@ import { actionRegisterTypes } from './register';
 import { actionArticleTypes } from './articles';
 import { actionCategoriesTypes } from './categories';
 import { actionMessageTypes } from './message';
-import { sendLogin, retrieveToken } from './user/sagas';
+import { sendLogin, retrieveToken, updateProfile } from './user/sagas';
 import { sendRegister } from './register/sagas';
 import {
   sendArticle,
@@ -20,8 +20,9 @@ import { showMessage } from './message/sagas';
 export default function* rootSaga() {
   return yield all([
     takeLatest(actionLoginTypes.LOGIN_REQUEST, sendLogin),
-    takeLatest(actionRegisterTypes.REGISTER_REQUEST, sendRegister),
     takeLatest(actionLoginTypes.TOKEN_RETRIEVE_REQUEST, retrieveToken),
+    takeLatest(actionLoginTypes.UPDATE_PROFILE_REQUEST, updateProfile),
+    takeLatest(actionRegisterTypes.REGISTER_REQUEST, sendRegister),
     takeLatest(actionArticleTypes.ARTICLE_REQUEST, sendArticle),
     takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST, loadArticleList),
     takeLatest(actionArticleTypes.LOAD_ARTICLE_REQUEST, loadArticle),

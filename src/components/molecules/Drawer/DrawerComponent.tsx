@@ -11,6 +11,8 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import Link from 'next/link';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { CSSProperties } from '@material-ui/styles';
+import { useDispatch } from 'react-redux';
+import { ActionsList } from '../../../store/ducks/user';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const DrawerComponent = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   return (
     <div>
       <div className={classes.toolbar} />
@@ -52,11 +55,17 @@ const DrawerComponent = () => {
       </List>
       <Divider />
       <List>
-        <ListItem button key="Teste">
+        <ListItem
+          button
+          key="Sair"
+          onClick={() => {
+            dispatch(ActionsList.logoutRequest());
+          }}
+        >
           <ListItemIcon>
             <ExitToAppIcon />
           </ListItemIcon>
-          <ListItemText primary="Teste" />
+          <ListItemText primary="Sair" />
         </ListItem>
       </List>
     </div>

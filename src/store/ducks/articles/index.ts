@@ -19,6 +19,7 @@ type Author = {
 type CommentAuthor = {
   name: string;
   id: string;
+  image?: string;
 };
 
 export type Answare = {

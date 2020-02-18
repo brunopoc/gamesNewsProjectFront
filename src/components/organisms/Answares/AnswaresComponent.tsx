@@ -119,6 +119,7 @@ const AnswaresComponent = ({
               author={{ name: answare.author.name }}
               commentedAt={FromNow(answare.commentedAt)}
               id={commentID}
+              image={answare.author.image}
             />
           );
         }

@@ -1,9 +1,12 @@
-import { put } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
 import api from '../../../utils/api';
+import { ActionsList as MessageActionList } from '../message';
 
 import { ActionsList } from '.';
+
+export const getToken = state => state.user.data.token;
 
 export function* sendLogin(value) {
   try {
@@ -48,5 +51,44 @@ export function* retrieveToken(value) {
     }
   } catch (err) {
     yield put(ActionsList.logoutRequest());
+  }
+}
+
+export function* updateProfile(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const token = yield select(getToken);
+    const formdata = value.payload.data;
+    const imgFormData = new FormData();
+    imgFormData.append('upload', formdata.upload, formdata.upload.name);
+    const imgUpload = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`, {
+      method: 'post',
+      body: imgFormData,
+    });
+    const imgResult = yield imgUpload.json();
+
+    const data = { ...formdata, avatar: imgResult.url };
+
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/update/profile`, {
+      method: 'post',
+      body: JSON.stringify(data, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+        'x-access-token': token,
+      }),
+    });
+    const result = yield resp.json();
+
+    console.log(result);
+
+    if (result.status === 'Error') {
+      yield put(MessageActionList.loadReady());
+    } else {
+      yield put(MessageActionList.loadReady());
+      yield put(MessageActionList.successShow());
+      yield put(ActionsList.updateProfileSuccess(result));
+    }
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
   }
 }

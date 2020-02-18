@@ -64,7 +64,7 @@ type OwnProps = {
 const CommentsComponent = (props: OwnProps) => {
   const dispatch = useDispatch();
   const { comments, articleID } = props;
-  const { id, name } = useSelector((state: ApplicationState) => state.user.data.data);
+  const { id, name, avatar } = useSelector((state: ApplicationState) => state.user.data.data);
   const { logged } = useSelector((state: ApplicationState) => state.user);
   const [limit, setLimit] = useState(2);
   const [newComment, setNewComment] = useState({});
@@ -93,7 +93,7 @@ const CommentsComponent = (props: OwnProps) => {
 
   function handleCommentFormikSubmit(values, { resetForm }) {
     resetForm({});
-    comments.unshift({ text: values.comment, author: { id, name } });
+    comments.unshift({ text: values.comment, author: { id, name, image: avatar } });
     const data = { comments, articleID };
     dispatch(ActionsList.articleCommentRequest(data));
   }
@@ -114,8 +114,8 @@ const CommentsComponent = (props: OwnProps) => {
     comments.map(comment => {
       if (comment.id === idComment) {
         const temp = comment.answares || [];
-        setNewComment({ text: values.answare, author: { id, name }, id: idComment });
-        temp.push({ text: values.answare, author: { id, name } });
+        setNewComment({ text: values.answare, author: { id, name, image: avatar }, id: idComment });
+        temp.push({ text: values.answare, author: { id, name, image: avatar } });
         return { ...comment, answares: temp };
       }
       return comment;
@@ -172,6 +172,7 @@ const CommentsComponent = (props: OwnProps) => {
                           author={{ name: comment.author.name }}
                           commentedAt={FromNow(comment.commentedAt)}
                           handleAnsware={() => handleAnsware(comment.id)}
+                          image={comment.author.image}
                         />
                         <AnswaresComponent
                           answares={comment.answares}

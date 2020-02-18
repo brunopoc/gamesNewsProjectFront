@@ -79,7 +79,9 @@ const validationSchema = Yup.object().shape({
 
 const WriteFormComponent = () => {
   const dispatch = useDispatch();
-  const author = useSelector((state: ApplicationState) => state.user.data.data?.name) || '';
+  const author = useSelector((state: ApplicationState) => state.user.data.data) || {
+    name: 'Desconhecido',
+  };
   const categoriesOptions = useSelector((state: ApplicationState) => state.categories.list) || [];
   function handleFormikSubmit(values, { resetForm }) {
     resetForm({});
