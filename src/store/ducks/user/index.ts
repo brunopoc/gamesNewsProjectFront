@@ -9,7 +9,9 @@ export enum actionLoginTypes {
   REDIRECT_REQUEST = '@login/REDIRECT_REQUEST',
   TOKEN_RETRIEVE_REQUEST = '@login/TOKEN_RETRIEVE_REQUEST',
   TOKEN_RETRIEVE_SUCCESS = '@login/TOKEN_RETRIEVE_SUCCESS',
-  USER_LIKE_RETRIEVE_SUCCESS = '@login/USER_LIKE_RETRIEVE_SUCCESS',
+  USER_LIKE_RETRIEVE_SUCCESS = '@user/USER_LIKE_RETRIEVE_SUCCESS',
+  UPDATE_PROFILE_REQUEST = '@user/UPDATE_PROFILE_REQUEST',
+  UPDATE_PROFILE_SUCCESS = '@user/UPDATE_PROFILE_SUCCESS',
 }
 
 type data = {
@@ -17,6 +19,7 @@ type data = {
   name: string;
   email: string;
   type?: string;
+  avatar?: string;
   likedPosts?: string[];
 };
 
@@ -58,10 +61,16 @@ export const ActionsList = {
   userLikeRetrieveSuccess: (data: User) => {
     return { type: actionLoginTypes.USER_LIKE_RETRIEVE_SUCCESS, payload: { data } };
   },
+  updateProfileRequest: (data: data) => {
+    return { type: actionLoginTypes.UPDATE_PROFILE_REQUEST, payload: { data } };
+  },
+  updateProfileSuccess: (data: User) => {
+    return { type: actionLoginTypes.UPDATE_PROFILE_REQUEST, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: UserState = {
-  data: { data: { name: '', email: '', id: '0', likedPosts: [] } },
+  data: { data: { name: '', email: '', id: '0', likedPosts: [], avatar: '' } },
   logged: false,
   error: false,
   loading: false,
@@ -112,7 +121,15 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
           data: { ...state.data.data, ...reduceAction.payload.data.data },
         },
       };
-    case actionLoginTypes.LOGOUT_REQUEST:
+    case actionLoginTypes.UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          data: { ...state.data.data, ...reduceAction.payload.data.data },
+        },
+      };
+    case actionLoginTypes.LOGOUT_REQUEST: {
       Cookies.remove('token');
       return {
         ...state,
@@ -120,6 +137,7 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         logged: false,
         redirect: true,
       };
+    }
     default:
       return state;
   }

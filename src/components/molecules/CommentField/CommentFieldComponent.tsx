@@ -43,15 +43,16 @@ type authorProps = {
 type ownProps = {
   author: authorProps;
   commentedAt?: string;
+  image?: string;
   text: string;
   handleAnsware: (...args: any[]) => void;
 };
 
-const CommentFieldComponent = ({ text, commentedAt, author, handleAnsware }: ownProps) => (
+const CommentFieldComponent = ({ text, commentedAt, author, handleAnsware, image }: ownProps) => (
   <Grid container spacing={1}>
     <Grid container item xs={3} sm={1}>
       <AvatarContainer>
-        <AvatarStyled />
+        <AvatarStyled src={image} alt="Foto de perfil" />
       </AvatarContainer>
     </Grid>
     <Grid container item xs={9} sm={11}>

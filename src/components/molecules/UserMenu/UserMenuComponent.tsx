@@ -25,6 +25,7 @@ const ColorButton = styled(Button)({
 
 const UserMenuComponent = () => {
   const logged = useSelector((state: ApplicationState) => state.user.logged);
+  const { avatar } = useSelector((state: ApplicationState) => state.user.data.data);
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const prevOpenRef = useRef(open);
@@ -64,7 +65,12 @@ const UserMenuComponent = () => {
         </Link>
       ) : (
         <div style={{ float: 'unset' }}>
-          <Avatar ref={anchorRef} onClick={handleToggle} />
+          <Avatar
+            ref={anchorRef}
+            onClick={handleToggle}
+            src={avatar}
+            alt="Menu com a foto de perfil"
+          />
           <Popper
             open={open}
             anchorEl={anchorRef.current}
