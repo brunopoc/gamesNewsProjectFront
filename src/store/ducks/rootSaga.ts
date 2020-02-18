@@ -13,6 +13,9 @@ import {
   loadArticle,
   likeArticle,
   articleComment,
+  loadPedingArticle,
+  loadPendingArticleUpdate,
+  loadAllArticle,
 } from './articles/sagas';
 import { loadCategories } from './categories/sagas';
 import { showMessage } from './message/sagas';
@@ -28,6 +31,9 @@ export default function* rootSaga() {
     takeLatest(actionArticleTypes.LOAD_ARTICLE_REQUEST, loadArticle),
     takeLatest(actionArticleTypes.ARTICLE_UPDATE_LIKE_REQUEST, likeArticle),
     takeLatest(actionArticleTypes.ARTICLE_COMMENT_REQUEST, articleComment),
+    takeLatest(actionArticleTypes.PENDING_ARTICLE_REQUEST, loadPedingArticle),
+    takeLatest(actionArticleTypes.PENDING_ARTICLE_UPDATE_REQUEST, loadPendingArticleUpdate),
+    takeLatest(actionArticleTypes.ALL_ARTICLE_REQUEST, loadAllArticle),
     takeLatest(actionCategoriesTypes.LIST_CATEGORIES_REQUEST, loadCategories),
     takeLatest(actionMessageTypes.SUCCESS_SHOW, showMessage),
   ]);

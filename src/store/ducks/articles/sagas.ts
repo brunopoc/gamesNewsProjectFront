@@ -1,11 +1,13 @@
 import { put, select } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
+import Cookies from 'js-cookie';
 import { ActionsList } from '.';
 import { ActionsList as MessageActionList } from '../message';
 import { ActionsList as UserActionList } from '../user';
 import api from '../../../utils/api';
 
 export const getToken = state => state.user.data.token;
+const cookieToken = Cookies.get('token');
 
 export function* sendArticle(value) {
   yield put(MessageActionList.loadRequest());
@@ -144,5 +146,67 @@ export function* articleComment(value) {
   if (!result.message) {
     yield put(MessageActionList.successShow());
     yield put(ActionsList.loadArticleSuccess(result));
+  }
+}
+
+export function* loadPedingArticle(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/pending/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+          'x-access-token': cookieToken,
+        }),
+      },
+    );
+    const result = yield resp.json();
+
+    yield put(ActionsList.pendingArticleSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadPendingArticleUpdate(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/aprove/${value.payload.data.id}`, {
+      method: 'post',
+      body: JSON.stringify({ aprove: value.payload.data.aprove }, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+        'x-access-token': cookieToken,
+      }),
+    });
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.successShow());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadAllArticle(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/all/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+          'x-access-token': cookieToken,
+        }),
+      },
+    );
+    const result = yield resp.json();
+
+    yield put(ActionsList.allArticleSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
   }
 }

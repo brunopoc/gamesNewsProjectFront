@@ -115,6 +115,37 @@ const AppBarComponent = (props: ResponsiveDrawerProps) => {
         <div className={classes.toolbar} />
         {props?.children}
       </main>
+      <style jsx global>
+        {`
+          .pagination {
+            display: inline-block;
+            padding-left: 15px;
+            padding-right: 15px;
+            margin: 40px auto;
+          }
+
+          .pagination li {
+            display: inline-block;
+            background-color: #000;
+            padding: 15px 0px;
+            margin: 5px;
+            color: #fff;
+            border-radius: 5px;
+          }
+          .pagination li a {
+            padding: 15px;
+            margin: 5px;
+          }
+          .pagination li a:hover {
+            cursor: pointer;
+          }
+          .pagination .active {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
+          }
+        `}
+      </style>
     </div>
   );
 };

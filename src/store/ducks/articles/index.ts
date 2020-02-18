@@ -9,7 +9,13 @@ export enum actionArticleTypes {
   LOAD_ARTICLE_REQUEST = '@ARTICLE_/LOAD_ARTICLE_REQUEST',
   LOAD_ARTICLE_SUCCESS = '@ARTICLE_/LOAD_ARTICLE_SUCCESS',
   ARTICLE_UPDATE_LIKE_REQUEST = '@ARTICLE_/ARTICLE_UPDATE_LIKE_REQUEST',
-  ARTICLE_COMMENT_REQUEST = '@ARTICLE_/ARTICLE_UPDATE_COMMENT_REQUEST',
+  ARTICLE_COMMENT_REQUEST = '@ARTICLE_/ARTICLE_COMMENT_REQUEST',
+  PENDING_ARTICLE_REQUEST = '@ARTICLE_/PENDING_ARTICLE_REQUEST',
+  PENDING_ARTICLE_SUCCESS = '@ARTICLE_/PENDING_ARTICLE_SUCCESS',
+  PENDING_ARTICLE_UPDATE_REQUEST = '@ARTICLE_/PENDING_ARTICLE_UPDATE_REQUEST',
+  LOAD_EDITABLE_ARTICLE = '@ARTICLE_/LOAD_EDITABLE_ARTICLE',
+  ALL_ARTICLE_REQUEST = '@ARTICLE_/ALL_ARTICLE_REQUEST',
+  ALL_ARTICLE_SUCCESS = '@ARTICLE_/ALL_ARTICLE_SUCCESS',
 }
 
 type Author = {
@@ -37,24 +43,43 @@ export type Comment = {
   answares?: Answare[];
 };
 
+export type Category = {
+  label: string;
+  value: string;
+};
+
+export type Tag = {
+  label: string;
+  value: string;
+};
+
 export interface Article {
   title: string;
   content: string;
   id: string;
   image?: string;
-  createdAt: Date;
+  createdAt?: Date;
   resume?: string;
   author?: Author;
   likes?: number;
   comments?: Comment[];
   refer: string;
+  categories?: Category[];
+  tags?: Tag[];
 }
 
 export interface ArticleState {
   readonly list: Article[];
+  readonly pending?: Article[];
+  readonly allPosts?: Article[];
+  readonly totalOfPendingPages: number;
+  readonly totalOfAllPages: number;
   readonly totalOfPages: number;
+  readonly currentAllPage: number;
+  readonly currentPendingPage: number;
   readonly currentPage: number;
   readonly currentArticle?: Article;
+  readonly editableArticle?: Article;
 }
 
 export const ActionsList = {
@@ -85,12 +110,34 @@ export const ActionsList = {
   articleCommentRequest: data => {
     return { type: actionArticleTypes.ARTICLE_COMMENT_REQUEST, payload: { data } };
   },
+  pendingArticleRequest: (page: number) => {
+    return { type: actionArticleTypes.PENDING_ARTICLE_REQUEST, payload: { page } };
+  },
+  pendingArticleSuccess: data => {
+    return { type: actionArticleTypes.PENDING_ARTICLE_SUCCESS, payload: { data } };
+  },
+  pendingArticleUpdateRequest: data => {
+    return { type: actionArticleTypes.PENDING_ARTICLE_UPDATE_REQUEST, payload: { data } };
+  },
+  loadEditableArticle: (data: Article) => {
+    return { type: actionArticleTypes.LOAD_EDITABLE_ARTICLE, payload: { data } };
+  },
+  allArticleRequest: (page: number) => {
+    return { type: actionArticleTypes.ALL_ARTICLE_REQUEST, payload: { page } };
+  },
+  allArticleSuccess: data => {
+    return { type: actionArticleTypes.ALL_ARTICLE_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
   list: [],
   totalOfPages: 1,
   currentPage: 1,
+  currentPendingPage: 1,
+  totalOfPendingPages: 1,
+  currentAllPage: 1,
+  totalOfAllPages: 1,
 };
 
 const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => {
@@ -113,6 +160,12 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
         },
       };
     }
+    case actionArticleTypes.PENDING_ARTICLE_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.ALL_ARTICLE_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.LOAD_EDITABLE_ARTICLE:
+      return { ...state, editableArticle: reduceAction.payload.data };
     default:
       return state;
   }

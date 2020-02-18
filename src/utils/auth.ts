@@ -19,6 +19,15 @@ export const withAuthSync = (redirect: boolean) => {
   }
 };
 
+export const adminOnly = (redirect: boolean, type: string) => {
+  const token = Cookies.get('token');
+  if (redirect || !token) {
+    Router.push('/login');
+  } else if (type === 'user') {
+    Router.push('/');
+  }
+};
+
 export const onlyNotAuth = () => {
   const logged = useSelector((state: ApplicationState) => state.user.logged);
   if (logged) {

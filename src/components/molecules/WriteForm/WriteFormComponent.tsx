@@ -82,6 +82,8 @@ const WriteFormComponent = () => {
   const author = useSelector((state: ApplicationState) => state.user.data.data) || {
     name: 'Desconhecido',
   };
+  const editableArticle = useSelector((state: ApplicationState) => state.articles.editableArticle);
+
   const categoriesOptions = useSelector((state: ApplicationState) => state.categories.list) || [];
   function handleFormikSubmit(values, { resetForm }) {
     resetForm({});
@@ -94,7 +96,13 @@ const WriteFormComponent = () => {
 
   return (
     <Formik
-      initialValues={{ title: '', content: '', upload: null, categories: [], tags: [] }}
+      initialValues={{
+        title: editableArticle.title,
+        content: editableArticle.content,
+        upload: null,
+        categories: editableArticle.categories,
+        tags: editableArticle.tags,
+      }}
       validationSchema={validationSchema}
       onSubmit={handleFormikSubmit}
     >
