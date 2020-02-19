@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Grid, styled } from '@material-ui/core';
+import { Box, Grid, styled, CardMedia } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
@@ -67,12 +67,19 @@ const FooterForm = styled(Box)({
   marginTop: '20px',
 });
 
+const ImageSection = styled(CardMedia)({
+  height: '200px',
+  width: '400px',
+  marginBottom: '10px',
+  backgroundColor: '#8B8B8B',
+});
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Por favor, coloque um titulo'),
   content: Yup.string()
     .required('Por favor, escreva sua postagem')
     .min(250, 'O Seu artigo é muito pequeno'),
-  upload: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
+  picturePreview: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
   categories: Yup.array().required('Por favor, informe a categoria'),
   tags: Yup.array(),
 });
@@ -82,10 +89,17 @@ const WriteFormComponent = () => {
   const author = useSelector((state: ApplicationState) => state.user.data.data) || {
     name: 'Desconhecido',
   };
+  const editableArticle = useSelector((state: ApplicationState) => state.articles.editableArticle);
+
   const categoriesOptions = useSelector((state: ApplicationState) => state.categories.list) || [];
   function handleFormikSubmit(values, { resetForm }) {
     resetForm({});
-    const data = { ...values, author };
+    const data = {
+      ...values,
+      author,
+      id: editableArticle.id ? editableArticle.id : '',
+      image: editableArticle.id ? editableArticle.image : '',
+    };
     dispatch(ActionsList.articleRequest(data));
   }
   useEffect(() => {
@@ -94,7 +108,14 @@ const WriteFormComponent = () => {
 
   return (
     <Formik
-      initialValues={{ title: '', content: '', upload: null, categories: [], tags: [] }}
+      initialValues={{
+        title: editableArticle?.title,
+        content: editableArticle?.content,
+        upload: null,
+        categories: editableArticle?.categories,
+        tags: editableArticle?.tags,
+        picturePreview: editableArticle?.image,
+      }}
       validationSchema={validationSchema}
       onSubmit={handleFormikSubmit}
     >
@@ -200,11 +221,18 @@ const WriteFormComponent = () => {
                       type="file"
                       name="upload"
                       onChange={e => {
+                        setFieldValue(
+                          'picturePreview',
+                          URL.createObjectURL(e.currentTarget.files[0]),
+                        );
                         setFieldValue('upload', e.currentTarget.files[0]);
                       }}
                     />
                   </FieldLineFileContainer>
-                  <ErrorSection>{errors.upload && touched.upload && errors.upload}</ErrorSection>
+                  {values.picturePreview && <ImageSection image={values.picturePreview} />}
+                  <ErrorSection>
+                    {errors.picturePreview && touched.picturePreview && errors.picturePreview}
+                  </ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>

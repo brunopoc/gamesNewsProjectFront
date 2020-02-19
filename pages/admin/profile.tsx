@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Grid, styled, Avatar, Container } from '@material-ui/core';
 import { Formik } from 'formik';
@@ -70,9 +70,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const Profile = () => {
-  withAuthSync(false);
   const dispatch = useDispatch();
   const { name, avatar, id } = useSelector((state: ApplicationState) => state.user.data.data);
+
+  useEffect(() => {
+    withAuthSync(false);
+  }, []);
 
   function handleFormikSubmit(values) {
     const data = { ...values, id };
