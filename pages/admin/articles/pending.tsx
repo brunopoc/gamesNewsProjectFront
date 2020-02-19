@@ -34,6 +34,11 @@ const ActionArea = styled(Box)({
   cursor: 'pointer',
 });
 
+const ActionContainer = styled(Box)({
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
+
 const TableCellArea = styled(TableCell)({
   cursor: 'pointer',
   textAlign: 'left',
@@ -70,7 +75,7 @@ const Pending = () => {
   };
 
   const handlePostAprove = (id, aprove) => {
-    dispatch(ActionsList.pendingArticleUpdateRequest({ id, aprove }));
+    dispatch(ActionsList.aproveArticleUpdateRequest({ id, aprove, section: 'pending' }));
   };
 
   const handleOnClickPost = post => {
@@ -106,12 +111,14 @@ const Pending = () => {
                   </Link>
                   <TableCell align="right">{post.author?.name}</TableCell>
                   <TableCell align="right">
-                    <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
-                      <CheckCircleIcon />
-                    </ActionArea>
-                    <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
-                      <HighlightOffIcon />
-                    </ActionArea>
+                    <ActionContainer>
+                      <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
+                        <CheckCircleIcon />
+                      </ActionArea>
+                      <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
+                        <HighlightOffIcon />
+                      </ActionArea>
+                    </ActionContainer>
                   </TableCell>
                 </TableRow>
               ))}

@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import ReactPaginate from 'react-paginate';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Link from 'next/link';
 import { ApplicationState } from '../../../src/store';
 import { AppBarAdminComponent } from '../../../src/components/organisms';
@@ -31,6 +32,11 @@ const TitleLabel = styled(Box)({
 
 const ActionArea = styled(Box)({
   cursor: 'pointer',
+});
+
+const ActionContainer = styled(Box)({
+  display: 'flex',
+  justifyContent: 'flex-end',
 });
 
 const TableCellArea = styled(TableCell)({
@@ -68,8 +74,8 @@ const All = () => {
     dispatch(ActionsList.allArticleRequest(selected));
   };
 
-  const handlePostAprove = id => {
-    dispatch(ActionsList.pendingArticleUpdateRequest({ id, aprove: 'aproved' }));
+  const handlePostAprove = (id, aprove) => {
+    dispatch(ActionsList.aproveArticleUpdateRequest({ id, aprove, section: 'all' }));
   };
 
   const handleOnClickPost = post => {
@@ -81,13 +87,14 @@ const All = () => {
     <AppBarAdminComponent>
       <TitleComponent text="Meu Perfil" />
       <Container fixed>
-        <TitleLabel>Lista dos artigos para aprovação</TitleLabel>
+        <TitleLabel>Lista com todos os Artigos</TitleLabel>
         <TableContainer component={Paper}>
           <TableStyled aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Titulo</TableCell>
                 <TableCell align="right">Autor</TableCell>
+                <TableCell align="right">Status</TableCell>
                 <TableCell align="right">Ações</TableCell>
               </TableRow>
             </TableHead>
@@ -104,10 +111,16 @@ const All = () => {
                     </TableCellArea>
                   </Link>
                   <TableCell align="right">{post.author?.name}</TableCell>
+                  <TableCell align="right">{post.aprove}</TableCell>
                   <TableCell align="right">
-                    <ActionArea onClick={() => handlePostAprove(post.id)}>
-                      <CheckCircleIcon />
-                    </ActionArea>
+                    <ActionContainer>
+                      <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
+                        <CheckCircleIcon />
+                      </ActionArea>
+                      <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
+                        <HighlightOffIcon />
+                      </ActionArea>
+                    </ActionContainer>
                   </TableCell>
                 </TableRow>
               ))}

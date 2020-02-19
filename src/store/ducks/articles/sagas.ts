@@ -7,7 +7,6 @@ import { ActionsList as UserActionList } from '../user';
 import api from '../../../utils/api';
 
 export const getToken = state => state.user.data.token;
-const cookieToken = Cookies.get('token');
 
 export function* sendArticle(value) {
   yield put(MessageActionList.loadRequest());
@@ -156,6 +155,7 @@ export function* articleComment(value) {
 export function* loadPedingArticle(value) {
   yield put(MessageActionList.loadRequest());
   try {
+    const cookieToken = Cookies.get('token');
     const resp = yield fetch(
       `${api.publicRuntimeConfig.API_ENDPOINT}/posts/pending/${value.payload.page}`,
       {
@@ -175,17 +175,30 @@ export function* loadPedingArticle(value) {
   }
 }
 
-export function* loadPendingArticleUpdate(value) {
+export function* loadAproveArticleUpdate(value) {
   yield put(MessageActionList.loadRequest());
   try {
-    yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/aprove/${value.payload.data.id}`, {
-      method: 'post',
-      body: JSON.stringify({ aprove: value.payload.data.aprove }, null, 2),
-      headers: new Headers({
-        'content-type': 'application/json',
-        'x-access-token': cookieToken,
-      }),
-    });
+    const cookieToken = Cookies.get('token');
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/aprove/${value.payload.data.id}`,
+      {
+        method: 'post',
+        body: JSON.stringify({ aprove: value.payload.data.aprove }, null, 2),
+        headers: new Headers({
+          'content-type': 'application/json',
+          'x-access-token': cookieToken,
+        }),
+      },
+    );
+
+    const result = yield resp.json();
+
+    if (value.payload.data.section === 'pending') {
+      yield put(ActionsList.pendingArticleUpdateSuccess(result));
+    }
+    if (value.payload.data.section === 'all') {
+      yield put(ActionsList.allArticleUpdateSuccess(result));
+    }
     yield put(MessageActionList.loadReady());
     yield put(MessageActionList.successShow());
   } catch (err) {
@@ -196,6 +209,7 @@ export function* loadPendingArticleUpdate(value) {
 export function* loadAllArticle(value) {
   yield put(MessageActionList.loadRequest());
   try {
+    const cookieToken = Cookies.get('token');
     const resp = yield fetch(
       `${api.publicRuntimeConfig.API_ENDPOINT}/posts/all/${value.payload.page}`,
       {

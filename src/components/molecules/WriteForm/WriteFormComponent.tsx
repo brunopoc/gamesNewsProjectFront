@@ -79,7 +79,7 @@ const validationSchema = Yup.object().shape({
   content: Yup.string()
     .required('Por favor, escreva sua postagem')
     .min(250, 'O Seu artigo é muito pequeno'),
-  upload: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
+  picturePreview: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
   categories: Yup.array().required('Por favor, informe a categoria'),
   tags: Yup.array(),
 });
@@ -230,7 +230,9 @@ const WriteFormComponent = () => {
                     />
                   </FieldLineFileContainer>
                   {values.picturePreview && <ImageSection image={values.picturePreview} />}
-                  <ErrorSection>{errors.upload && touched.upload && errors.upload}</ErrorSection>
+                  <ErrorSection>
+                    {errors.picturePreview && touched.picturePreview && errors.picturePreview}
+                  </ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>

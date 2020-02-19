@@ -12,10 +12,12 @@ export enum actionArticleTypes {
   ARTICLE_COMMENT_REQUEST = '@ARTICLE_/ARTICLE_COMMENT_REQUEST',
   PENDING_ARTICLE_REQUEST = '@ARTICLE_/PENDING_ARTICLE_REQUEST',
   PENDING_ARTICLE_SUCCESS = '@ARTICLE_/PENDING_ARTICLE_SUCCESS',
-  PENDING_ARTICLE_UPDATE_REQUEST = '@ARTICLE_/PENDING_ARTICLE_UPDATE_REQUEST',
+  PENDING_ARTICLE_UPDATE_SUCCESS = '@ARTICLE_/PENDING_ARTICLE_UPDATE_SUCCESS',
+  APROVE_ARTICLE_UPDATE_REQUEST = '@ARTICLE_/APROVE_ARTICLE_UPDATE_REQUEST',
   LOAD_EDITABLE_ARTICLE = '@ARTICLE_/LOAD_EDITABLE_ARTICLE',
   ALL_ARTICLE_REQUEST = '@ARTICLE_/ALL_ARTICLE_REQUEST',
   ALL_ARTICLE_SUCCESS = '@ARTICLE_/ALL_ARTICLE_SUCCESS',
+  ALL_ARTICLE_UPDATE_SUCCESS = '@ARTICLE_/ALL_ARTICLE_UPDATE_SUCCESS',
 }
 
 type Author = {
@@ -66,6 +68,7 @@ export interface Article {
   refer: string;
   categories?: Category[];
   tags?: Tag[];
+  aprove: string;
 }
 
 export interface ArticleState {
@@ -116,8 +119,11 @@ export const ActionsList = {
   pendingArticleSuccess: data => {
     return { type: actionArticleTypes.PENDING_ARTICLE_SUCCESS, payload: { data } };
   },
-  pendingArticleUpdateRequest: data => {
-    return { type: actionArticleTypes.PENDING_ARTICLE_UPDATE_REQUEST, payload: { data } };
+  aproveArticleUpdateRequest: data => {
+    return { type: actionArticleTypes.APROVE_ARTICLE_UPDATE_REQUEST, payload: { data } };
+  },
+  pendingArticleUpdateSuccess: data => {
+    return { type: actionArticleTypes.PENDING_ARTICLE_UPDATE_SUCCESS, payload: { data } };
   },
   loadEditableArticle: (data: Article) => {
     return { type: actionArticleTypes.LOAD_EDITABLE_ARTICLE, payload: { data } };
@@ -127,6 +133,9 @@ export const ActionsList = {
   },
   allArticleSuccess: data => {
     return { type: actionArticleTypes.ALL_ARTICLE_SUCCESS, payload: { data } };
+  },
+  allArticleUpdateSuccess: data => {
+    return { type: actionArticleTypes.ALL_ARTICLE_UPDATE_SUCCESS, payload: { data } };
   },
 };
 
@@ -158,6 +167,27 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
           ...state.currentArticle,
           ...reduceAction.payload.data,
         },
+      };
+    }
+    case actionArticleTypes.PENDING_ARTICLE_UPDATE_SUCCESS: {
+      const listArticles = state.pending.filter(article => {
+        return article.id !== reduceAction.payload.data.id;
+      });
+      return {
+        ...state,
+        pending: listArticles,
+      };
+    }
+    case actionArticleTypes.ALL_ARTICLE_UPDATE_SUCCESS: {
+      const listArticles = state.allPosts.map(article => {
+        if (article.id === reduceAction.payload.data.id) {
+          return { ...article, ...reduceAction.payload.data };
+        }
+        return article;
+      });
+      return {
+        ...state,
+        allPosts: listArticles,
       };
     }
     case actionArticleTypes.PENDING_ARTICLE_SUCCESS:
