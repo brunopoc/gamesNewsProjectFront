@@ -56,6 +56,14 @@ const DrawerComponent = () => {
             <ListItemText primary="Novo Artigo" />
           </ListItem>
         </Link>
+        <Link href="/admin/articles/personal">
+          <ListItem button key="Meus Artigos">
+            <ListItemIcon>
+              <ArtTrackIcon />
+            </ListItemIcon>
+            <ListItemText primary="Meus Artigos" />
+          </ListItem>
+        </Link>
       </List>
       {type === 'admin' && (
         <>

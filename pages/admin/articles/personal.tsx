@@ -13,14 +13,14 @@ import {
   styled,
 } from '@material-ui/core';
 import ReactPaginate from 'react-paginate';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import EditIcon from '@material-ui/icons/Edit';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Link from 'next/link';
 import { ApplicationState } from '../../../src/store';
 import { AppBarAdminComponent } from '../../../src/components/organisms';
 import { ActionsList } from '../../../src/store/ducks/articles';
 import TitleComponent from '../../../src/components/atoms/Title/TitleComponent';
-import { adminOnly } from '../../../src/utils/auth';
+import { withAuthSync } from '../../../src/utils/auth';
 
 const TitleLabel = styled(Box)({
   width: '100%',
@@ -40,7 +40,6 @@ const ActionContainer = styled(Box)({
 });
 
 const TableCellArea = styled(TableCell)({
-  cursor: 'pointer',
   textAlign: 'left',
   display: 'table-cell',
   padding: '16px',
@@ -57,64 +56,64 @@ const TableStyled = styled(Table)({
   minWidth: 650,
 });
 
-const Pending = () => {
+const Personal = () => {
   const dispatch = useDispatch();
-  const { currentPendingPage, pending, totalOfPendingPages } = useSelector(
+  const { currentPersonalPage, personalPosts, totalOfPersonalPages } = useSelector(
     (state: ApplicationState) => state.articles,
   );
-  const type = useSelector((state: ApplicationState) => state.user.data.data.type);
+
+  const { id } = useSelector((state: ApplicationState) => state.user.data.data);
 
   useEffect(() => {
-    adminOnly(false, type);
-    dispatch(ActionsList.pendingArticleRequest(currentPendingPage));
+    withAuthSync(false);
+    dispatch(ActionsList.personalArticleRequest(currentPersonalPage, id));
   }, []);
 
   const handlePageClick = data => {
     const selected = data.selected + 1;
-    dispatch(ActionsList.pendingArticleRequest(selected));
+    dispatch(ActionsList.personalArticleRequest(selected, id));
   };
 
-  const handlePostAprove = (id, aprove) => {
-    dispatch(ActionsList.aproveArticleUpdateRequest({ id, aprove, section: 'pending' }));
+  const handlePostAprove = (idPost: string, aprove) => {
+    dispatch(ActionsList.aproveArticleUpdateRequest({ id: idPost, aprove, section: 'personal' }));
   };
 
   const handleOnClickPost = post => {
     dispatch(ActionsList.loadEditableArticle(post));
   };
 
-  const initPage = currentPendingPage - 1;
+  const initPage = currentPersonalPage - 1;
   return (
     <AppBarAdminComponent>
-      <TitleComponent text="Aprovar Artigos" />
+      <TitleComponent text="Meus Artigos" />
       <Container fixed>
-        <TitleLabel>Lista dos artigos para aprovação</TitleLabel>
+        <TitleLabel>Lista com todos os artigos já escritos</TitleLabel>
         <TableContainer component={Paper}>
           <TableStyled aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Titulo</TableCell>
-                <TableCell align="right">Autor</TableCell>
-                <TableCell align="right">Ações</TableCell>
+                <TableCell align="right">Editar</TableCell>
+                <TableCell align="right">Excluir</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {pending?.map(post => (
+              {personalPosts?.map(post => (
                 <TableRow key={post.id}>
-                  <Link href="/admin/articles/update">
-                    <TableCellArea
-                      onClick={() => handleOnClickPost(post)}
-                      component="th"
-                      scope="row"
-                    >
-                      {post.title}
-                    </TableCellArea>
-                  </Link>
-                  <TableCell align="right">{post.author?.name}</TableCell>
+                  <TableCellArea component="th" scope="row">
+                    {post.title}
+                  </TableCellArea>
                   <TableCell align="right">
                     <ActionContainer>
-                      <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
-                        <CheckCircleIcon />
+                      <ActionArea onClick={() => handleOnClickPost(post)}>
+                        <Link href="/admin/articles/update">
+                          <EditIcon />
+                        </Link>
                       </ActionArea>
+                    </ActionContainer>
+                  </TableCell>
+                  <TableCell align="right">
+                    <ActionContainer>
                       <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
                         <HighlightOffIcon />
                       </ActionArea>
@@ -130,7 +129,7 @@ const Pending = () => {
           nextLabel="Próximo"
           breakLabel="..."
           breakClassName="break-me"
-          pageCount={totalOfPendingPages}
+          pageCount={totalOfPersonalPages}
           initialPage={initPage}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
@@ -144,4 +143,4 @@ const Pending = () => {
   );
 };
 
-export default Pending;
+export default Personal;

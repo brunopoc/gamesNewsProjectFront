@@ -18,6 +18,9 @@ export enum actionArticleTypes {
   ALL_ARTICLE_REQUEST = '@ARTICLE_/ALL_ARTICLE_REQUEST',
   ALL_ARTICLE_SUCCESS = '@ARTICLE_/ALL_ARTICLE_SUCCESS',
   ALL_ARTICLE_UPDATE_SUCCESS = '@ARTICLE_/ALL_ARTICLE_UPDATE_SUCCESS',
+  PERSONAL_ARTICLE_REQUEST = '@ARTICLE_/PERSONAL_ARTICLE_REQUEST',
+  PERSONAL_ARTICLE_SUCCESS = '@ARTICLE_/PERSONAL_ARTICLE_SUCCESS',
+  PERSONAL_ARTICLE_UPDATE_SUCCESS = '@ARTICLE_/PERSONAL_ARTICLE_UPDATE_SUCCESS',
 }
 
 type Author = {
@@ -68,18 +71,21 @@ export interface Article {
   refer: string;
   categories?: Category[];
   tags?: Tag[];
-  aprove: string;
+  aprove?: string;
 }
 
 export interface ArticleState {
   readonly list: Article[];
   readonly pending?: Article[];
   readonly allPosts?: Article[];
+  readonly personalPosts?: Article[];
   readonly totalOfPendingPages: number;
   readonly totalOfAllPages: number;
+  readonly totalOfPersonalPages: number;
   readonly totalOfPages: number;
   readonly currentAllPage: number;
   readonly currentPendingPage: number;
+  readonly currentPersonalPage: number;
   readonly currentPage: number;
   readonly currentArticle?: Article;
   readonly editableArticle?: Article;
@@ -137,6 +143,15 @@ export const ActionsList = {
   allArticleUpdateSuccess: data => {
     return { type: actionArticleTypes.ALL_ARTICLE_UPDATE_SUCCESS, payload: { data } };
   },
+  personalArticleRequest: (page: number, id: string) => {
+    return { type: actionArticleTypes.PERSONAL_ARTICLE_REQUEST, payload: { page, id } };
+  },
+  personalArticleSuccess: data => {
+    return { type: actionArticleTypes.PERSONAL_ARTICLE_SUCCESS, payload: { data } };
+  },
+  personalArticleUpdateSuccess: data => {
+    return { type: actionArticleTypes.PERSONAL_ARTICLE_UPDATE_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
@@ -145,7 +160,9 @@ const INITIAL_STATE: ArticleState = {
   currentPage: 1,
   currentPendingPage: 1,
   totalOfPendingPages: 1,
+  totalOfPersonalPages: 1,
   currentAllPage: 1,
+  currentPersonalPage: 1,
   totalOfAllPages: 1,
 };
 
@@ -190,9 +207,20 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
         allPosts: listArticles,
       };
     }
+    case actionArticleTypes.PERSONAL_ARTICLE_UPDATE_SUCCESS: {
+      const listArticles = state.personalPosts.filter(article => {
+        return article.id !== reduceAction.payload.data.id;
+      });
+      return {
+        ...state,
+        personalPosts: listArticles,
+      };
+    }
     case actionArticleTypes.PENDING_ARTICLE_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
     case actionArticleTypes.ALL_ARTICLE_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.PERSONAL_ARTICLE_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
     case actionArticleTypes.LOAD_EDITABLE_ARTICLE:
       return { ...state, editableArticle: reduceAction.payload.data };

@@ -70,7 +70,7 @@ export const ActionsList = {
 };
 
 const INITIAL_STATE: UserState = {
-  data: { data: { name: '', email: '', id: '0', likedPosts: [], avatar: '' } },
+  data: { data: { name: '', email: '', id: '', likedPosts: [], avatar: '' } },
   logged: false,
   error: false,
   loading: false,

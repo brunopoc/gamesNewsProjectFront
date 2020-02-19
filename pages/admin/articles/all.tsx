@@ -85,7 +85,7 @@ const All = () => {
   const initPage = currentAllPage - 1;
   return (
     <AppBarAdminComponent>
-      <TitleComponent text="Meu Perfil" />
+      <TitleComponent text="Todos os Artigos" />
       <Container fixed>
         <TitleLabel>Lista com todos os Artigos</TitleLabel>
         <TableContainer component={Paper}>

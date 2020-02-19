@@ -199,6 +199,9 @@ export function* loadAproveArticleUpdate(value) {
     if (value.payload.data.section === 'all') {
       yield put(ActionsList.allArticleUpdateSuccess(result));
     }
+    if (value.payload.data.section === 'personal') {
+      yield put(ActionsList.personalArticleUpdateSuccess(result));
+    }
     yield put(MessageActionList.loadReady());
     yield put(MessageActionList.successShow());
   } catch (err) {
@@ -223,6 +226,29 @@ export function* loadAllArticle(value) {
     const result = yield resp.json();
 
     yield put(ActionsList.allArticleSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadPersonalArticle(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const cookieToken = Cookies.get('token');
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/${value.payload.id}/personal/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+          'x-access-token': cookieToken,
+        }),
+      },
+    );
+    const result = yield resp.json();
+
+    yield put(ActionsList.personalArticleSuccess(result));
     yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(MessageActionList.loadReady());

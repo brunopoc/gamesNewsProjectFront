@@ -103,6 +103,11 @@ const UserMenuComponent = () => {
                           <MenuItem>Escrever Um Artigo</MenuItem>
                         </Link>
                       </div>
+                      <div>
+                        <Link href="/admin/articles/personal">
+                          <MenuItem>Meus Artigos</MenuItem>
+                        </Link>
+                      </div>
                       <MenuItem
                         onClick={() => {
                           dispatch(ActionsList.logoutRequest());
