@@ -33,7 +33,8 @@ const LoginCardComponent: React.FC = () => {
       <BoxStyled>
         {error === true ? (
           <Alert severity="error">
-            Não foi possível fazer o login, verifique seu usuario e senha
+            Não foi possível fazer o login, usuario e senha podem estar incorreto ou o email
+            bloqueado
           </Alert>
         ) : (
           <div />

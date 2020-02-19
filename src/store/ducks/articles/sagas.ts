@@ -237,7 +237,7 @@ export function* loadPersonalArticle(value) {
   try {
     const cookieToken = Cookies.get('token');
     const resp = yield fetch(
-      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/${value.payload.id}/personal/${value.payload.page}`,
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/personal/${value.payload.page}`,
       {
         method: 'get',
         headers: new Headers({

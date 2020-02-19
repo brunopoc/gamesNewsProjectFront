@@ -13,14 +13,13 @@ import {
   styled,
 } from '@material-ui/core';
 import ReactPaginate from 'react-paginate';
-import EditIcon from '@material-ui/icons/Edit';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import BlockIcon from '@material-ui/icons/Block';
 import Link from 'next/link';
 import { ApplicationState } from '../../../src/store';
 import { AppBarAdminComponent } from '../../../src/components/organisms';
-import { ActionsList } from '../../../src/store/ducks/articles';
+import { ActionsList } from '../../../src/store/ducks/user';
 import TitleComponent from '../../../src/components/atoms/Title/TitleComponent';
-import { withAuthSync } from '../../../src/utils/auth';
+import { adminOnly } from '../../../src/utils/auth';
 
 const TitleLabel = styled(Box)({
   width: '100%',
@@ -40,6 +39,7 @@ const ActionContainer = styled(Box)({
 });
 
 const TableCellArea = styled(TableCell)({
+  cursor: 'pointer',
   textAlign: 'left',
   display: 'table-cell',
   padding: '16px',
@@ -56,69 +56,63 @@ const TableStyled = styled(Table)({
   minWidth: 650,
 });
 
-const Personal = () => {
+const Users = () => {
   const dispatch = useDispatch();
-  const { currentPersonalPage, personalPosts, totalOfPersonalPages } = useSelector(
-    (state: ApplicationState) => state.articles,
+  const { currentUsersPage, users, totalOfUsers } = useSelector(
+    (state: ApplicationState) => state.user.data,
   );
+  const type = useSelector((state: ApplicationState) => state.user.data.data.type);
 
   useEffect(() => {
-    withAuthSync(false);
-    dispatch(ActionsList.personalArticleRequest(currentPersonalPage));
+    adminOnly(false, type);
+    dispatch(ActionsList.listUsersRequest(currentUsersPage));
   }, []);
 
   const handlePageClick = data => {
     const selected = data.selected + 1;
-    dispatch(ActionsList.personalArticleRequest(selected));
+    dispatch(ActionsList.listUsersRequest(selected));
   };
 
-  const handlePostAprove = (idPost: string, aprove) => {
-    dispatch(ActionsList.aproveArticleUpdateRequest({ id: idPost, aprove, section: 'personal' }));
+  const handleUserBlock = (id, blocked) => {
+    dispatch(ActionsList.blockRequest(id, blocked));
   };
 
-  const handleOnClickPost = post => {
-    dispatch(ActionsList.loadEditableArticle(post));
-  };
-
-  const initPage = currentPersonalPage - 1;
+  const initPage = currentUsersPage - 1;
   return (
     <AppBarAdminComponent>
-      <TitleComponent text="Meus Artigos" />
+      <TitleComponent text="Todos os Usuarios" />
       <Container fixed>
-        <TitleLabel>Lista com todos os artigos já escritos</TitleLabel>
+        <TitleLabel>Lista com todos os Usuarios</TitleLabel>
         <TableContainer component={Paper}>
           <TableStyled aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Titulo</TableCell>
-                <TableCell align="right">Editar</TableCell>
-                <TableCell align="right">Excluir</TableCell>
+                <TableCell>Nome</TableCell>
+                <TableCell align="right">Email</TableCell>
+                <TableCell align="right">Status</TableCell>
+                <TableCell align="right">Ações</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {personalPosts?.map(post => (
-                <TableRow key={post.id}>
-                  <TableCellArea component="th" scope="row">
-                    {post.title}
-                  </TableCellArea>
-                  <TableCell align="right">
-                    <ActionContainer>
-                      <ActionArea onClick={() => handleOnClickPost(post)}>
-                        <Link href="/admin/articles/update">
-                          <EditIcon />
-                        </Link>
-                      </ActionArea>
-                    </ActionContainer>
-                  </TableCell>
-                  <TableCell align="right">
-                    <ActionContainer>
-                      <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
-                        <HighlightOffIcon />
-                      </ActionArea>
-                    </ActionContainer>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {!!users &&
+                users.map(user => (
+                  <TableRow key={user.id}>
+                    <Link href="/admin/articles/update">
+                      <TableCellArea component="th" scope="row">
+                        {user.name}
+                      </TableCellArea>
+                    </Link>
+                    <TableCell align="right">{user.email}</TableCell>
+                    <TableCell align="right">{user.blocked ? 'Bloqueado' : 'Normal'}</TableCell>
+                    <TableCell align="right">
+                      <ActionContainer>
+                        <ActionArea onClick={() => handleUserBlock(user.id, !user.blocked)}>
+                          <BlockIcon />
+                        </ActionArea>
+                      </ActionContainer>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </TableStyled>
         </TableContainer>
@@ -127,7 +121,7 @@ const Personal = () => {
           nextLabel="Próximo"
           breakLabel="..."
           breakClassName="break-me"
-          pageCount={totalOfPersonalPages}
+          pageCount={totalOfUsers}
           initialPage={initPage}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}
@@ -141,4 +135,4 @@ const Personal = () => {
   );
 };
 
-export default Personal;
+export default Users;

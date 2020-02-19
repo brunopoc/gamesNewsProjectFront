@@ -5,6 +5,7 @@ import { RegisterState } from './ducks/register';
 import { ArticleState } from './ducks/articles';
 import { CategoriesState } from './ducks/categories';
 import { MessageState } from './ducks/message';
+import { ComplaintState } from './ducks/complaints';
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 
@@ -14,6 +15,7 @@ export interface ApplicationState {
   articles: ArticleState;
   categories: CategoriesState;
   message: MessageState;
+  complaints: ComplaintState;
 }
 
 const bindMiddleware = (middleware: any) => applyMiddleware(...middleware);

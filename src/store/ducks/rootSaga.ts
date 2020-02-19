@@ -5,7 +5,8 @@ import { actionRegisterTypes } from './register';
 import { actionArticleTypes } from './articles';
 import { actionCategoriesTypes } from './categories';
 import { actionMessageTypes } from './message';
-import { sendLogin, retrieveToken, updateProfile } from './user/sagas';
+import { actionComplaintTypes } from './complaints';
+import { sendLogin, retrieveToken, updateProfile, loadAllUsers, loadBlockUser } from './user/sagas';
 import { sendRegister } from './register/sagas';
 import {
   sendArticle,
@@ -20,12 +21,15 @@ import {
 } from './articles/sagas';
 import { loadCategories } from './categories/sagas';
 import { showMessage } from './message/sagas';
+import { sendComplaint, loadComplaintsList } from './complaints/sagas';
 
 export default function* rootSaga() {
   return yield all([
     takeLatest(actionLoginTypes.LOGIN_REQUEST, sendLogin),
     takeLatest(actionLoginTypes.TOKEN_RETRIEVE_REQUEST, retrieveToken),
     takeLatest(actionLoginTypes.UPDATE_PROFILE_REQUEST, updateProfile),
+    takeLatest(actionLoginTypes.LIST_USERS_REQUEST, loadAllUsers),
+    takeLatest(actionLoginTypes.BLOCK_REQUEST, loadBlockUser),
     takeLatest(actionRegisterTypes.REGISTER_REQUEST, sendRegister),
     takeLatest(actionArticleTypes.ARTICLE_REQUEST, sendArticle),
     takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST, loadArticleList),
@@ -38,5 +42,7 @@ export default function* rootSaga() {
     takeLatest(actionArticleTypes.PERSONAL_ARTICLE_REQUEST, loadPersonalArticle),
     takeLatest(actionCategoriesTypes.LIST_CATEGORIES_REQUEST, loadCategories),
     takeLatest(actionMessageTypes.SUCCESS_SHOW, showMessage),
+    takeLatest(actionComplaintTypes.COMPLAINT_REQUEST, sendComplaint),
+    takeLatest(actionComplaintTypes.COMPLAINT_LIST_REQUEST, loadComplaintsList),
   ]);
 }

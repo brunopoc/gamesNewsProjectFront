@@ -6,6 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import CreateIcon from '@material-ui/icons/Create';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import ArtTrackIcon from '@material-ui/icons/ArtTrack';
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 import Divider from '@material-ui/core/Divider';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -83,6 +84,14 @@ const DrawerComponent = () => {
                   <ArtTrackIcon />
                 </ListItemIcon>
                 <ListItemText primary="Todos os Artigos" />
+              </ListItem>
+            </Link>
+            <Link href="/admin/articles/users">
+              <ListItem button key="Todos os Usuarios">
+                <ListItemIcon>
+                  <PeopleAltIcon />
+                </ListItemIcon>
+                <ListItemText primary="Todos os Usuarios" />
               </ListItem>
             </Link>
           </List>

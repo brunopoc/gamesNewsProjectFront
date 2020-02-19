@@ -8,3 +8,4 @@ export { default as CommentFieldComponent } from './CommentField/CommentFieldCom
 export { default as AnswareFieldComponent } from './AnswareField/AnswareFieldComponent';
 export { default as AppBarListComponent } from './AppBarList/AppBarListComponent';
 export { default as MenuItemsComponent } from './MenuItems/MenuItemsComponent';
+export { default as SpringModalComponent } from './SpringModal/SpringModalComponent';
