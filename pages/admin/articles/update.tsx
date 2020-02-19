@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { WriteCardComponent } from '../../../src/components/organisms';
 import { withAuthSync } from '../../../src/utils/auth';
 
 const Update = () => {
-  withAuthSync(false);
+  useEffect(() => {
+    withAuthSync(false);
+  }, []);
+
   return <WriteCardComponent />;
 };
 

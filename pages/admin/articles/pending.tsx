@@ -14,6 +14,7 @@ import {
 } from '@material-ui/core';
 import ReactPaginate from 'react-paginate';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import Link from 'next/link';
 import { ApplicationState } from '../../../src/store';
 import { AppBarAdminComponent } from '../../../src/components/organisms';
@@ -68,8 +69,8 @@ const Pending = () => {
     dispatch(ActionsList.pendingArticleRequest(selected));
   };
 
-  const handlePostAprove = id => {
-    dispatch(ActionsList.pendingArticleUpdateRequest({ id, aprove: 'aproved' }));
+  const handlePostAprove = (id, aprove) => {
+    dispatch(ActionsList.pendingArticleUpdateRequest({ id, aprove }));
   };
 
   const handleOnClickPost = post => {
@@ -105,8 +106,11 @@ const Pending = () => {
                   </Link>
                   <TableCell align="right">{post.author?.name}</TableCell>
                   <TableCell align="right">
-                    <ActionArea onClick={() => handlePostAprove(post.id)}>
+                    <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
                       <CheckCircleIcon />
+                    </ActionArea>
+                    <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
+                      <HighlightOffIcon />
                     </ActionArea>
                   </TableCell>
                 </TableRow>

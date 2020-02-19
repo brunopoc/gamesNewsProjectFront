@@ -12,17 +12,21 @@ const cookieToken = Cookies.get('token');
 export function* sendArticle(value) {
   yield put(MessageActionList.loadRequest());
   try {
+    let data;
     const token = yield select(getToken);
     const formdata = value.payload.data;
-    const imgFormData = new FormData();
-    imgFormData.append('upload', formdata.upload, formdata.upload.name);
-    const imgUpload = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`, {
-      method: 'post',
-      body: imgFormData,
-    });
-    const imgResult = yield imgUpload.json();
-
-    const data = { ...formdata, image: imgResult.url };
+    if (!formdata.image) {
+      const imgFormData = new FormData();
+      imgFormData.append('upload', formdata.upload, formdata.upload.name);
+      const imgUpload = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`, {
+        method: 'post',
+        body: imgFormData,
+      });
+      const imgResult = yield imgUpload.json();
+      data = { ...formdata, image: imgResult.url };
+    } else {
+      data = { ...formdata };
+    }
 
     const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/`, {
       method: 'post',

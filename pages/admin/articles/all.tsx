@@ -60,12 +60,12 @@ const All = () => {
 
   useEffect(() => {
     adminOnly(false, type);
-    dispatch(ActionsList.pendingArticleRequest(currentAllPage));
+    dispatch(ActionsList.allArticleRequest(currentAllPage));
   }, []);
 
   const handlePageClick = data => {
     const selected = data.selected + 1;
-    dispatch(ActionsList.pendingArticleRequest(selected));
+    dispatch(ActionsList.allArticleRequest(selected));
   };
 
   const handlePostAprove = id => {
