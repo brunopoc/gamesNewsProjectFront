@@ -12,6 +12,10 @@ export enum actionLoginTypes {
   USER_LIKE_RETRIEVE_SUCCESS = '@user/USER_LIKE_RETRIEVE_SUCCESS',
   UPDATE_PROFILE_REQUEST = '@user/UPDATE_PROFILE_REQUEST',
   UPDATE_PROFILE_SUCCESS = '@user/UPDATE_PROFILE_SUCCESS',
+  LIST_USERS_REQUEST = '@user/LIST_USERS_REQUEST',
+  LIST_USERS_SUCCESS = '@user/LIST_USERS_SUCCESS',
+  BLOCK_REQUEST = '@user/BLOCK_REQUEST',
+  BLOCK_SUCCESS = '@user/BLOCK_SUCCESS',
 }
 
 type data = {
@@ -20,11 +24,15 @@ type data = {
   email: string;
   type?: string;
   avatar?: string;
+  blocked?: boolean;
   likedPosts?: string[];
 };
 
 export interface User {
   token?: string;
+  users?: data[];
+  totalOfUsers?: number;
+  currentUsersPage?: number;
   data?: data;
 }
 
@@ -67,10 +75,26 @@ export const ActionsList = {
   updateProfileSuccess: (data: User) => {
     return { type: actionLoginTypes.UPDATE_PROFILE_REQUEST, payload: { data } };
   },
+  listUsersRequest: (page: number) => {
+    return { type: actionLoginTypes.LIST_USERS_REQUEST, payload: { page } };
+  },
+  listUsersSuccess: data => {
+    return { type: actionLoginTypes.LIST_USERS_SUCCESS, payload: { data } };
+  },
+  blockRequest: (id: string, blocked: boolean) => {
+    return { type: actionLoginTypes.BLOCK_REQUEST, payload: { blocked, id } };
+  },
+  blockSuccess: data => {
+    return { type: actionLoginTypes.BLOCK_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: UserState = {
-  data: { data: { name: '', email: '', id: '', likedPosts: [], avatar: '' } },
+  data: {
+    data: { name: '', email: '', id: '', likedPosts: [], avatar: '' },
+    totalOfUsers: 1,
+    currentUsersPage: 1,
+  },
   logged: false,
   error: false,
   loading: false,
@@ -95,7 +119,7 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         loading: false,
         logged: false,
         redirect: true,
-        data: {},
+        data: { ...state.data },
       };
     case actionLoginTypes.LOGIN_REQUEST:
       return { ...state, loading: true };
@@ -109,6 +133,7 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         logged: true,
         redirect: false,
         data: {
+          ...state.data,
           token: reduceAction.payload.data.token,
           data: { ...state.data.data, ...reduceAction.payload.data.data },
         },
@@ -136,6 +161,20 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
         data: { data: { name: '', email: '', id: '0', likedPosts: [] } },
         logged: false,
         redirect: true,
+      };
+    }
+    case actionLoginTypes.LIST_USERS_SUCCESS:
+      return { ...state, data: { ...state.data, ...reduceAction.payload.data } };
+    case actionLoginTypes.BLOCK_SUCCESS: {
+      const listUsers = state.data.users.map(user => {
+        if (user.id === reduceAction.payload.data.id) {
+          return { ...user, ...reduceAction.payload.data };
+        }
+        return user;
+      });
+      return {
+        ...state,
+        data: { ...state.data, users: listUsers },
       };
     }
     default:

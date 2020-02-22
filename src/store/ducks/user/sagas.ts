@@ -79,8 +79,6 @@ export function* updateProfile(value) {
     });
     const result = yield resp.json();
 
-    console.log(result);
-
     if (result.status === 'Error') {
       yield put(MessageActionList.loadReady());
     } else {
@@ -88,6 +86,49 @@ export function* updateProfile(value) {
       yield put(MessageActionList.successShow());
       yield put(ActionsList.updateProfileSuccess(result));
     }
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadAllUsers(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const cookieToken = Cookies.get('token');
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/users/list/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+          'x-access-token': cookieToken,
+        }),
+      },
+    );
+    const result = yield resp.json();
+    yield put(ActionsList.listUsersSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadBlockUser(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const cookieToken = Cookies.get('token');
+    const data = { ...value.payload };
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/admin/blocked`, {
+      method: 'post',
+      body: JSON.stringify(data, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+        'x-access-token': cookieToken,
+      }),
+    });
+    const result = yield resp.json();
+    yield put(ActionsList.blockSuccess(result));
+    yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(MessageActionList.loadReady());
   }

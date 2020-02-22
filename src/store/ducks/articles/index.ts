@@ -143,8 +143,8 @@ export const ActionsList = {
   allArticleUpdateSuccess: data => {
     return { type: actionArticleTypes.ALL_ARTICLE_UPDATE_SUCCESS, payload: { data } };
   },
-  personalArticleRequest: (page: number, id: string) => {
-    return { type: actionArticleTypes.PERSONAL_ARTICLE_REQUEST, payload: { page, id } };
+  personalArticleRequest: (page: number) => {
+    return { type: actionArticleTypes.PERSONAL_ARTICLE_REQUEST, payload: { page } };
   },
   personalArticleSuccess: data => {
     return { type: actionArticleTypes.PERSONAL_ARTICLE_SUCCESS, payload: { data } };
