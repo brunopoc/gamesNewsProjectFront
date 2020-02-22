@@ -1,4 +1,4 @@
-import { put, select, delay } from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import fetch from 'isomorphic-fetch';
 import api from '../../../utils/api';
 
@@ -7,7 +7,6 @@ import { ActionsList } from '.';
 export const getToken = state => state.user.data.token;
 
 export function* loadCategories() {
-  yield delay(3000);
   try {
     const token = yield select(getToken);
 

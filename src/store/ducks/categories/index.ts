@@ -6,7 +6,7 @@ export enum actionCategoriesTypes {
 }
 
 export interface Categories {
-  title: string;
+  label: string;
   value: string;
 }
 

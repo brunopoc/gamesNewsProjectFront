@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { Box, styled } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { ApplicationState } from '../../../store';
+import { ActionsList as CategorieActionList } from '../../../store/ducks/categories';
 
 const MenuListStyled = styled(Box)({
   listStyleType: 'none',
@@ -35,6 +38,13 @@ type OwnProps = {
 };
 
 const AppBarListComponent = ({ direction }: OwnProps) => {
+  const dispatch = useDispatch();
+  const { list } = useSelector((state: ApplicationState) => state.categories);
+
+  useEffect(() => {
+    dispatch(CategorieActionList.listCategoriesRequest());
+  }, []);
+
   return (
     <MenuListStyled component="ul">
       {direction === 'horizontal' ? (
@@ -42,26 +52,26 @@ const AppBarListComponent = ({ direction }: OwnProps) => {
           <Link href="/">
             <MenuItemStyledHorizontal component="li">Home</MenuItemStyledHorizontal>
           </Link>
-          <MenuItemStyledHorizontal component="li">PC</MenuItemStyledHorizontal>
-          <MenuItemStyledHorizontal component="li">Xbox One</MenuItemStyledHorizontal>
-          <MenuItemStyledHorizontal component="li">PS4</MenuItemStyledHorizontal>
-          <MenuItemStyledHorizontal component="li">Nintendo Switch</MenuItemStyledHorizontal>
-          <MenuItemStyledHorizontal component="li">Arcade</MenuItemStyledHorizontal>
-          <MenuItemStyledHorizontal component="li">Animes</MenuItemStyledHorizontal>
-          <MenuItemStyledHorizontal component="li">Outros</MenuItemStyledHorizontal>
+          {list.map(category => (
+            <Link href={`/category/${category.value}`}>
+              <MenuItemStyledHorizontal key={category.value} component="li">
+                {category.label}
+              </MenuItemStyledHorizontal>
+            </Link>
+          ))}
         </>
       ) : (
         <>
           <Link href="/">
             <MenuItemStyledVertical component="li">Home</MenuItemStyledVertical>
           </Link>
-          <MenuItemStyledVertical component="li">PC</MenuItemStyledVertical>
-          <MenuItemStyledVertical component="li">Xbox One</MenuItemStyledVertical>
-          <MenuItemStyledVertical component="li">PS4</MenuItemStyledVertical>
-          <MenuItemStyledVertical component="li">Nintendo Switch</MenuItemStyledVertical>
-          <MenuItemStyledVertical component="li">Arcade</MenuItemStyledVertical>
-          <MenuItemStyledVertical component="li">Animes</MenuItemStyledVertical>
-          <MenuItemStyledVertical component="li">Outros</MenuItemStyledVertical>
+          {list.map(category => (
+            <Link href={`/category/${category.value}`}>
+              <MenuItemStyledVertical key={category.value} component="li">
+                {category.label}
+              </MenuItemStyledVertical>
+            </Link>
+          ))}
         </>
       )}
     </MenuListStyled>

@@ -74,16 +74,20 @@ const UserMenuComponent = () => {
           <Popper
             open={open}
             anchorEl={anchorRef.current}
+            placement="bottom-end"
             role={undefined}
             transition
             disablePortal
+            style={{
+              zIndex: 1,
+            }}
           >
             {({ TransitionProps, placement }) => (
               <Grow
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 {...TransitionProps}
                 style={{
-                  transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom',
+                  transformOrigin: placement === 'bottom-end' ? 'right top' : 'right bottom',
                 }}
               >
                 <Paper>
