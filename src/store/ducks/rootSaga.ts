@@ -22,7 +22,7 @@ import {
   loadArticleListByTag,
 } from './articles/sagas';
 import { loadCategories } from './categories/sagas';
-import { showMessage } from './message/sagas';
+import { showMessage, showError } from './message/sagas';
 import { sendComplaint, loadComplaintsList } from './complaints/sagas';
 
 export default function* rootSaga() {
@@ -46,6 +46,7 @@ export default function* rootSaga() {
     takeLatest(actionArticleTypes.PERSONAL_ARTICLE_REQUEST, loadPersonalArticle),
     takeLatest(actionCategoriesTypes.LIST_CATEGORIES_REQUEST, loadCategories),
     takeLatest(actionMessageTypes.SUCCESS_SHOW, showMessage),
+    takeLatest(actionMessageTypes.ERROR_SHOW, showError),
     takeLatest(actionComplaintTypes.COMPLAINT_REQUEST, sendComplaint),
     takeLatest(actionComplaintTypes.COMPLAINT_LIST_REQUEST, loadComplaintsList),
   ]);

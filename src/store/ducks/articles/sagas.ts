@@ -39,6 +39,7 @@ export function* sendArticle(value) {
     if (result.status === 'Error') {
       yield put(ActionsList.articleFailure());
       yield put(MessageActionList.loadReady());
+      yield put(MessageActionList.errorShow());
     } else {
       yield put(ActionsList.articleSuccess());
       yield put(MessageActionList.loadReady());
@@ -46,6 +47,7 @@ export function* sendArticle(value) {
     }
   } catch (err) {
     yield put(ActionsList.articleFailure());
+    yield put(MessageActionList.errorShow());
     yield put(MessageActionList.loadReady());
   }
 }
@@ -69,6 +71,7 @@ export function* loadArticleList(value) {
   } catch (err) {
     yield put(ActionsList.articleFailure());
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -91,6 +94,7 @@ export function* loadArticleListByCategory(value) {
   } catch (err) {
     yield put(ActionsList.articleFailure());
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -113,6 +117,7 @@ export function* loadArticleListByTag(value) {
   } catch (err) {
     yield put(ActionsList.articleFailure());
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -135,6 +140,7 @@ export function* loadArticle(value) {
   } catch (err) {
     yield put(ActionsList.articleFailure());
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -193,6 +199,8 @@ export function* articleComment(value) {
   if (!result.message) {
     yield put(MessageActionList.successShow());
     yield put(ActionsList.loadArticleSuccess(result));
+  } else {
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -216,6 +224,7 @@ export function* loadPedingArticle(value) {
     yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -250,6 +259,7 @@ export function* loadAproveArticleUpdate(value) {
     yield put(MessageActionList.successShow());
   } catch (err) {
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -273,6 +283,7 @@ export function* loadAllArticle(value) {
     yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -296,5 +307,6 @@ export function* loadPersonalArticle(value) {
     yield put(MessageActionList.loadReady());
   } catch (err) {
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
   }
 }

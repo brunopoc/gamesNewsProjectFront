@@ -5,8 +5,10 @@ import api from '../../../utils/api';
 
 import { ActionsList } from '.';
 import { ActionsList as LoginActionList } from '../user';
+import { ActionsList as MessageActionList } from '../message';
 
 export function* sendRegister(value) {
+  yield put(MessageActionList.loadRequest());
   try {
     const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/singup`, {
       method: 'post',
@@ -20,14 +22,19 @@ export function* sendRegister(value) {
       Cookies.set('token', result.token);
     }
     if (result.message) {
+      yield put(MessageActionList.loadReady());
       yield put(ActionsList.registerFailure());
+      yield put(MessageActionList.errorShow());
     } else {
+      yield put(MessageActionList.loadReady());
       yield all([
         put(ActionsList.registerSuccess(result)),
         put(LoginActionList.loginSuccess(result)),
       ]);
     }
   } catch (err) {
+    yield put(MessageActionList.loadReady());
     yield put(ActionsList.registerFailure());
+    yield put(MessageActionList.errorShow());
   }
 }

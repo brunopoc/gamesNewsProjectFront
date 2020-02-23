@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import dynamic from 'next/dynamic';
 import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
+import Alert from '@material-ui/lab/Alert';
 import Text from '../../atoms/Inputs/Text';
 import Send from '../../atoms/Buttons/Send';
 import { ActionsList } from '../../../store/ducks/articles';
@@ -58,6 +59,8 @@ const ErrorSection = styled(Box)({
   height: '20px',
   textAlign: 'right',
   width: '100%',
+  color: '#C66262',
+  fontWeight: 600,
 });
 
 const FooterForm = styled(Box)({
@@ -73,14 +76,18 @@ const ImageSection = styled(CardMedia)({
   backgroundColor: '#8B8B8B',
 });
 
+const AlertStyled = styled(Alert)({
+  width: '100%',
+});
+
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Por favor, coloque um titulo'),
   content: Yup.string()
     .required('Por favor, escreva sua postagem')
     .min(250, 'O Seu artigo é muito pequeno'),
   picturePreview: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
-  categories: Yup.array().required('Por favor, informe a categoria'),
-  tags: Yup.array(),
+  categories: Yup.mixed().required('Por favor, informe a categoria'),
+  tags: Yup.mixed(),
 });
 
 const WriteFormComponent = () => {
@@ -232,6 +239,11 @@ const WriteFormComponent = () => {
                 </FieldContainer>
               </FormContainer>
             </Grid>
+            {(errors.picturePreview || errors.categories || errors.title || errors.content) && (
+              <Grid container item sm={12}>
+                <AlertStyled severity="error">Ocorreu algum problema no seu artigo</AlertStyled>
+              </Grid>
+            )}
           </Grid>
           <FooterForm>
             <Send> Enviar </Send>
