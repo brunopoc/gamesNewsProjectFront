@@ -25,6 +25,11 @@ const BoxFooterStyled = styled(Box)({
   marginTop: '10px',
 });
 
+const LinkStyled = styled(Box)({
+  color: '#738FCE',
+  cursor: 'pointer',
+});
+
 const LoginCardComponent: React.FC = () => {
   const error = useSelector((state: ApplicationState) => state.user.error);
   return (
@@ -44,7 +49,7 @@ const LoginCardComponent: React.FC = () => {
           Ainda não possui uma conta?
           <br />
           <Link href="/register">
-            <div>Clique aqui e cria uma!</div>
+            <LinkStyled>Clique aqui e cria uma!</LinkStyled>
           </Link>
         </BoxFooterStyled>
       </BoxStyled>

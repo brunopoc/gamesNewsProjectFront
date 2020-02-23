@@ -9,6 +9,7 @@ import { ActionsList } from '.';
 export const getToken = state => state.user.data.token;
 
 export function* sendLogin(value) {
+  yield put(MessageActionList.loadRequest());
   try {
     const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/singin`, {
       method: 'post',
@@ -22,12 +23,17 @@ export function* sendLogin(value) {
       Cookies.set('token', result.token);
     }
     if (result.message) {
+      yield put(MessageActionList.loadReady());
       yield put(ActionsList.loginFailure());
+      yield put(MessageActionList.errorShow());
     } else {
+      yield put(MessageActionList.loadReady());
       yield put(ActionsList.loginSuccess(result));
     }
   } catch (err) {
+    yield put(MessageActionList.loadReady());
     yield put(ActionsList.loginFailure());
+    yield put(MessageActionList.errorShow());
   }
 }
 
@@ -81,12 +87,14 @@ export function* updateProfile(value) {
 
     if (result.status === 'Error') {
       yield put(MessageActionList.loadReady());
+      yield put(MessageActionList.errorShow());
     } else {
       yield put(MessageActionList.loadReady());
       yield put(MessageActionList.successShow());
       yield put(ActionsList.updateProfileSuccess(result));
     }
   } catch (err) {
+    yield put(MessageActionList.errorShow());
     yield put(MessageActionList.loadReady());
   }
 }

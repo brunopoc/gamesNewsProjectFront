@@ -23,6 +23,7 @@ const MainComponent: React.FC = ({ children }) => {
   const logged = useSelector((state: ApplicationState) => state.user.logged);
   const load = useSelector((state: ApplicationState) => state.message.load) || false;
   const success = useSelector((state: ApplicationState) => state.message.success) || false;
+  const error = useSelector((state: ApplicationState) => state.message.error) || false;
   RetrieveData(logged);
 
   if (typeof window !== 'undefined') {
@@ -45,6 +46,11 @@ const MainComponent: React.FC = ({ children }) => {
       <Snackbar open={success}>
         <MuiAlert severity="success" elevation={6} variant="filled">
           Tudo ocorreu com sucesso!
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar open={error}>
+        <MuiAlert severity="error" elevation={6} variant="filled">
+          Algo deu errado!
         </MuiAlert>
       </Snackbar>
       <div className="layout">{children}</div>
