@@ -1,6 +1,6 @@
 const prodConfig = {
   publicRuntimeConfig: {
-    API_ENDPOINT: 'http://sou-gamer-com-orgulho-back.herokuapp.com/api/v1',
+    API_ENDPOINT: 'https://sou-gamer-com-orgulho-back.herokuapp.com/api/v1',
   },
 };
 
