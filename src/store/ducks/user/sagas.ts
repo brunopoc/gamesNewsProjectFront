@@ -115,8 +115,10 @@ export function* loadAllUsers(value) {
     );
     const result = yield resp.json();
     yield put(ActionsList.listUsersSuccess(result));
+    yield put(MessageActionList.successShow());
     yield put(MessageActionList.loadReady());
   } catch (err) {
+    yield put(MessageActionList.errorShow());
     yield put(MessageActionList.loadReady());
   }
 }
