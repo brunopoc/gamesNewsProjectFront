@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { Box, styled } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ApplicationState } from '../../../store';
-import { ActionsList as CategorieActionList } from '../../../store/ducks/categories';
 
 const MenuListStyled = styled(Box)({
   listStyleType: 'none',
@@ -38,12 +37,7 @@ type OwnProps = {
 };
 
 const AppBarListComponent = ({ direction }: OwnProps) => {
-  const dispatch = useDispatch();
   const { list } = useSelector((state: ApplicationState) => state.categories);
-
-  useEffect(() => {
-    dispatch(CategorieActionList.listCategoriesRequest());
-  }, []);
 
   return (
     <MenuListStyled component="ul">
