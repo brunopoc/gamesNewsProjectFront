@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Box, Grid, styled, CardMedia } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
@@ -10,7 +10,6 @@ import Text from '../../atoms/Inputs/Text';
 import Send from '../../atoms/Buttons/Send';
 import { ActionsList } from '../../../store/ducks/articles';
 import { ApplicationState } from '../../../store';
-import { ActionsList as CategorieActionList } from '../../../store/ducks/categories';
 
 const CKEditor = dynamic(() => import('../RichText/RichTextComponent'), {
   ssr: false,
@@ -102,9 +101,6 @@ const WriteFormComponent = () => {
     };
     dispatch(ActionsList.articleRequest(data));
   }
-  useEffect(() => {
-    dispatch(CategorieActionList.listCategoriesRequest());
-  }, []);
 
   return (
     <Formik

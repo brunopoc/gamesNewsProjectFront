@@ -18,6 +18,8 @@ import {
   loadAproveArticleUpdate,
   loadAllArticle,
   loadPersonalArticle,
+  loadArticleListByCategory,
+  loadArticleListByTag,
 } from './articles/sagas';
 import { loadCategories } from './categories/sagas';
 import { showMessage } from './message/sagas';
@@ -33,6 +35,8 @@ export default function* rootSaga() {
     takeLatest(actionRegisterTypes.REGISTER_REQUEST, sendRegister),
     takeLatest(actionArticleTypes.ARTICLE_REQUEST, sendArticle),
     takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST, loadArticleList),
+    takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST_BY_CATEGORY, loadArticleListByCategory),
+    takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST_BY_TAG, loadArticleListByTag),
     takeLatest(actionArticleTypes.LOAD_ARTICLE_REQUEST, loadArticle),
     takeLatest(actionArticleTypes.ARTICLE_UPDATE_LIKE_REQUEST, likeArticle),
     takeLatest(actionArticleTypes.ARTICLE_COMMENT_REQUEST, articleComment),

@@ -19,7 +19,9 @@ const WriteCardComponent = () => {
   const redirect = useSelector((state: any) => state.user.redirect);
 
   useEffect(() => {
-    dispatch(CategorieActionList.listCategoriesRequest());
+    setTimeout(() => {
+      dispatch(CategorieActionList.listCategoriesRequest());
+    }, 3000);
     withAuthSync(redirect);
   }, []);
 
