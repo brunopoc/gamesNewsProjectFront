@@ -14,14 +14,12 @@ const Category = () => {
     (state: ApplicationState) => state.articles,
   );
   useEffect(() => {
-    dispatch(
-      ActionsList.articleListRequestByCategory(currentPage, router.query.category.toString()),
-    );
+    dispatch(ActionsList.articleListRequestByTag(currentPage, router.query.tag.toString()));
   }, []);
 
   const handlePageClick = data => {
     const selected = data.selected + 1;
-    dispatch(ActionsList.articleListRequestByCategory(selected, router.query.category.toString()));
+    dispatch(ActionsList.articleListRequestByTag(selected, router.query.tag.toString()));
   };
   const initPage = currentPage - 1;
   return (

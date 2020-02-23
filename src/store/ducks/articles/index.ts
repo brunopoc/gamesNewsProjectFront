@@ -5,6 +5,8 @@ export enum actionArticleTypes {
   ARTICLE_SUCCESS = '@ARTICLE_/ARTICLE_SUCCESS',
   ARTICLE_FAILURE = '@ARTICLE_/ARTICLE_FAILURE',
   ARTICLE_LIST_REQUEST = '@ARTICLE_/ARTICLE_LIST_REQUEST',
+  ARTICLE_LIST_REQUEST_BY_CATEGORY = '@ARTICLE_/ARTICLE_LIST_REQUEST_BY_CATEGORY',
+  ARTICLE_LIST_REQUEST_BY_TAG = '@ARTICLE_/ARTICLE_LIST_REQUEST_BY_TAG',
   ARTICLE_LIST_SUCCESS = '@ARTICLE_/ARTICLE_LIST_SUCCESS',
   LOAD_ARTICLE_REQUEST = '@ARTICLE_/LOAD_ARTICLE_REQUEST',
   LOAD_ARTICLE_SUCCESS = '@ARTICLE_/LOAD_ARTICLE_SUCCESS',
@@ -103,6 +105,15 @@ export const ActionsList = {
   },
   articleListRequest: (page: number) => {
     return { type: actionArticleTypes.ARTICLE_LIST_REQUEST, payload: { page } };
+  },
+  articleListRequestByCategory: (page: number, category: string) => {
+    return {
+      type: actionArticleTypes.ARTICLE_LIST_REQUEST_BY_CATEGORY,
+      payload: { page, category },
+    };
+  },
+  articleListRequestByTag: (page: number, tag: string) => {
+    return { type: actionArticleTypes.ARTICLE_LIST_REQUEST_BY_TAG, payload: { page, tag } };
   },
   articleListSuccess: (data: ArticleState) => {
     return { type: actionArticleTypes.ARTICLE_LIST_SUCCESS, payload: { data } };

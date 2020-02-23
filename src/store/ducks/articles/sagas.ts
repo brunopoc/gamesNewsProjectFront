@@ -72,6 +72,50 @@ export function* loadArticleList(value) {
   }
 }
 
+export function* loadArticleListByCategory(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/category/${value.payload.category}/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      },
+    );
+    const result = yield resp.json();
+
+    yield put(ActionsList.articleListSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(ActionsList.articleFailure());
+    yield put(MessageActionList.loadReady());
+  }
+}
+
+export function* loadArticleListByTag(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/tag/${value.payload.tag}/${value.payload.page}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      },
+    );
+    const result = yield resp.json();
+
+    yield put(ActionsList.articleListSuccess(result));
+    yield put(MessageActionList.loadReady());
+  } catch (err) {
+    yield put(ActionsList.articleFailure());
+    yield put(MessageActionList.loadReady());
+  }
+}
+
 export function* loadArticle(value) {
   yield put(MessageActionList.loadRequest());
   try {
