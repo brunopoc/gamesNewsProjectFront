@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { ArticlesComponent, CommonComponent } from '../src/components/organisms';
 import { ApplicationState } from '../src/store';
 import { ActionsList } from '../src/store/ducks/articles';
+import { ActionsList as CategoriesActionList } from '../src/store/ducks/categories';
 
 const Index = () => {
   const dispatch = useDispatch();
   const { list, currentPage, totalOfPages } = useSelector(
     (state: ApplicationState) => state.articles,
   );
-  useEffect(() => {
-    dispatch(ActionsList.articleListRequest(currentPage));
-  }, []);
 
   const handlePageClick = data => {
     const selected = data.selected + 1;
@@ -76,6 +74,11 @@ const Index = () => {
       </style>
     </div>
   );
+};
+
+Index.getInitialProps = async ({ store }) => {
+  store.dispatch(ActionsList.articleListRequest(1));
+  store.dispatch(CategoriesActionList.listCategoriesRequest());
 };
 
 export default Index;

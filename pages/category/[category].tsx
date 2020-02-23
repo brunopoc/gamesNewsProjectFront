@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -6,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { ArticlesComponent, CommonComponent } from '../../src/components/organisms';
 import { ApplicationState } from '../../src/store';
 import { ActionsList } from '../../src/store/ducks/articles';
+import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
 
 const Category = () => {
   const dispatch = useDispatch();
@@ -13,11 +14,6 @@ const Category = () => {
   const { list, currentPage, totalOfPages } = useSelector(
     (state: ApplicationState) => state.articles,
   );
-  useEffect(() => {
-    dispatch(
-      ActionsList.articleListRequestByCategory(currentPage, router.query.category.toString()),
-    );
-  }, []);
 
   const handlePageClick = data => {
     const selected = data.selected + 1;
@@ -80,6 +76,11 @@ const Category = () => {
       </style>
     </div>
   );
+};
+
+Category.getInitialProps = async ({ store, query }) => {
+  store.dispatch(ActionsList.articleListRequestByCategory(1, query.category.toString()));
+  store.dispatch(CategoriesActionList.listCategoriesRequest());
 };
 
 export default Category;
