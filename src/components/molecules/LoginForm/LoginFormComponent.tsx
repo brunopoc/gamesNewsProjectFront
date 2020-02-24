@@ -36,6 +36,8 @@ const ErrorSection = styled(Box)({
   height: '20px',
   textAlign: 'right',
   width: '100%',
+  color: '#C66262',
+  fontWeight: 600,
 });
 
 const LoginFormComponent = () => {

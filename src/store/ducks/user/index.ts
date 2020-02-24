@@ -16,6 +16,14 @@ export enum actionLoginTypes {
   LIST_USERS_SUCCESS = '@user/LIST_USERS_SUCCESS',
   BLOCK_REQUEST = '@user/BLOCK_REQUEST',
   BLOCK_SUCCESS = '@user/BLOCK_SUCCESS',
+  CONFIRM_EMAIL_REQUEST = '@user/CONFIRM_EMAIL_REQUEST',
+  CONFIRM_EMAIL_ERROR = '@user/CONFIRM_EMAIL_ERROR',
+  FORGOT_PASSWORD_REQUEST = '@user/FORGOT_PASSWORD_REQUEST',
+  FORGOT_PASSWORD_ERROR = '@user/FORGOT_PASSWORD_ERROR',
+  FORGOT_PASSWORD_SUCCESS = '@user/FORGOT_PASSWORD_SUCCESS',
+  RESET_PASSWORD_REQUEST = '@user/RESET_PASSWORD_REQUEST',
+  RESET_PASSWORD_SUCCESS = '@user/RESET_PASSWORD_SUCCESS',
+  RESET_PASSWORD_ERROR = '@user/RESET_PASSWORD_ERROR',
 }
 
 type data = {
@@ -26,6 +34,7 @@ type data = {
   avatar?: string;
   blocked?: boolean;
   likedPosts?: string[];
+  emailChecked: boolean;
 };
 
 export interface User {
@@ -42,6 +51,11 @@ export interface UserState {
   readonly loading: boolean;
   readonly error: boolean;
   readonly redirect: boolean;
+  readonly verifiedError: boolean;
+  readonly forgetPasswordError: boolean;
+  readonly forgetPasswordSuccess: boolean;
+  readonly resetPasswordError: boolean;
+  readonly resetPasswordSuccess: boolean;
 }
 
 export const ActionsList = {
@@ -87,11 +101,35 @@ export const ActionsList = {
   blockSuccess: data => {
     return { type: actionLoginTypes.BLOCK_SUCCESS, payload: { data } };
   },
+  confirmEmailRequest: (token: string) => {
+    return { type: actionLoginTypes.CONFIRM_EMAIL_REQUEST, payload: { token } };
+  },
+  confirmEmailError: () => {
+    return { type: actionLoginTypes.CONFIRM_EMAIL_ERROR };
+  },
+  forgotPasswordRequest: (email: string) => {
+    return { type: actionLoginTypes.FORGOT_PASSWORD_REQUEST, payload: { email } };
+  },
+  forgotPasswordError: () => {
+    return { type: actionLoginTypes.FORGOT_PASSWORD_ERROR };
+  },
+  forgotPasswordSuccess: () => {
+    return { type: actionLoginTypes.FORGOT_PASSWORD_SUCCESS };
+  },
+  resetPasswordRequest: data => {
+    return { type: actionLoginTypes.RESET_PASSWORD_REQUEST, payload: { data } };
+  },
+  resetPasswordSuccess: () => {
+    return { type: actionLoginTypes.RESET_PASSWORD_SUCCESS };
+  },
+  resetPasswordError: () => {
+    return { type: actionLoginTypes.RESET_PASSWORD_ERROR };
+  },
 };
 
 const INITIAL_STATE: UserState = {
   data: {
-    data: { name: '', email: '', id: '', likedPosts: [], avatar: '' },
+    data: { name: '', email: '', id: '', likedPosts: [], avatar: '', emailChecked: false },
     totalOfUsers: 1,
     currentUsersPage: 1,
   },
@@ -99,6 +137,11 @@ const INITIAL_STATE: UserState = {
   error: false,
   loading: false,
   redirect: false,
+  verifiedError: false,
+  forgetPasswordError: false,
+  forgetPasswordSuccess: false,
+  resetPasswordError: false,
+  resetPasswordSuccess: false,
 };
 
 const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
@@ -125,6 +168,16 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, reduceAction) => {
       return { ...state, loading: true };
     case actionLoginTypes.REDIRECT_REQUEST:
       return { ...state, redirect: true };
+    case actionLoginTypes.CONFIRM_EMAIL_ERROR:
+      return { ...state, verifiedError: true };
+    case actionLoginTypes.FORGOT_PASSWORD_ERROR:
+      return { ...state, forgetPasswordError: true };
+    case actionLoginTypes.FORGOT_PASSWORD_SUCCESS:
+      return { ...state, forgetPasswordSuccess: true };
+    case actionLoginTypes.RESET_PASSWORD_ERROR:
+      return { ...state, resetPasswordError: true };
+    case actionLoginTypes.RESET_PASSWORD_SUCCESS:
+      return { ...state, resetPasswordSuccess: true };
     case actionLoginTypes.TOKEN_RETRIEVE_SUCCESS:
       return {
         ...state,

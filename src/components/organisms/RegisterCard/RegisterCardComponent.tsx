@@ -28,7 +28,7 @@ const RegisterCardComponent: React.FC = () => {
         Crie uma conta e faça parte da nossa comunidade!
       </BoxHeaderStyled>
       <BoxStyled>
-        {error && <Alert severity="error">Email já cadastrado</Alert>}
+        {error && <Alert severity="error">Email ou Usuario já cadastrado</Alert>}
         <RegisterFormComponent />
       </BoxStyled>
     </Card>
