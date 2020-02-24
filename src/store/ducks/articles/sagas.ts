@@ -41,6 +41,7 @@ export function* sendArticle(value) {
       yield put(MessageActionList.loadReady());
       yield put(MessageActionList.errorShow());
     } else {
+      value.payload.resetForm();
       yield put(ActionsList.articleSuccess());
       yield put(MessageActionList.loadReady());
       yield put(MessageActionList.successShow());

@@ -94,8 +94,8 @@ export interface ArticleState {
 }
 
 export const ActionsList = {
-  articleRequest: (data: Article) => {
-    return { type: actionArticleTypes.ARTICLE_REQUEST, payload: { data } };
+  articleRequest: (data: Article, resetForm) => {
+    return { type: actionArticleTypes.ARTICLE_REQUEST, payload: { data, resetForm } };
   },
   articleSuccess: () => {
     return { type: actionArticleTypes.ARTICLE_SUCCESS };
