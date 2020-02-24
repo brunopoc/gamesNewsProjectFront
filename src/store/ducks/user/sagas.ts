@@ -65,13 +65,18 @@ export function* updateProfile(value) {
   try {
     const token = yield select(getToken);
     const formdata = value.payload.data;
+
     const imgFormData = new FormData();
-    imgFormData.append('upload', formdata.upload, formdata.upload.name);
-    const imgUpload = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`, {
-      method: 'post',
-      body: imgFormData,
-    });
-    const imgResult = yield imgUpload.json();
+    let imgUpload;
+    let imgResult = { url: '' };
+    if (formdata.upload) {
+      imgFormData.append('upload', formdata.upload, formdata.upload.name);
+      imgUpload = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/uploadImage/`, {
+        method: 'post',
+        body: imgFormData,
+      });
+      imgResult = yield imgUpload.json();
+    }
 
     const data = { ...formdata, avatar: imgResult.url };
 

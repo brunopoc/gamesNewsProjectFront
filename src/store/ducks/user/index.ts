@@ -87,7 +87,7 @@ export const ActionsList = {
     return { type: actionLoginTypes.UPDATE_PROFILE_REQUEST, payload: { data } };
   },
   updateProfileSuccess: (data: User) => {
-    return { type: actionLoginTypes.UPDATE_PROFILE_REQUEST, payload: { data } };
+    return { type: actionLoginTypes.UPDATE_PROFILE_SUCCESS, payload: { data } };
   },
   listUsersRequest: (page: number) => {
     return { type: actionLoginTypes.LIST_USERS_REQUEST, payload: { page } };

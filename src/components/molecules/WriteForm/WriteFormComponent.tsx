@@ -85,7 +85,6 @@ const validationSchema = Yup.object().shape({
   content: Yup.string()
     .required('Por favor, escreva sua postagem')
     .min(250, 'O Seu artigo é muito pequeno'),
-  picturePreview: Yup.mixed().required('Por favor, faça o upload de uma imagem de destaque'),
   categories: Yup.mixed().required('Por favor, informe a categoria'),
   tags: Yup.mixed(),
 });
@@ -99,14 +98,13 @@ const WriteFormComponent = () => {
 
   const categoriesOptions = useSelector((state: ApplicationState) => state.categories.list) || [];
   function handleFormikSubmit(values, { resetForm }) {
-    resetForm({});
     const data = {
       ...values,
       author,
       id: editableArticle.id ? editableArticle.id : '',
       image: editableArticle.id ? editableArticle.image : '',
     };
-    dispatch(ActionsList.articleRequest(data));
+    dispatch(ActionsList.articleRequest(data, resetForm));
   }
 
   return (
@@ -239,7 +237,10 @@ const WriteFormComponent = () => {
                 </FieldContainer>
               </FormContainer>
             </Grid>
-            {(errors.picturePreview || errors.categories || errors.title || errors.content) && (
+            {((errors.picturePreview && touched.picturePreview) ||
+              (errors.categories && touched.categories) ||
+              (errors.title && touched.title) ||
+              (errors.content && touched.content)) && (
               <Grid container item sm={12}>
                 <AlertStyled severity="error">Ocorreu algum problema no seu artigo</AlertStyled>
               </Grid>
