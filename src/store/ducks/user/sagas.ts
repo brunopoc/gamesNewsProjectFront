@@ -139,7 +139,75 @@ export function* loadBlockUser(value) {
     const result = yield resp.json();
     yield put(ActionsList.blockSuccess(result));
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.successShow());
   } catch (err) {
     yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
+  }
+}
+
+export function* confirmEmail(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const data = { token: value.payload.token };
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/confirmemail`, {
+      method: 'post',
+      body: JSON.stringify(data, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+    if (result.message !== 'Success') yield put(ActionsList.confirmEmailError());
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.successShow());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
+  }
+}
+
+export function* forgotPassword(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const data = { email: value.payload.email };
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/forgetpassword`, {
+      method: 'post',
+      body: JSON.stringify(data, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+    if (result.message !== 'Success') yield put(ActionsList.forgotPasswordError());
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.successShow());
+    yield put(ActionsList.forgotPasswordSuccess());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
+  }
+}
+
+export function* resetPassword(value) {
+  yield put(MessageActionList.loadRequest());
+  try {
+    const data = { ...value.payload.data };
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/users/resetpassword`, {
+      method: 'post',
+      body: JSON.stringify(data, null, 2),
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+    if (result.message !== 'Success') yield put(ActionsList.resetPasswordError());
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.successShow());
+    yield put(ActionsList.resetPasswordSuccess());
+  } catch (err) {
+    yield put(MessageActionList.loadReady());
+    yield put(MessageActionList.errorShow());
+    yield put(ActionsList.resetPasswordError());
   }
 }

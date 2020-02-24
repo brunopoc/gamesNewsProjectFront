@@ -45,6 +45,9 @@ const LoginCardComponent: React.FC = () => {
           <div />
         )}
         <LoginFormComponent />
+        <Link href="/forgot">
+          <LinkStyled>Esqueceu sua senha? Clique aqui!</LinkStyled>
+        </Link>
         <BoxFooterStyled component="div">
           Ainda não possui uma conta?
           <br />

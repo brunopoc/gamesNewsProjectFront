@@ -6,7 +6,16 @@ import { actionArticleTypes } from './articles';
 import { actionCategoriesTypes } from './categories';
 import { actionMessageTypes } from './message';
 import { actionComplaintTypes } from './complaints';
-import { sendLogin, retrieveToken, updateProfile, loadAllUsers, loadBlockUser } from './user/sagas';
+import {
+  sendLogin,
+  retrieveToken,
+  updateProfile,
+  loadAllUsers,
+  loadBlockUser,
+  confirmEmail,
+  forgotPassword,
+  resetPassword,
+} from './user/sagas';
 import { sendRegister } from './register/sagas';
 import {
   sendArticle,
@@ -32,7 +41,12 @@ export default function* rootSaga() {
     takeLatest(actionLoginTypes.UPDATE_PROFILE_REQUEST, updateProfile),
     takeLatest(actionLoginTypes.LIST_USERS_REQUEST, loadAllUsers),
     takeLatest(actionLoginTypes.BLOCK_REQUEST, loadBlockUser),
+    takeLatest(actionLoginTypes.CONFIRM_EMAIL_REQUEST, confirmEmail),
+    takeLatest(actionLoginTypes.FORGOT_PASSWORD_REQUEST, forgotPassword),
+    takeLatest(actionLoginTypes.RESET_PASSWORD_REQUEST, resetPassword),
+
     takeLatest(actionRegisterTypes.REGISTER_REQUEST, sendRegister),
+
     takeLatest(actionArticleTypes.ARTICLE_REQUEST, sendArticle),
     takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST, loadArticleList),
     takeLatest(actionArticleTypes.ARTICLE_LIST_REQUEST_BY_CATEGORY, loadArticleListByCategory),
@@ -44,9 +58,12 @@ export default function* rootSaga() {
     takeLatest(actionArticleTypes.APROVE_ARTICLE_UPDATE_REQUEST, loadAproveArticleUpdate),
     takeLatest(actionArticleTypes.ALL_ARTICLE_REQUEST, loadAllArticle),
     takeLatest(actionArticleTypes.PERSONAL_ARTICLE_REQUEST, loadPersonalArticle),
+
     takeLatest(actionCategoriesTypes.LIST_CATEGORIES_REQUEST, loadCategories),
+
     takeLatest(actionMessageTypes.SUCCESS_SHOW, showMessage),
     takeLatest(actionMessageTypes.ERROR_SHOW, showError),
+
     takeLatest(actionComplaintTypes.COMPLAINT_REQUEST, sendComplaint),
     takeLatest(actionComplaintTypes.COMPLAINT_LIST_REQUEST, loadComplaintsList),
   ]);

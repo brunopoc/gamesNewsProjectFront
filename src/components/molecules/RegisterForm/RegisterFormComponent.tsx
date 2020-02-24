@@ -37,6 +37,8 @@ const ErrorSection = styled(Box)({
   height: '20px',
   textAlign: 'right',
   width: '100%',
+  color: '#C66262',
+  fontWeight: 600,
 });
 
 const RegisterFormComponent = () => {
@@ -47,6 +49,7 @@ const RegisterFormComponent = () => {
       .email('Por favor, coloque um email')
       .required('Por favor, coloque um email'),
     name: Yup.string().required('Por favor, coloque um nome'),
+    nickname: Yup.string().required('Por favor, coloque um nome de usuario'),
     password: Yup.string().required('Por favor, coloque uma senha'),
   });
 
@@ -56,7 +59,7 @@ const RegisterFormComponent = () => {
 
   return (
     <Formik
-      initialValues={{ email: '', password: '', name: '' }}
+      initialValues={{ email: '', password: '', name: '', nickname: '' }}
       validationSchema={signinValidationSchema}
       onSubmit={handleFormikSubmit}
     >
@@ -75,6 +78,23 @@ const RegisterFormComponent = () => {
                     placeholder="Digite seu email ..."
                   />
                   <ErrorSection>{errors.email && touched.email && errors.email}</ErrorSection>
+                </FieldContainer>
+              </FormContainer>
+            </Grid>
+            <Grid container item sm={12}>
+              <FormContainer>
+                <FieldContainer>
+                  <Text
+                    value={values.nickname}
+                    name="nickname"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    label="Crie um nome de usuario :"
+                    placeholder="Crie um nome de usuario ..."
+                  />
+                  <ErrorSection>
+                    {errors.nickname && touched.nickname && errors.nickname}
+                  </ErrorSection>
                 </FieldContainer>
               </FormContainer>
             </Grid>
