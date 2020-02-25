@@ -12,3 +12,4 @@ export { default as HeadComponent } from './Head/HeadComponent';
 export { default as CommentsComponent } from './Comments/CommentsComponent';
 export { default as AnswaresComponent } from './Answares/AnswaresComponent';
 export { default as AppBarComponent } from './AppBar/AppBarComponent';
+export { default as SimilarComponent } from './Similar/SimilarComponent';

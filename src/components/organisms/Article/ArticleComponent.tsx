@@ -1,9 +1,19 @@
 import React from 'react';
-import { Card, Box, CardMedia, CardContent, Typography, styled } from '@material-ui/core';
+import {
+  Card,
+  Box,
+  CardMedia,
+  CardContent,
+  Typography,
+  styled,
+  Breadcrumbs,
+  Link,
+  Grid,
+} from '@material-ui/core';
 import { FromNow } from '../../../utils/moment';
 import { Article } from '../../../store/ducks/articles';
 import Like from '../../atoms/Buttons/Like';
-import { CommentsComponent } from '..';
+import { CommentsComponent, SimilarComponent } from '..';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -16,8 +26,7 @@ const Date = styled(Typography)({
   fontStyle: 'italic',
   color: '#b2b2b2',
   textAlign: 'right',
-  marginTop: '5px',
-  fontSize: '14px',
+  fontSize: '12px',
 });
 
 const Author = styled(Typography)({
@@ -43,6 +52,27 @@ const DescriptionArea = styled(Box)({
   padding: '10px',
 });
 
+const TitleArea = styled(Box)({
+  marginBottom: '0px',
+});
+
+const BreadcrumbsStyled = styled(Breadcrumbs)({
+  marginBottom: '10px',
+  marginTop: '5px',
+  fontSize: '12px',
+  fontWeight: 600,
+});
+
+const DataAndAuthor = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '100%',
+});
+
+const TagsSection = styled(Box)({
+  padding: '10px',
+});
+
 type OwnProps = {
   article: Article;
 };
@@ -61,12 +91,39 @@ const ArticleComponent = (props: OwnProps) => {
         <Content component="div">
           <CardContent>
             <div>
-              <h3>{article.title}</h3>
+              <TitleArea component="h3">{article.title}</TitleArea>
+              <BreadcrumbsStyled aria-label="breadcrumb">
+                <Link color="inherit" href="/">
+                  Home
+                </Link>
+                {article.categories.map(category => (
+                  <Link key={category.value} color="inherit" href={`/category/${category.value}`}>
+                    {category.label}
+                  </Link>
+                ))}
+              </BreadcrumbsStyled>
               <ImageCard image={imageURL} />
             </div>
             <DescriptionArea dangerouslySetInnerHTML={{ __html: article?.content }} />
-            <Author>{`Autor: ${authorName}`}</Author>
-            <Date>{articleCreatedAt}</Date>
+            <TagsSection>
+              <Grid container spacing={1}>
+                <Grid container item sm={6}>
+                  <BreadcrumbsStyled aria-label="breadcrumb">
+                    {article.tags.map(tag => (
+                      <Link key={tag.value} color="inherit" href={`/tag/${tag.value}`}>
+                        {tag.label}
+                      </Link>
+                    ))}
+                  </BreadcrumbsStyled>
+                </Grid>
+                <Grid container item sm={6}>
+                  <DataAndAuthor>
+                    <Author>{`Autor: ${authorName}`}</Author>
+                    <Date>{articleCreatedAt}</Date>
+                  </DataAndAuthor>
+                </Grid>
+              </Grid>
+            </TagsSection>
           </CardContent>
           <FooterCard component="div">
             <Like articleId={article.id} articleLikes={article.likes} />
@@ -75,6 +132,7 @@ const ArticleComponent = (props: OwnProps) => {
           </FooterCard>
         </Content>
       </Card>
+      <SimilarComponent category={article.categories[0].value} />
       <CommentsComponent comments={article.comments} articleID={article.id} />
     </Content>
   );

@@ -23,6 +23,8 @@ export enum actionArticleTypes {
   PERSONAL_ARTICLE_REQUEST = '@ARTICLE_/PERSONAL_ARTICLE_REQUEST',
   PERSONAL_ARTICLE_SUCCESS = '@ARTICLE_/PERSONAL_ARTICLE_SUCCESS',
   PERSONAL_ARTICLE_UPDATE_SUCCESS = '@ARTICLE_/PERSONAL_ARTICLE_UPDATE_SUCCESS',
+  LOAD_SIMILAR_ARTICLE_REQUEST = '@ARTICLE_/LOAD_SIMILAR_ARTICLE_REQUEST',
+  LOAD_SIMILAR_ARTICLE_SUCCESS = '@ARTICLE_/LOAD_SIMILAR_ARTICLE_SUCCESS',
 }
 
 type Author = {
@@ -81,6 +83,7 @@ export interface ArticleState {
   readonly pending?: Article[];
   readonly allPosts?: Article[];
   readonly personalPosts?: Article[];
+  readonly similar?: Article[];
   readonly totalOfPendingPages: number;
   readonly totalOfAllPages: number;
   readonly totalOfPersonalPages: number;
@@ -163,6 +166,12 @@ export const ActionsList = {
   personalArticleUpdateSuccess: data => {
     return { type: actionArticleTypes.PERSONAL_ARTICLE_UPDATE_SUCCESS, payload: { data } };
   },
+  loadSimilarArticleRequest: data => {
+    return { type: actionArticleTypes.LOAD_SIMILAR_ARTICLE_REQUEST, payload: { data } };
+  },
+  loadSimilarArticleSuccess: data => {
+    return { type: actionArticleTypes.LOAD_SIMILAR_ARTICLE_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
@@ -235,6 +244,8 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
       return { ...state, ...reduceAction.payload.data };
     case actionArticleTypes.LOAD_EDITABLE_ARTICLE:
       return { ...state, editableArticle: reduceAction.payload.data };
+    case actionArticleTypes.LOAD_SIMILAR_ARTICLE_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
     default:
       return state;
   }
