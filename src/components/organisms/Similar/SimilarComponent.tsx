@@ -44,6 +44,11 @@ const ImageCard = styled(CardMedia)({
   borderRadius: '5px',
 });
 
+const CardActionAreaStyled = styled(CardActionArea)({
+  height: '100%',
+  width: '100%',
+});
+
 type OwnProps = {
   category: string;
 };
@@ -72,12 +77,12 @@ const SimilarComponent = (props: OwnProps) => {
                 return (
                   <Grid key={article.refer} container item sm={4}>
                     <Link href="/post/[refer]" as={`/post/${article.refer}`}>
-                      <CardActionArea>
+                      <CardActionAreaStyled>
                         <SimilarContainer>
                           <ImageCard image={imageURL} />
                           <SimilarTitleContainer>{article.title}</SimilarTitleContainer>
                         </SimilarContainer>
-                      </CardActionArea>
+                      </CardActionAreaStyled>
                     </Link>
                   </Grid>
                 );

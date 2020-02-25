@@ -25,6 +25,11 @@ export enum actionArticleTypes {
   PERSONAL_ARTICLE_UPDATE_SUCCESS = '@ARTICLE_/PERSONAL_ARTICLE_UPDATE_SUCCESS',
   LOAD_SIMILAR_ARTICLE_REQUEST = '@ARTICLE_/LOAD_SIMILAR_ARTICLE_REQUEST',
   LOAD_SIMILAR_ARTICLE_SUCCESS = '@ARTICLE_/LOAD_SIMILAR_ARTICLE_SUCCESS',
+
+  MOST_VIEWED_IN_WEEK_REQUEST = '@ARTICLE_/MOST_VIEWED_IN_WEEK_REQUEST',
+  MOST_VIEWED_IN_WEEK_SUCCESS = '@ARTICLE_/MOST_VIEWED_IN_WEEK_SUCCESS',
+  MOST_LIKED_IN_WEEK_REQUEST = '@ARTICLE_/MOST_LIKED_IN_WEEK_REQUEST',
+  MOST_LIKED_IN_WEEK_SUCCESS = '@ARTICLE_/MOST_LIKED_IN_WEEK_SUCCESS',
 }
 
 type Author = {
@@ -94,6 +99,8 @@ export interface ArticleState {
   readonly currentPage: number;
   readonly currentArticle?: Article;
   readonly editableArticle?: Article;
+  readonly mostViewedInWeek?: Article;
+  readonly mostLikedInWeek?: Article;
 }
 
 export const ActionsList = {
@@ -172,6 +179,19 @@ export const ActionsList = {
   loadSimilarArticleSuccess: data => {
     return { type: actionArticleTypes.LOAD_SIMILAR_ARTICLE_SUCCESS, payload: { data } };
   },
+
+  mostViewedInWeekRequest: () => {
+    return { type: actionArticleTypes.MOST_VIEWED_IN_WEEK_REQUEST };
+  },
+  mostViewedInWeekSuccess: data => {
+    return { type: actionArticleTypes.MOST_VIEWED_IN_WEEK_SUCCESS, payload: { data } };
+  },
+  mostLikedInWeekRequest: () => {
+    return { type: actionArticleTypes.MOST_LIKED_IN_WEEK_REQUEST };
+  },
+  mostLikedInWeekSuccess: data => {
+    return { type: actionArticleTypes.MOST_LIKED_IN_WEEK_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
@@ -245,6 +265,10 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
     case actionArticleTypes.LOAD_EDITABLE_ARTICLE:
       return { ...state, editableArticle: reduceAction.payload.data };
     case actionArticleTypes.LOAD_SIMILAR_ARTICLE_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.MOST_VIEWED_IN_WEEK_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.MOST_LIKED_IN_WEEK_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
     default:
       return state;

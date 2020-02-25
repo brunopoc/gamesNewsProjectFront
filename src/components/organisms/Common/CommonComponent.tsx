@@ -1,20 +1,12 @@
 import React from 'react';
-import { Container, Box, Grid, Card } from '@material-ui/core';
+import { Container, Box, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { HeaderComponent } from '..';
+import { HeaderComponent, SidebarComponent } from '..';
 
 const Main = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   paddingTop: '40px',
-});
-
-const CardStyled = styled(Card)({
-  display: 'flex',
-  justifyContent: 'flex-start',
-  flexDirection: 'column',
-  width: '100%',
-  alignItems: 'center',
 });
 
 const CommonComponent = ({ children }) => (
@@ -27,7 +19,7 @@ const CommonComponent = ({ children }) => (
             {children}
           </Grid>
           <Grid container item md={4}>
-            <CardStyled> - Assuntos em Alta - </CardStyled>
+            <SidebarComponent />
           </Grid>
         </Grid>
       </Main>
