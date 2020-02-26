@@ -107,9 +107,9 @@ const SidebarComponent = () => {
         </a>
       </SocialMedia>
       {mostViewedInWeek && (
-        <div>
+        <div style={{ width: '100%' }}>
           <BoxHeaderStyled component="div">As mais vistas da semana</BoxHeaderStyled>
-          <ul style={{ listStyleType: 'none', padding: '10px' }}>
+          <ul style={{ listStyleType: 'none', padding: '10px 0px' }}>
             {mostViewedInWeek.map(article => {
               const imageURL =
                 article?.image ||
@@ -119,19 +119,21 @@ const SidebarComponent = () => {
                 <li key={article.title}>
                   <CardActionAreaStyled>
                     <Link href="/post/[refer]" as={`/post/${article.refer}`}>
-                      <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
-                        <Grid container spacing={1}>
-                          <Grid container item xs={3}>
-                            <ImageContainer>
-                              <ImageCard image={imageURL} />
-                            </ImageContainer>
+                      <>
+                        <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
+                          <Grid container spacing={1}>
+                            <Grid container item xs={3}>
+                              <ImageContainer>
+                                <ImageCard image={imageURL} />
+                              </ImageContainer>
+                            </Grid>
+                            <Grid container item xs={9}>
+                              <TextContainer>{article.title}</TextContainer>
+                            </Grid>
                           </Grid>
-                          <Grid container item xs={9}>
-                            <TextContainer>{article.title}</TextContainer>
-                          </Grid>
-                        </Grid>
-                      </div>
-                      <Divider />
+                        </div>
+                        <Divider />
+                      </>
                     </Link>
                   </CardActionAreaStyled>
                 </li>
@@ -141,9 +143,9 @@ const SidebarComponent = () => {
         </div>
       )}
       {mostLikedInWeek && (
-        <div>
+        <div style={{ width: '100%' }}>
           <BoxHeaderStyled component="div">As mais curtidas da semana</BoxHeaderStyled>
-          <ul style={{ listStyleType: 'none', padding: '10px' }}>
+          <ul style={{ listStyleType: 'none', padding: '10px 0px' }}>
             {mostLikedInWeek.map(article => {
               const imageURL =
                 article?.image ||
@@ -153,19 +155,21 @@ const SidebarComponent = () => {
                 <li key={article.title}>
                   <CardActionAreaStyled>
                     <Link href="/post/[refer]" as={`/post/${article.refer}`}>
-                      <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
-                        <Grid container spacing={1}>
-                          <Grid container item xs={3}>
-                            <ImageContainer>
-                              <ImageCard image={imageURL} />
-                            </ImageContainer>
+                      <>
+                        <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
+                          <Grid container spacing={1}>
+                            <Grid container item xs={3}>
+                              <ImageContainer>
+                                <ImageCard image={imageURL} />
+                              </ImageContainer>
+                            </Grid>
+                            <Grid container item xs={9}>
+                              <TextContainer>{article.title}</TextContainer>
+                            </Grid>
                           </Grid>
-                          <Grid container item xs={9}>
-                            <TextContainer>{article.title}</TextContainer>
-                          </Grid>
-                        </Grid>
-                      </div>
-                      <Divider />
+                        </div>
+                        <Divider />
+                      </>
                     </Link>
                   </CardActionAreaStyled>
                 </li>
