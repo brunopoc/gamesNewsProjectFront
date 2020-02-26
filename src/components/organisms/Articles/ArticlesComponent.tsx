@@ -10,9 +10,30 @@ import {
 } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
 import Link from 'next/link';
+import {
+  FacebookShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  WhatsappShareButton,
+  FacebookIcon,
+  InstapaperIcon,
+  LineIcon,
+  RedditIcon,
+  TelegramIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  WhatsappIcon,
+} from 'react-share';
 import { FromNow } from '../../../utils/moment';
 import { Article } from '../../../store/ducks/articles';
 import Like from '../../atoms/Buttons/Like';
+import { SpringModalComponent } from '../../molecules';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -50,12 +71,34 @@ const DescriptionArea = styled(Box)({
   padding: '10px',
 });
 
+const ShareIcons = styled(Box)({
+  display: 'flex',
+  justifyContent: 'space-around',
+});
+
+const ShareButton = styled(Box)({
+  cursor: 'pointer',
+  padding: '5px',
+});
+
 type OwnProps = {
   articles: Article[];
 };
 
 const ArticlesComponent = (props: OwnProps) => {
   const { articles } = props;
+  const [open, setOpen] = React.useState(false);
+  const [urlPage, setUrl] = React.useState('');
+
+  const handleOpen = (ref: string) => {
+    setOpen(true);
+    setUrl(`https://www.sougamercomorgulho.com.br/post/${ref}`);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Grid container spacing={3}>
       {articles.map(article => {
@@ -85,7 +128,43 @@ const ArticlesComponent = (props: OwnProps) => {
                   <Link href="/post/[refer]" as={`/post/${article.refer}#comments`}>
                     <Comments>{`${article?.comments.length} Comentários`}</Comments>
                   </Link>
-                  <div>Compartilhar</div>
+                  <SpringModalComponent
+                    handleClose={handleClose}
+                    open={open}
+                    title="Compartilhar"
+                    text="Quer mostrar o assunto com os seus amigos? Compartilhe na sua rede social! =D"
+                  >
+                    <ShareIcons>
+                      <FacebookShareButton url={urlPage}>
+                        <FacebookIcon size={32} round />
+                      </FacebookShareButton>
+                      <InstapaperShareButton url={urlPage}>
+                        <InstapaperIcon size={32} round />
+                      </InstapaperShareButton>
+                      <LineShareButton url={urlPage}>
+                        <LineIcon size={32} round />
+                      </LineShareButton>
+                      <RedditShareButton url={urlPage}>
+                        <RedditIcon size={32} round />
+                      </RedditShareButton>
+                      <TelegramShareButton url={urlPage}>
+                        <TelegramIcon size={32} round />
+                      </TelegramShareButton>
+                      <TumblrShareButton url={urlPage}>
+                        <TumblrIcon size={32} round />
+                      </TumblrShareButton>
+                      <TwitterShareButton url={urlPage}>
+                        <TwitterIcon size={32} round />
+                      </TwitterShareButton>
+                      <ViberShareButton url={urlPage}>
+                        <ViberIcon size={32} round />
+                      </ViberShareButton>
+                      <WhatsappShareButton url={urlPage}>
+                        <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                    </ShareIcons>
+                  </SpringModalComponent>
+                  <ShareButton onClick={() => handleOpen(article.refer)}>Compartilhar</ShareButton>
                 </FooterCard>
               </Content>
             </Card>
