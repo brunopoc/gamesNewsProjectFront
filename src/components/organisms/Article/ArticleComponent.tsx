@@ -156,7 +156,10 @@ const ArticleComponent = (props: OwnProps) => {
               </BreadcrumbsStyled>
               <ImageCard image={imageURL} />
             </div>
-            <DescriptionArea dangerouslySetInnerHTML={{ __html: article?.content }} />
+            <DescriptionArea
+              className="contentArea"
+              dangerouslySetInnerHTML={{ __html: article?.content }}
+            />
             <TagsSection>
               <Grid container spacing={1}>
                 <Grid container item sm={6}>
@@ -222,6 +225,13 @@ const ArticleComponent = (props: OwnProps) => {
       </Card>
       <SimilarComponent category={article.categories[0].value} />
       <CommentsComponent comments={article.comments} articleID={article.id} />
+      <style jsx global>
+        {`
+          .contentArea .image img {
+            width: 100%;
+          }
+        `}
+      </style>
     </Content>
   );
 };
