@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Box, Grid, Card } from '@material-ui/core';
+import { Container, Box, Grid } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { HeaderComponent } from '..';
+import { HeaderComponent, SidebarComponent } from '..';
 
 const Main = styled(Box)({
   display: 'flex',
@@ -9,12 +9,11 @@ const Main = styled(Box)({
   paddingTop: '40px',
 });
 
-const CardStyled = styled(Card)({
-  display: 'flex',
-  justifyContent: 'flex-start',
-  flexDirection: 'column',
+const FooterContainer = styled(Box)({
   width: '100%',
-  alignItems: 'center',
+  padding: '20px',
+  marginTop: '10px',
+  borderTop: '1px solid #BBBBBB',
 });
 
 const CommonComponent = ({ children }) => (
@@ -27,11 +26,12 @@ const CommonComponent = ({ children }) => (
             {children}
           </Grid>
           <Grid container item md={4}>
-            <CardStyled> - Assuntos em Alta - </CardStyled>
+            <SidebarComponent />
           </Grid>
         </Grid>
       </Main>
     </Container>
+    <FooterContainer>Copyright © 2020 Sou Gamer Com Orgulho</FooterContainer>
   </div>
 );
 

@@ -215,7 +215,9 @@ const WriteFormComponent = () => {
             <Grid container item sm={12}>
               <FormContainer>
                 <FieldContainer>
-                  <TitleLabel>Adicione uma imagem de destaque:</TitleLabel>
+                  <TitleLabel>
+                    Adicione uma imagem de destaque (formatos aceitados: .png, .jpeg, .jpg):
+                  </TitleLabel>
                   <FieldLineFileContainer>
                     <input
                       id="upload"

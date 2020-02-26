@@ -17,8 +17,17 @@ const Content = styled(Box)({
   justifyContent: 'space-between',
   flexDirection: 'column',
   marginTop: '20px',
-  padding: '5px',
   width: '100%',
+});
+
+const BoxHeaderStyled = styled(Box)({
+  width: '100%',
+  padding: '10px',
+  textAlign: 'center',
+  backgroundColor: '#000',
+  color: '#fff',
+  fontWeight: 800,
+  fontSize: '16px',
 });
 
 const CommentSection = styled(Box)({
@@ -212,6 +221,7 @@ const CommentsComponent = (props: OwnProps) => {
         </Formik>
       </SpringModalComponent>
       <Card>
+        <BoxHeaderStyled component="div">Comentários</BoxHeaderStyled>
         <CardContent>
           {logged ? (
             <Formik

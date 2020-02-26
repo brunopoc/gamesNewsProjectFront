@@ -311,3 +311,54 @@ export function* loadPersonalArticle(value) {
     yield put(MessageActionList.errorShow());
   }
 }
+
+export function* loadSimilarArticles(value) {
+  try {
+    const resp = yield fetch(
+      `${api.publicRuntimeConfig.API_ENDPOINT}/posts/similar/${value.payload.data}`,
+      {
+        method: 'get',
+        headers: new Headers({
+          'content-type': 'application/json',
+        }),
+      },
+    );
+    const result = yield resp.json();
+
+    yield put(ActionsList.loadSimilarArticleSuccess(result));
+  } catch (err) {
+    yield put(MessageActionList.errorShow());
+  }
+}
+
+export function* loadmostLikedInWeek() {
+  try {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/mostlikedinweek`, {
+      method: 'get',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+
+    yield put(ActionsList.mostLikedInWeekSuccess(result));
+  } catch (err) {
+    yield put(MessageActionList.errorShow());
+  }
+}
+
+export function* loadmostViewedInWeek() {
+  try {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/mostviewsinweek`, {
+      method: 'get',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+
+    yield put(ActionsList.mostViewedInWeekSuccess(result));
+  } catch (err) {
+    yield put(MessageActionList.errorShow());
+  }
+}

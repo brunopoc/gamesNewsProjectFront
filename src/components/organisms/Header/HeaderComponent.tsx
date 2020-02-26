@@ -30,10 +30,10 @@ const HeaderComponent = () => {
       <MenuContainer>
         <Container>
           <Grid container spacing={2}>
-            <Grid container item xs={6} sm={8} md={9} lg={10}>
+            <Grid container item xs={4} sm={8} md={9} lg={10}>
               {matches ? <MenuItemsComponent direction="horizontal" /> : <AppBarComponent />}
             </Grid>
-            <Grid container item justify="flex-end" alignItems="center" xs={6} sm={4} md={3} lg={2}>
+            <Grid container item justify="flex-end" alignItems="center" xs={8} sm={4} md={3} lg={2}>
               <UserMenuComponent />
             </Grid>
           </Grid>
