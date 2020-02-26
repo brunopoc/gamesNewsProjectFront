@@ -10,10 +10,31 @@ import {
   Link,
   Grid,
 } from '@material-ui/core';
+import {
+  FacebookShareButton,
+  InstapaperShareButton,
+  LineShareButton,
+  RedditShareButton,
+  TelegramShareButton,
+  TumblrShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  WhatsappShareButton,
+  FacebookIcon,
+  InstapaperIcon,
+  LineIcon,
+  RedditIcon,
+  TelegramIcon,
+  TumblrIcon,
+  TwitterIcon,
+  ViberIcon,
+  WhatsappIcon,
+} from 'react-share';
 import { FromNow } from '../../../utils/moment';
 import { Article } from '../../../store/ducks/articles';
 import Like from '../../atoms/Buttons/Like';
-import { CommentsComponent, SimilarComponent } from '..';
+import { CommentsComponent, SimilarComponent, HeadComponent } from '..';
+import { SpringModalComponent } from '../../molecules';
 
 const Content = styled(Box)({
   display: 'flex',
@@ -73,6 +94,16 @@ const TagsSection = styled(Box)({
   padding: '10px',
 });
 
+const ShareIcons = styled(Box)({
+  display: 'flex',
+  justifyContent: 'space-around',
+});
+
+const ShareButton = styled(Box)({
+  cursor: 'pointer',
+  padding: '5px',
+});
+
 type OwnProps = {
   article: Article;
 };
@@ -85,8 +116,29 @@ const ArticleComponent = (props: OwnProps) => {
     article?.image ||
     'https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/18j48tw3csif0jpg.jpg';
 
+  const [open, setOpen] = React.useState(false);
+  const [urlPage, setUrl] = React.useState('');
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  React.useEffect(() => {
+    setUrl(window.location.href);
+  }, []);
+
   return (
     <Content component="div">
+      <HeadComponent
+        title={`${article.title} - Sou Gamer Com Orgulho`}
+        description={article.resume}
+        url={urlPage}
+        image={imageURL}
+      />
       <Card>
         <Content component="div">
           <CardContent>
@@ -127,8 +179,44 @@ const ArticleComponent = (props: OwnProps) => {
           </CardContent>
           <FooterCard component="div">
             <Like articleId={article.id} articleLikes={article.likes} />
+            <SpringModalComponent
+              handleClose={handleClose}
+              open={open}
+              title="Compartilhar"
+              text="Quer mostrar o assunto com os seus amigos? Compartilhe na sua rede social! =D"
+            >
+              <ShareIcons>
+                <FacebookShareButton url={urlPage}>
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
+                <InstapaperShareButton url={urlPage}>
+                  <InstapaperIcon size={32} round />
+                </InstapaperShareButton>
+                <LineShareButton url={urlPage}>
+                  <LineIcon size={32} round />
+                </LineShareButton>
+                <RedditShareButton url={urlPage}>
+                  <RedditIcon size={32} round />
+                </RedditShareButton>
+                <TelegramShareButton url={urlPage}>
+                  <TelegramIcon size={32} round />
+                </TelegramShareButton>
+                <TumblrShareButton url={urlPage}>
+                  <TumblrIcon size={32} round />
+                </TumblrShareButton>
+                <TwitterShareButton url={urlPage}>
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>
+                <ViberShareButton url={urlPage}>
+                  <ViberIcon size={32} round />
+                </ViberShareButton>
+                <WhatsappShareButton url={urlPage}>
+                  <WhatsappIcon size={32} round />
+                </WhatsappShareButton>
+              </ShareIcons>
+            </SpringModalComponent>
 
-            <div>Compartilhar</div>
+            <ShareButton onClick={handleOpen}>Compartilhar</ShareButton>
           </FooterCard>
         </Content>
       </Card>

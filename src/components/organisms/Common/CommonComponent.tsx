@@ -9,6 +9,13 @@ const Main = styled(Box)({
   paddingTop: '40px',
 });
 
+const FooterContainer = styled(Box)({
+  width: '100%',
+  padding: '20px',
+  marginTop: '10px',
+  borderTop: '1px solid #BBBBBB',
+});
+
 const CommonComponent = ({ children }) => (
   <div className="commonArea">
     <HeaderComponent />
@@ -24,6 +31,7 @@ const CommonComponent = ({ children }) => (
         </Grid>
       </Main>
     </Container>
+    <FooterContainer>Copyright © 2020 Sou Gamer Com Orgulho</FooterContainer>
   </div>
 );
 

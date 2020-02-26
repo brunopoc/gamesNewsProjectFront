@@ -99,8 +99,8 @@ export interface ArticleState {
   readonly currentPage: number;
   readonly currentArticle?: Article;
   readonly editableArticle?: Article;
-  readonly mostViewedInWeek?: Article;
-  readonly mostLikedInWeek?: Article;
+  readonly mostViewedInWeek?: Article[];
+  readonly mostLikedInWeek?: Article[];
 }
 
 export const ActionsList = {

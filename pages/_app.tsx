@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import App from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -35,7 +36,12 @@ class MyApp extends App<OwnProps> {
     return (
       <Provider store={store}>
         <MainComponent>
-          <HeadComponent title="Sou Gamer Com Orgulho" />
+          <HeadComponent
+            title="Sou Gamer Com Orgulho"
+            description="Procurando noticias sobre o mundo dos games? Então veio ao lugar certo! Sou Gamer Com Orgulho é um portal onde os próprios leitores podem escrever a matéria. Venha fazer parte da nossa comunidade!"
+            url="https://www.sougamercomorgulho.com.br"
+            image="https://gameapi-upload.s3.amazonaws.com/137293.jpg"
+          />
           <CssBaseline />
           <Component {...pageProps} />
         </MainComponent>
