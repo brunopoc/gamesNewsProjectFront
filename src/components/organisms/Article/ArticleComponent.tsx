@@ -129,6 +129,14 @@ const ArticleComponent = (props: OwnProps) => {
 
   React.useEffect(() => {
     setUrl(window.location.href);
+    document.querySelectorAll('oembed[url]').forEach((element: any) => {
+      fetch(`https://noembed.com/embed?url=${element.attributes.url.value}`).then(resp => {
+        resp.json().then(result => {
+          // eslint-disable-next-line no-param-reassign
+          element.innerHTML = result.html.replace('480', '100%');
+        });
+      });
+    });
   }, []);
 
   return (
@@ -229,6 +237,9 @@ const ArticleComponent = (props: OwnProps) => {
         {`
           .contentArea .image img {
             width: 100%;
+          }
+          .contentArea figure.media {
+            margin: 10px 0px;
           }
         `}
       </style>
