@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import YouTubeIcon from '@material-ui/icons/YouTube';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import Link from 'next/link';
 import { ActionsList } from '../../../store/ducks/articles';
 import { ApplicationState } from '../../../store';
@@ -43,6 +44,12 @@ const YouTubeIconStyled = styled(YouTubeIcon)({
   color: '#000',
 });
 
+const TwitterIconStyled = styled(TwitterIcon)({
+  height: '50px',
+  width: '50px',
+  color: '#000',
+});
+
 const BoxHeaderStyled = styled(Box)({
   width: '100%',
   padding: '10px',
@@ -76,6 +83,12 @@ const TextContainer = styled(Box)({
   color: '#4B4B4B',
 });
 
+const FacebookContainer = styled(Box)({
+  maxWidth: '340px',
+  width: '100%',
+  marginBottom: '20px',
+});
+
 const CardActionAreaStyled = styled(CardActionArea)({
   height: '100%',
   width: '100%',
@@ -105,6 +118,9 @@ const SidebarComponent = () => {
         <a href="https://www.youtube.com/channel/UCEAXWgm887myU5Tg2fkhLtw">
           <YouTubeIconStyled />
         </a>
+        <a href="https://twitter.com/sougamercom">
+          <TwitterIconStyled />
+        </a>
       </SocialMedia>
       {mostViewedInWeek && (
         <div style={{ width: '100%' }}>
@@ -117,31 +133,49 @@ const SidebarComponent = () => {
 
               return (
                 <li key={article.title}>
-                  <CardActionAreaStyled>
-                    <Link href="/post/[refer]" as={`/post/${article.refer}`}>
-                      <>
-                        <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
-                          <Grid container spacing={1}>
-                            <Grid container item xs={3}>
-                              <ImageContainer>
-                                <ImageCard image={imageURL} />
-                              </ImageContainer>
-                            </Grid>
-                            <Grid container item xs={9}>
-                              <TextContainer>{article.title}</TextContainer>
-                            </Grid>
+                  <Link href="/post/[refer]" as={`/post/${article.refer}`}>
+                    <CardActionAreaStyled>
+                      <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
+                        <Grid container spacing={1}>
+                          <Grid container item xs={3}>
+                            <ImageContainer>
+                              <ImageCard image={imageURL} />
+                            </ImageContainer>
                           </Grid>
-                        </div>
-                        <Divider />
-                      </>
-                    </Link>
-                  </CardActionAreaStyled>
+                          <Grid container item xs={9}>
+                            <TextContainer>{article.title}</TextContainer>
+                          </Grid>
+                        </Grid>
+                      </div>
+                      <Divider />
+                    </CardActionAreaStyled>
+                  </Link>
                 </li>
               );
             })}
           </ul>
         </div>
       )}
+      <FacebookContainer>
+        <div
+          className="fb-page"
+          data-href="https://www.facebook.com/SouGamerComOrgulho/"
+          data-tabs="timeline"
+          data-width=""
+          data-height=""
+          data-small-header="true"
+          data-adapt-container-width="true"
+          data-hide-cover="false"
+          data-show-facepile="false"
+        >
+          <blockquote
+            cite="https://www.facebook.com/SouGamerComOrgulho/"
+            className="fb-xfbml-parse-ignore"
+          >
+            <a href="https://www.facebook.com/SouGamerComOrgulho/">Sou Gamer com Orgulho</a>
+          </blockquote>
+        </div>
+      </FacebookContainer>
       {mostLikedInWeek && (
         <div style={{ width: '100%' }}>
           <BoxHeaderStyled component="div">As mais curtidas da semana</BoxHeaderStyled>
@@ -150,28 +184,25 @@ const SidebarComponent = () => {
               const imageURL =
                 article?.image ||
                 'https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/18j48tw3csif0jpg.jpg';
-
               return (
                 <li key={article.title}>
-                  <CardActionAreaStyled>
-                    <Link href="/post/[refer]" as={`/post/${article.refer}`}>
-                      <>
-                        <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
-                          <Grid container spacing={1}>
-                            <Grid container item xs={3}>
-                              <ImageContainer>
-                                <ImageCard image={imageURL} />
-                              </ImageContainer>
-                            </Grid>
-                            <Grid container item xs={9}>
-                              <TextContainer>{article.title}</TextContainer>
-                            </Grid>
+                  <Link href="/post/[refer]" as={`/post/${article.refer}`}>
+                    <CardActionAreaStyled>
+                      <div style={{ margin: '10px 0px', cursor: 'pointer' }}>
+                        <Grid container spacing={1}>
+                          <Grid container item xs={3}>
+                            <ImageContainer>
+                              <ImageCard image={imageURL} />
+                            </ImageContainer>
                           </Grid>
-                        </div>
-                        <Divider />
-                      </>
-                    </Link>
-                  </CardActionAreaStyled>
+                          <Grid container item xs={9}>
+                            <TextContainer>{article.title}</TextContainer>
+                          </Grid>
+                        </Grid>
+                      </div>
+                      <Divider />
+                    </CardActionAreaStyled>
+                  </Link>
                 </li>
               );
             })}

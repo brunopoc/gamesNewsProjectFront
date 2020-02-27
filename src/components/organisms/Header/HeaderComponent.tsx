@@ -9,7 +9,16 @@ const Header = styled(Box)({
   height: '140px',
   backgroundColor: '#111111',
   display: 'flex',
+  flexDirection: 'column',
   alignItems: 'flex-end',
+});
+
+const LogoArea = styled(Box)({
+  width: '320px',
+  height: '10px',
+  margin: 'auto',
+  display: 'flex',
+  justifyContent: 'center',
 });
 
 const MenuContainer = styled(Box)({
@@ -27,6 +36,13 @@ const HeaderComponent = () => {
 
   return (
     <Header>
+      <LogoArea>
+        <img
+          style={{ width: '140px', position: 'absolute', top: '0px' }}
+          src="https://gameapi-upload.s3.amazonaws.com/logo.png"
+          alt="Logo do site"
+        />
+      </LogoArea>
       <MenuContainer>
         <Container>
           <Grid container spacing={2}>
