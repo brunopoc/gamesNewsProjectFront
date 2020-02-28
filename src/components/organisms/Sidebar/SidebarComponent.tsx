@@ -7,6 +7,7 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Link from 'next/link';
+import AdSense from 'react-adsense';
 import { ActionsList } from '../../../store/ducks/articles';
 import { ApplicationState } from '../../../store';
 
@@ -127,17 +128,14 @@ const SidebarComponent = () => {
         </a>
       </SocialMedia>
       <AdsArea>
-        <amp-ad
-          width="100vw"
-          height="320"
-          type="adsense"
-          data-ad-client="ca-pub-9181350088524240"
-          data-ad-slot="9360777014"
-          data-auto-format="rspv"
-          data-full-width=""
-        >
-          <div overflow="" />
-        </amp-ad>
+        <AdSense.Google
+          client="ca-pub-9181350088524240"
+          slot="9360777014"
+          style={{ display: 'block' }}
+          format="rspv"
+          responsive="true"
+          layoutKey="-gw-1+2a-9x+5c"
+        />
       </AdsArea>
       {mostViewedInWeek && (
         <div style={{ width: '100%' }}>
