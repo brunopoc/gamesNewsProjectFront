@@ -94,6 +94,10 @@ const CardActionAreaStyled = styled(CardActionArea)({
   width: '100%',
 });
 
+const AdsArea = styled(Box)({
+  width: '100%',
+});
+
 const SidebarComponent = () => {
   const dispatch = useDispatch();
 
@@ -122,6 +126,19 @@ const SidebarComponent = () => {
           <TwitterIconStyled />
         </a>
       </SocialMedia>
+      <AdsArea>
+        <amp-ad
+          width="100vw"
+          height="320"
+          type="adsense"
+          data-ad-client="ca-pub-9181350088524240"
+          data-ad-slot="9360777014"
+          data-auto-format="rspv"
+          data-full-width=""
+        >
+          <div overflow="" />
+        </amp-ad>
+      </AdsArea>
       {mostViewedInWeek && (
         <div style={{ width: '100%' }}>
           <BoxHeaderStyled component="div">As mais vistas da semana</BoxHeaderStyled>
