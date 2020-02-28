@@ -132,9 +132,8 @@ const SidebarComponent = () => {
           client="ca-pub-9181350088524240"
           slot="9360777014"
           style={{ display: 'block' }}
-          format="rspv"
+          format="auto"
           responsive="true"
-          layoutKey="-gw-1+2a-9x+5c"
         />
       </AdsArea>
       {mostViewedInWeek && (
