@@ -28,12 +28,6 @@ class MyDocument extends Document {
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
           />
-          <script
-            async
-            defer
-            crossOrigin="anonymous"
-            src="https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v6.0&appId=450663825551486&autoLogAppEvents=1"
-          />
           <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js" />
         </Head>
         <body className="custom_class">

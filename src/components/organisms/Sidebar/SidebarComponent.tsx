@@ -7,7 +7,6 @@ import InstagramIcon from '@material-ui/icons/Instagram';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import Link from 'next/link';
-import AdSense from 'react-adsense';
 import { ActionsList } from '../../../store/ducks/articles';
 import { ApplicationState } from '../../../store';
 
@@ -84,18 +83,8 @@ const TextContainer = styled(Box)({
   color: '#4B4B4B',
 });
 
-const FacebookContainer = styled(Box)({
-  maxWidth: '340px',
-  width: '100%',
-  marginBottom: '20px',
-});
-
 const CardActionAreaStyled = styled(CardActionArea)({
   height: '100%',
-  width: '100%',
-});
-
-const AdsArea = styled(Box)({
   width: '100%',
 });
 
@@ -127,15 +116,6 @@ const SidebarComponent = () => {
           <TwitterIconStyled />
         </a>
       </SocialMedia>
-      <AdsArea>
-        <AdSense.Google
-          client="ca-pub-9181350088524240"
-          slot="9360777014"
-          style={{ display: 'block' }}
-          format="auto"
-          responsive="true"
-        />
-      </AdsArea>
       {mostViewedInWeek && (
         <div style={{ width: '100%' }}>
           <BoxHeaderStyled component="div">As mais vistas da semana</BoxHeaderStyled>
@@ -170,26 +150,6 @@ const SidebarComponent = () => {
           </ul>
         </div>
       )}
-      <FacebookContainer>
-        <div
-          className="fb-page"
-          data-href="https://www.facebook.com/SouGamerComOrgulho/"
-          data-tabs="timeline"
-          data-width=""
-          data-height=""
-          data-small-header="true"
-          data-adapt-container-width="true"
-          data-hide-cover="false"
-          data-show-facepile="false"
-        >
-          <blockquote
-            cite="https://www.facebook.com/SouGamerComOrgulho/"
-            className="fb-xfbml-parse-ignore"
-          >
-            <a href="https://www.facebook.com/SouGamerComOrgulho/">Sou Gamer com Orgulho</a>
-          </blockquote>
-        </div>
-      </FacebookContainer>
       {mostLikedInWeek && (
         <div style={{ width: '100%' }}>
           <BoxHeaderStyled component="div">As mais curtidas da semana</BoxHeaderStyled>
