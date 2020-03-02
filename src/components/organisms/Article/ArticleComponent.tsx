@@ -156,11 +156,12 @@ const ArticleComponent = (props: OwnProps) => {
                 <Link color="inherit" href="/">
                   Home
                 </Link>
-                {article.categories.map(category => (
-                  <Link key={category.value} color="inherit" href={`/category/${category.value}`}>
-                    {category.label}
-                  </Link>
-                ))}
+                {article.categories &&
+                  article.categories.map(category => (
+                    <Link key={category.value} color="inherit" href={`/category/${category.value}`}>
+                      {category.label}
+                    </Link>
+                  ))}
               </BreadcrumbsStyled>
               <ImageCard image={imageURL} />
             </div>
@@ -172,11 +173,12 @@ const ArticleComponent = (props: OwnProps) => {
               <Grid container spacing={1}>
                 <Grid container item sm={6}>
                   <BreadcrumbsStyled aria-label="breadcrumb">
-                    {article.tags.map(tag => (
-                      <Link key={tag.value} color="inherit" href={`/tag/${tag.value}`}>
-                        {tag.label}
-                      </Link>
-                    ))}
+                    {article.tags &&
+                      article.tags.map(tag => (
+                        <Link key={tag.value} color="inherit" href={`/tag/${tag.value}`}>
+                          {tag.label}
+                        </Link>
+                      ))}
                   </BreadcrumbsStyled>
                 </Grid>
                 <Grid container item sm={6}>

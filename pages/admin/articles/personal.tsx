@@ -90,35 +90,42 @@ const Personal = () => {
           <TableStyled aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell align="left">Status</TableCell>
                 <TableCell>Titulo</TableCell>
                 <TableCell align="right">Editar</TableCell>
                 <TableCell align="right">Excluir</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {personalPosts?.map(post => (
-                <TableRow key={post.id}>
-                  <TableCellArea component="th" scope="row">
-                    {post.title}
-                  </TableCellArea>
-                  <TableCell align="right">
-                    <ActionContainer>
-                      <ActionArea onClick={() => handleOnClickPost(post)}>
-                        <Link href="/admin/articles/update">
-                          <EditIcon />
-                        </Link>
-                      </ActionArea>
-                    </ActionContainer>
-                  </TableCell>
-                  <TableCell align="right">
-                    <ActionContainer>
-                      <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
-                        <HighlightOffIcon />
-                      </ActionArea>
-                    </ActionContainer>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {!!personalPosts &&
+                personalPosts?.map(post => (
+                  <TableRow key={post.id}>
+                    <TableCellArea component="th" scope="row">
+                      {post.aprove === 'aproved' && 'Aprovado'}
+                      {post.aprove === 'rejected' && 'Rejeitado'}
+                      {post.aprove === 'pending' && 'Em Análise'}
+                    </TableCellArea>
+                    <TableCellArea component="th" scope="row">
+                      {post.title}
+                    </TableCellArea>
+                    <TableCell align="right">
+                      <ActionContainer>
+                        <ActionArea onClick={() => handleOnClickPost(post)}>
+                          <Link href="/admin/articles/update">
+                            <EditIcon />
+                          </Link>
+                        </ActionArea>
+                      </ActionContainer>
+                    </TableCell>
+                    <TableCell align="right">
+                      <ActionContainer>
+                        <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
+                          <HighlightOffIcon />
+                        </ActionArea>
+                      </ActionContainer>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </TableStyled>
         </TableContainer>

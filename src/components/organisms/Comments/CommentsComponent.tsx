@@ -3,6 +3,7 @@ import { Formik } from 'formik';
 import { Grid, Box, styled, Divider, Card, CardContent } from '@material-ui/core';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
+import Link from 'next/link';
 import { ActionsList, Comment } from '../../../store/ducks/articles';
 import { ActionsList as ComplaintsActionList } from '../../../store/ducks/complaints';
 import Text from '../../atoms/Inputs/Text';
@@ -64,6 +65,20 @@ const ButtonContainer = styled(Box)({
   justifyContent: 'flex-end',
   display: 'flex',
   flexDirection: 'column',
+});
+
+const LoginWarn = styled(Box)({
+  textAlign: 'center',
+  fontSize: '20px',
+  fontStyle: 'italic',
+  color: '#636363',
+  fontWeight: 600,
+});
+
+const LinkStyled = styled(Box)({
+  color: '#738FCE',
+  cursor: 'pointer',
+  display: 'inline-block',
 });
 
 type OwnProps = {
@@ -256,10 +271,21 @@ const CommentsComponent = (props: OwnProps) => {
               )}
             </Formik>
           ) : (
-            <div> Faça o seu Login ou Crie uma conta para comentar </div>
+            <LoginWarn>
+              {'Parece que você ainda não está logado. '}
+              <br />
+              <Link href="/login">
+                <LinkStyled>Faça o seu login</LinkStyled>
+              </Link>
+              {' ou '}
+              <Link href="/register">
+                <LinkStyled>crie uma conta</LinkStyled>
+              </Link>
+              {' para comentar'}
+            </LoginWarn>
           )}
           <CommentSection>
-            {comments &&
+            {!!comments &&
               comments.map(comment => (
                 <div key={comment.id}>
                   <Divider />

@@ -81,7 +81,7 @@ const AnswaresComponent = ({
 
   return (
     <AnswareSection>
-      {answares &&
+      {!!answares &&
         answares.map((answare, index) => {
           const loadAll = loadMore.indexOf(commentID) >= 0;
           if (limit >= index || loadAll) {

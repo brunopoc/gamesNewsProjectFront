@@ -99,31 +99,32 @@ const All = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {allPosts?.map(post => (
-                <TableRow key={post.id}>
-                  <Link href="/admin/articles/update">
-                    <TableCellArea
-                      onClick={() => handleOnClickPost(post)}
-                      component="th"
-                      scope="row"
-                    >
-                      {post.title}
-                    </TableCellArea>
-                  </Link>
-                  <TableCell align="right">{post.author?.name}</TableCell>
-                  <TableCell align="right">{post.aprove}</TableCell>
-                  <TableCell align="right">
-                    <ActionContainer>
-                      <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
-                        <CheckCircleIcon />
-                      </ActionArea>
-                      <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
-                        <HighlightOffIcon />
-                      </ActionArea>
-                    </ActionContainer>
-                  </TableCell>
-                </TableRow>
-              ))}
+              {!!allPosts &&
+                allPosts.map(post => (
+                  <TableRow key={post.id}>
+                    <Link href="/admin/articles/update">
+                      <TableCellArea
+                        onClick={() => handleOnClickPost(post)}
+                        component="th"
+                        scope="row"
+                      >
+                        {post.title}
+                      </TableCellArea>
+                    </Link>
+                    <TableCell align="right">{post.author?.name}</TableCell>
+                    <TableCell align="right">{post.aprove}</TableCell>
+                    <TableCell align="right">
+                      <ActionContainer>
+                        <ActionArea onClick={() => handlePostAprove(post.id, 'aproved')}>
+                          <CheckCircleIcon />
+                        </ActionArea>
+                        <ActionArea onClick={() => handlePostAprove(post.id, 'rejected')}>
+                          <HighlightOffIcon />
+                        </ActionArea>
+                      </ActionContainer>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </TableStyled>
         </TableContainer>
