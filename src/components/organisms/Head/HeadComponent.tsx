@@ -36,7 +36,7 @@ export default ({ title, description, url, image }: HeadProps) => (
     <meta httpEquiv="Pragma" content="no-cache" />
     <meta httpEquiv="Cache-Control" content="no-cache" />
     <meta property="og:title" content={title} />
-    <meta property="og:type" content="article" />
+    <meta property="og:type" content="games" />
     <meta property="og:image" content={image.replace(/^https:\/\//i, 'http://')} />
     <meta property="og:image:url" content={image.replace(/^https:\/\//i, 'http://')} />
     <meta property="og:image:secure_url" content={image} />
