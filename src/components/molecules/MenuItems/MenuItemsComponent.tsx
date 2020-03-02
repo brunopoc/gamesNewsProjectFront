@@ -46,13 +46,14 @@ const AppBarListComponent = ({ direction }: OwnProps) => {
           <Link href="/">
             <MenuItemStyledHorizontal component="li">Home</MenuItemStyledHorizontal>
           </Link>
-          {list.map(category => (
-            <Link key={category.value} href={`/category/${category.value}`}>
-              <MenuItemStyledHorizontal key={category.value} component="li">
-                {category.label}
-              </MenuItemStyledHorizontal>
-            </Link>
-          ))}
+          {!!list &&
+            list.map(category => (
+              <Link key={category.value} href={`/category/${category.value}`}>
+                <MenuItemStyledHorizontal key={category.value} component="li">
+                  {category.label}
+                </MenuItemStyledHorizontal>
+              </Link>
+            ))}
         </>
       ) : (
         <>
