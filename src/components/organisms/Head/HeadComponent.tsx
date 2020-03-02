@@ -35,12 +35,13 @@ export default ({ title, description, url, image }: HeadProps) => (
     <meta name="revisit-after" content="7 days" />
     <meta httpEquiv="Pragma" content="no-cache" />
     <meta httpEquiv="Cache-Control" content="no-cache" />
-    <meta name="og:title" content={title} />
-    <meta name="og:type" content="games" />
-    <meta name="og:url" content={url} />
-    <meta name="og:image" content={image} />
-    <meta name="og:site_name" content="Sou Gamer Com Orgulho" />
-    <meta name="og:description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={`image = ${title}`} />
+    <meta property="og:site_name" content="Sou Gamer Com Orgulho" />
+    <meta property="og:description" content={description} />
     <meta name="tweetmeme-title" content={title} />
   </Head>
 );
