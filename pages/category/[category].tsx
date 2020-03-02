@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import ReactPaginate from 'react-paginate';
-import { ArticlesComponent, CommonComponent } from '../../src/components/organisms';
+import { ArticlesComponent, CommonComponent, HeadComponent } from '../../src/components/organisms';
 import { ApplicationState } from '../../src/store';
 import { ActionsList } from '../../src/store/ducks/articles';
 import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
@@ -22,6 +22,12 @@ const Category = () => {
   const initPage = currentPage - 1;
   return (
     <div>
+      <HeadComponent
+        title="Categorias - Sou Gamer Com Orgulho"
+        description="Procurando noticias sobre o mundo dos games? Então veio ao lugar certo! Sou Gamer Com Orgulho é um portal onde os próprios leitores podem escrever a matéria. Venha fazer parte da nossa comunidade!"
+        url="https://www.sougamercomorgulho.com.br"
+        image="https://gameapi-upload.s3.amazonaws.com/137293.jpg"
+      />
       <CommonComponent>
         <Grid container item md={12}>
           <ArticlesComponent articles={list} />

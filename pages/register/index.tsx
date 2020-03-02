@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Box } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { RegisterCardComponent } from '../../src/components/organisms';
+import { RegisterCardComponent, HeadComponent } from '../../src/components/organisms';
 import Header from '../../src/components/organisms/Header/HeaderComponent';
 import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
 
@@ -13,6 +13,12 @@ const BoxStyled = styled(Box)({
 
 const Register = () => (
   <div>
+    <HeadComponent
+      title="Cria sua conta - Sou Gamer Com Orgulho"
+      description="Procurando noticias sobre o mundo dos games? Então veio ao lugar certo! Sou Gamer Com Orgulho é um portal onde os próprios leitores podem escrever a matéria. Venha fazer parte da nossa comunidade!"
+      url="https://www.sougamercomorgulho.com.br"
+      image="https://gameapi-upload.s3.amazonaws.com/137293.jpg"
+    />
     <Header />
     <Container fixed>
       <BoxStyled component="div">

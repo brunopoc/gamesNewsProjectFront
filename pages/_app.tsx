@@ -6,7 +6,7 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import createStore from '../src/store';
-import { MainComponent, HeadComponent } from '../src/components/organisms';
+import { MainComponent } from '../src/components/organisms';
 
 interface OwnProps {
   Component: React.Component;
@@ -36,12 +36,6 @@ class MyApp extends App<OwnProps> {
     return (
       <Provider store={store}>
         <MainComponent>
-          <HeadComponent
-            title="Sou Gamer Com Orgulho"
-            description="Procurando noticias sobre o mundo dos games? Então veio ao lugar certo! Sou Gamer Com Orgulho é um portal onde os próprios leitores podem escrever a matéria. Venha fazer parte da nossa comunidade!"
-            url="https://www.sougamercomorgulho.com.br"
-            image="https://gameapi-upload.s3.amazonaws.com/137293.jpg"
-          />
           <CssBaseline />
           <Component {...pageProps} />
         </MainComponent>

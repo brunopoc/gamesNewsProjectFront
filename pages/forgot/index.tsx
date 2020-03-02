@@ -11,6 +11,7 @@ import Send from '../../src/components/atoms/Buttons/Send';
 import { ActionsList } from '../../src/store/ducks/user';
 import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
 import { ApplicationState } from '../../src/store';
+import { HeadComponent } from '../../src/components/organisms';
 
 const BoxContainerStyled = styled(Box)({
   display: 'flex',
@@ -78,6 +79,12 @@ const Forgot = () => {
 
   return (
     <div>
+      <HeadComponent
+        title="Esqueci a minha senha - Sou Gamer Com Orgulho"
+        description="Procurando noticias sobre o mundo dos games? Então veio ao lugar certo! Sou Gamer Com Orgulho é um portal onde os próprios leitores podem escrever a matéria. Venha fazer parte da nossa comunidade!"
+        url="https://www.sougamercomorgulho.com.br"
+        image="https://gameapi-upload.s3.amazonaws.com/137293.jpg"
+      />
       <Header />
       <Container fixed>
         <BoxContainerStyled component="div">
