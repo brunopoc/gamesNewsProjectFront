@@ -362,3 +362,19 @@ export function* loadmostViewedInWeek() {
     yield put(MessageActionList.errorShow());
   }
 }
+
+export function* loadHighlights() {
+  try {
+    const resp = yield fetch(`${api.publicRuntimeConfig.API_ENDPOINT}/posts/highlights`, {
+      method: 'get',
+      headers: new Headers({
+        'content-type': 'application/json',
+      }),
+    });
+    const result = yield resp.json();
+
+    yield put(ActionsList.highlightsSuccess(result));
+  } catch (err) {
+    yield put(MessageActionList.errorShow());
+  }
+}

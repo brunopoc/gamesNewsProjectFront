@@ -30,6 +30,8 @@ export enum actionArticleTypes {
   MOST_VIEWED_IN_WEEK_SUCCESS = '@ARTICLE_/MOST_VIEWED_IN_WEEK_SUCCESS',
   MOST_LIKED_IN_WEEK_REQUEST = '@ARTICLE_/MOST_LIKED_IN_WEEK_REQUEST',
   MOST_LIKED_IN_WEEK_SUCCESS = '@ARTICLE_/MOST_LIKED_IN_WEEK_SUCCESS',
+  HIGHLIGHTS_REQUEST = '@ARTICLE_/HIGHLIGHTS_REQUEST',
+  HIGHLIGHTS_SUCCESS = '@ARTICLE_/HIGHLIGHTS_SUCCESS',
 }
 
 type Author = {
@@ -101,6 +103,7 @@ export interface ArticleState {
   readonly editableArticle?: Article;
   readonly mostViewedInWeek?: Article[];
   readonly mostLikedInWeek?: Article[];
+  readonly highlights?: Article[];
 }
 
 export const ActionsList = {
@@ -192,6 +195,12 @@ export const ActionsList = {
   mostLikedInWeekSuccess: data => {
     return { type: actionArticleTypes.MOST_LIKED_IN_WEEK_SUCCESS, payload: { data } };
   },
+  highlightsRequest: () => {
+    return { type: actionArticleTypes.HIGHLIGHTS_REQUEST };
+  },
+  highlightsSuccess: data => {
+    return { type: actionArticleTypes.HIGHLIGHTS_SUCCESS, payload: { data } };
+  },
 };
 
 const INITIAL_STATE: ArticleState = {
@@ -269,6 +278,8 @@ const reducer: Reducer<ArticleState> = (state = INITIAL_STATE, reduceAction) => 
     case actionArticleTypes.MOST_VIEWED_IN_WEEK_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
     case actionArticleTypes.MOST_LIKED_IN_WEEK_SUCCESS:
+      return { ...state, ...reduceAction.payload.data };
+    case actionArticleTypes.HIGHLIGHTS_SUCCESS:
       return { ...state, ...reduceAction.payload.data };
     default:
       return state;

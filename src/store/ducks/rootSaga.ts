@@ -32,6 +32,7 @@ import {
   loadSimilarArticles,
   loadmostLikedInWeek,
   loadmostViewedInWeek,
+  loadHighlights,
 } from './articles/sagas';
 import { loadCategories } from './categories/sagas';
 import { showMessage, showError } from './message/sagas';
@@ -64,6 +65,7 @@ export default function* rootSaga() {
     takeLatest(actionArticleTypes.LOAD_SIMILAR_ARTICLE_REQUEST, loadSimilarArticles),
     takeLatest(actionArticleTypes.MOST_LIKED_IN_WEEK_REQUEST, loadmostLikedInWeek),
     takeLatest(actionArticleTypes.MOST_VIEWED_IN_WEEK_REQUEST, loadmostViewedInWeek),
+    takeLatest(actionArticleTypes.HIGHLIGHTS_REQUEST, loadHighlights),
 
     takeLatest(actionCategoriesTypes.LIST_CATEGORIES_REQUEST, loadCategories),
 

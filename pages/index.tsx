@@ -3,13 +3,14 @@ import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { ArticlesComponent, CommonComponent, HeadComponent } from '../src/components/organisms';
+import { CarouselComponent } from '../src/components/molecules';
 import { ApplicationState } from '../src/store';
 import { ActionsList } from '../src/store/ducks/articles';
 import { ActionsList as CategoriesActionList } from '../src/store/ducks/categories';
 
 const Index = () => {
   const dispatch = useDispatch();
-  const { list, currentPage, totalOfPages } = useSelector(
+  const { list, currentPage, totalOfPages, highlights } = useSelector(
     (state: ApplicationState) => state.articles,
   );
 
@@ -28,6 +29,9 @@ const Index = () => {
       />
       <CommonComponent>
         <Grid container item md={12}>
+          <CarouselComponent highlights={highlights} />
+        </Grid>
+        <Grid container item md={12}>
           <ArticlesComponent articles={list} />
         </Grid>
         <Grid container item md={12}>
@@ -38,8 +42,8 @@ const Index = () => {
             breakClassName="break-me"
             pageCount={totalOfPages}
             initialPage={initPage}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={2}
             onPageChange={handlePageClick}
             containerClassName="pagination"
             subContainerClassName="pages pagination"
@@ -85,6 +89,7 @@ const Index = () => {
 Index.getInitialProps = async ({ store }) => {
   store.dispatch(ActionsList.articleListRequest(1));
   store.dispatch(CategoriesActionList.listCategoriesRequest());
+  store.dispatch(ActionsList.highlightsRequest());
 };
 
 export default Index;

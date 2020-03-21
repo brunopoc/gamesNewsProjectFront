@@ -9,3 +9,4 @@ export { default as AnswareFieldComponent } from './AnswareField/AnswareFieldCom
 export { default as AppBarListComponent } from './AppBarList/AppBarListComponent';
 export { default as MenuItemsComponent } from './MenuItems/MenuItemsComponent';
 export { default as SpringModalComponent } from './SpringModal/SpringModalComponent';
+export { default as CarouselComponent } from './Carousel/CarouselComponent';
