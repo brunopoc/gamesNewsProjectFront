@@ -20,21 +20,22 @@ const CarouselComponent = ({ highlights }: OwnProps) => {
         interval={5000}
         useKeyboardArrows
       >
-        {highlights.map(article => (
-          <div
-            style={{ height: '100%' }}
-            onClick={() => {
-              Router.push('/post/[refer]', `/post/${article.refer}`);
-            }}
-          >
-            <img
-              style={{ height: '100%', objectFit: 'cover' }}
-              src={article.image}
-              alt={article.title}
-            />
-            <p className="legend">{article.title}</p>
-          </div>
-        ))}
+        {!!highlights &&
+          highlights.map(article => (
+            <div
+              style={{ height: '100%' }}
+              onClick={() => {
+                Router.push('/post/[refer]', `/post/${article.refer}`);
+              }}
+            >
+              <img
+                style={{ height: '100%', objectFit: 'cover' }}
+                src={article.image}
+                alt={article.title}
+              />
+              <p className="legend">{article.title}</p>
+            </div>
+          ))}
       </Carousel>
       <style jsx global>
         {`
