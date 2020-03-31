@@ -1,28 +1,12 @@
 import React from 'react';
 import Document, { Main, NextScript, Head } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
-import { GA_TRACKING_ID } from '../src/utils/gtag';
 
 class MyDocument extends Document {
   render() {
     return (
       <html lang="pt">
         <Head>
-          {/* Global Site Tag (gtag.js) - Google Analytics */}
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
-          <script
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
-            }}
-          />
           <script
             data-ad-client="ca-pub-9181350088524240"
             async

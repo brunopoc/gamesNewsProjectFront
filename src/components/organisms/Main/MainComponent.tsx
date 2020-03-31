@@ -24,6 +24,7 @@ const MainComponent: React.FC = ({ children }) => {
   const load = useSelector((state: ApplicationState) => state.message.load) || false;
   const success = useSelector((state: ApplicationState) => state.message.success) || false;
   const error = useSelector((state: ApplicationState) => state.message.error) || false;
+
   RetrieveData(logged);
 
   if (typeof window !== 'undefined') {
