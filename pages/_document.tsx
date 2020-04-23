@@ -1,6 +1,15 @@
 import React from 'react';
 import Document, { Main, NextScript, Head } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles';
+import * as Sentry from '@sentry/browser';
+
+process.on('unhandledRejection', err => {
+  Sentry.captureException(err);
+});
+
+process.on('uncaughtException', err => {
+  Sentry.captureException(err);
+});
 
 class MyDocument extends Document {
   render() {

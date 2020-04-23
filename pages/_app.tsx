@@ -5,8 +5,14 @@ import { Provider } from 'react-redux';
 import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import * as Sentry from '@sentry/node';
 import createStore from '../src/store';
 import { MainComponent } from '../src/components/organisms';
+
+Sentry.init({
+  enabled: process.env.NODE_ENV === 'production',
+  dsn: process.env.SENTRY_DSN,
+});
 
 interface OwnProps {
   Component: React.Component;
@@ -29,6 +35,18 @@ class MyApp extends App<OwnProps> {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+  }
+
+  componentDidCatch(error, errorInfo) {
+    Sentry.withScope(scope => {
+      Object.keys(errorInfo).forEach(key => {
+        scope.setExtra(key, errorInfo[key]);
+      });
+
+      Sentry.captureException(error);
+    });
+
+    super.componentDidCatch(error, errorInfo);
   }
 
   render() {
