@@ -9,14 +9,17 @@ import * as Sentry from '@sentry/node';
 import createStore from '../src/store';
 import { MainComponent } from '../src/components/organisms';
 
-Sentry.init({
+/* Sentry.init({
   enabled: process.env.NODE_ENV === 'production',
   dsn: process.env.SENTRY_DSN,
-});
+}); */
+
+Sentry.init({ dsn: 'https://f7e218c5499343a1ac3b3f51cabacd1f@o382569.ingest.sentry.io/5211603' });
 
 interface OwnProps {
   Component: React.Component;
   store: any;
+  err?: any;
 }
 
 class MyApp extends App<OwnProps> {
@@ -50,12 +53,15 @@ class MyApp extends App<OwnProps> {
   }
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps, store, err } = this.props;
+
+    const modifiedPageProps = { ...pageProps, err };
+
     return (
       <Provider store={store}>
         <MainComponent>
           <CssBaseline />
-          <Component {...pageProps} />
+          <Component {...modifiedPageProps} />
         </MainComponent>
       </Provider>
     );
