@@ -21,11 +21,7 @@ export default ({ title, description, url, image }: HeadProps) => {
     <Head key={title}>
       {loaded && (
         <>
-          <script
-            id="gtm-js"
-            async
-            src={`https://www.googletagmanager.com/gtm.js?id=${GA_TRACKING_ID}`}
-          />
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `
