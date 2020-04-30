@@ -1,7 +1,6 @@
 /* eslint-disable react/no-danger */
 import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { GA_TRACKING_ID } from '../../../utils/gtag';
 
 type HeadProps = {
   title: string;
@@ -11,6 +10,7 @@ type HeadProps = {
 };
 
 export default ({ title, description, url, image }: HeadProps) => {
+  const GA_TRACKING_ID = 'UA-159166241-1';
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
