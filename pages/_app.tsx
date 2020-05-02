@@ -10,8 +10,8 @@ import createStore from '../src/store';
 import { MainComponent } from '../src/components/organisms';
 
 Sentry.init({
-  // dsn: process.env.SENTRY_DSN,
-  dsn: 'https://f7e218c5499343a1ac3b3f51cabacd1f@o382569.ingest.sentry.io/5211603',
+  enabled: process.env.NODE_ENV === 'production',
+  dsn: process.env.SENTRY_DSN,
 });
 
 interface OwnProps {
