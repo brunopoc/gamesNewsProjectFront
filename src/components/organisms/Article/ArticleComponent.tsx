@@ -233,9 +233,7 @@ const ArticleComponent = (props: OwnProps) => {
           </FooterCard>
         </Content>
       </Card>
-      <SimilarComponent
-        category={article.categories.length > 0 ? article.categories[0].value : 'outros'}
-      />
+      <SimilarComponent category={article.categories ? article.categories[0].value : 'outros'} />
       <CommentsComponent comments={article.comments} articleID={article.id} />
       <style jsx global>
         {`
