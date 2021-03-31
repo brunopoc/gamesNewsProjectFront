@@ -6,8 +6,8 @@ import withRedux from 'next-redux-wrapper';
 import withReduxSaga from 'next-redux-saga';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import * as Sentry from '@sentry/node';
-import createStore from '../src/store';
-import { MainComponent } from '../src/components/organisms';
+import createStore from '../store';
+import { MainComponent } from '../components/organisms';
 
 Sentry.init({
   enabled: process.env.NODE_ENV === 'production',

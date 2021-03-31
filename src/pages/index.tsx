@@ -2,11 +2,11 @@ import React from 'react';
 import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactPaginate from 'react-paginate';
-import { ArticlesComponent, CommonComponent, HeadComponent } from '../src/components/organisms';
-import { CarouselComponent } from '../src/components/molecules';
-import { ApplicationState } from '../src/store';
-import { ActionsList } from '../src/store/ducks/articles';
-import { ActionsList as CategoriesActionList } from '../src/store/ducks/categories';
+import { ArticlesComponent, CommonComponent, HeadComponent } from '../components/organisms';
+import { CarouselComponent } from '../components/molecules';
+import { ApplicationState } from '../store';
+import { ActionsList } from '../store/ducks/articles';
+import { ActionsList as CategoriesActionList } from '../store/ducks/categories';
 
 const Index = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { WriteCardComponent } from '../../../src/components/organisms';
-import { withAuthSync } from '../../../src/utils/auth';
-import { ActionsList } from '../../../src/store/ducks/articles';
+import { WriteCardComponent } from '../../../components/organisms';
+import { withAuthSync } from '../../../utils/auth';
+import { ActionsList } from '../../../store/ducks/articles';
 
 const Write = () => {
   const dispatch = useDispatch();

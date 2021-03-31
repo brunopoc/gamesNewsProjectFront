@@ -15,11 +15,11 @@ import {
 import ReactPaginate from 'react-paginate';
 import BlockIcon from '@material-ui/icons/Block';
 import Link from 'next/link';
-import { ApplicationState } from '../../../src/store';
-import { AppBarAdminComponent } from '../../../src/components/organisms';
-import { ActionsList } from '../../../src/store/ducks/user';
-import TitleComponent from '../../../src/components/atoms/Title/TitleComponent';
-import { adminOnly } from '../../../src/utils/auth';
+import { ApplicationState } from '../../../store';
+import { AppBarAdminComponent } from '../../../components/organisms';
+import { ActionsList } from '../../../store/ducks/user';
+import TitleComponent from '../../../components/atoms/Title/TitleComponent';
+import { adminOnly } from '../../../utils/auth';
 
 const TitleLabel = styled(Box)({
   width: '100%',

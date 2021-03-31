@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Box } from '@material-ui/core';
 import { styled } from '@material-ui/core/styles';
-import { LoginCardComponent, HeadComponent } from '../../src/components/organisms';
-import Header from '../../src/components/organisms/Header/HeaderComponent';
-import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
+import { LoginCardComponent, HeadComponent } from '../../components/organisms';
+import Header from '../../components/organisms/Header/HeaderComponent';
+import { ActionsList as CategoriesActionList } from '../../store/ducks/categories';
 
 const BoxStyled = styled(Box)({
   display: 'flex',

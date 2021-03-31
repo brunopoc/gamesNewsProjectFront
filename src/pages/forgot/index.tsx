@@ -5,13 +5,13 @@ import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import Header from '../../src/components/organisms/Header/HeaderComponent';
-import Email from '../../src/components/atoms/Inputs/Email';
-import Send from '../../src/components/atoms/Buttons/Send';
-import { ActionsList } from '../../src/store/ducks/user';
-import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
-import { ApplicationState } from '../../src/store';
-import { HeadComponent } from '../../src/components/organisms';
+import Header from '../../components/organisms/Header/HeaderComponent';
+import Email from '../../components/atoms/Inputs/Email';
+import Send from '../../components/atoms/Buttons/Send';
+import { ActionsList } from '../../store/ducks/user';
+import { ActionsList as CategoriesActionList } from '../../store/ducks/categories';
+import { ApplicationState } from '../../store';
+import { HeadComponent } from '../../components/organisms';
 
 const BoxContainerStyled = styled(Box)({
   display: 'flex',

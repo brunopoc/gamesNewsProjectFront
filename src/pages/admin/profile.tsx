@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Grid, styled, Avatar, Container } from '@material-ui/core';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { ApplicationState } from '../../src/store';
-import Text from '../../src/components/atoms/Inputs/Text';
-import Send from '../../src/components/atoms/Buttons/Send';
-import { AppBarAdminComponent } from '../../src/components/organisms';
-import { ActionsList } from '../../src/store/ducks/user';
-import TitleComponent from '../../src/components/atoms/Title/TitleComponent';
-import { withAuthSync } from '../../src/utils/auth';
+import { ApplicationState } from '../../store';
+import Text from '../../components/atoms/Inputs/Text';
+import Send from '../../components/atoms/Buttons/Send';
+import { AppBarAdminComponent } from '../../components/organisms';
+import { ActionsList } from '../../store/ducks/user';
+import TitleComponent from '../../components/atoms/Title/TitleComponent';
+import { withAuthSync } from '../../utils/auth';
 
 const FieldContainer = styled(Box)({
   display: 'flex',

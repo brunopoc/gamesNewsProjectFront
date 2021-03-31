@@ -6,12 +6,12 @@ import { styled } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import Header from '../../src/components/organisms/Header/HeaderComponent';
-import { ActionsList } from '../../src/store/ducks/user';
-import { ApplicationState } from '../../src/store';
-import Email from '../../src/components/atoms/Inputs/Email';
-import Password from '../../src/components/atoms/Inputs/Password';
-import Send from '../../src/components/atoms/Buttons/Send';
+import Header from '../../components/organisms/Header/HeaderComponent';
+import { ActionsList } from '../../store/ducks/user';
+import { ApplicationState } from '../../store';
+import Email from '../../components/atoms/Inputs/Email';
+import Password from '../../components/atoms/Inputs/Password';
+import Send from '../../components/atoms/Buttons/Send';
 
 const BoxContainerStyled = styled(Box)({
   display: 'flex',

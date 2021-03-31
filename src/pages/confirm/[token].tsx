@@ -4,11 +4,11 @@ import { Container, Box } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import { styled } from '@material-ui/core/styles';
 import { useRouter } from 'next/router';
-import { LoginCardComponent } from '../../src/components/organisms';
-import Header from '../../src/components/organisms/Header/HeaderComponent';
-import { ActionsList } from '../../src/store/ducks/user';
-import { ApplicationState } from '../../src/store';
-import { ActionsList as CategoriesActionList } from '../../src/store/ducks/categories';
+import { LoginCardComponent } from '../../components/organisms';
+import Header from '../../components/organisms/Header/HeaderComponent';
+import { ActionsList } from '../../store/ducks/user';
+import { ApplicationState } from '../../store';
+import { ActionsList as CategoriesActionList } from '../../store/ducks/categories';
 
 const BoxStyled = styled(Box)({
   display: 'flex',
