@@ -39,7 +39,7 @@ const HeaderComponent = () => {
       <LogoArea>
         <img
           style={{ width: '140px', position: 'absolute', top: '0px' }}
-          src="https://gameapi-upload.s3.amazonaws.com/logo.png"
+          src="/img/logo.png"
           alt="Logo do site"
         />
       </LogoArea>
